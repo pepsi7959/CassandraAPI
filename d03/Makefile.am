@@ -1,0 +1,5 @@
+bin_PROGRAMS = D03
+D03_SOURCES = d03.c
+D03_CFLAGS = -I$(top_src)/include
+D03_LDFLAGS =
+D03_LDADD =
