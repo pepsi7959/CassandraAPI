@@ -1,7 +1,8 @@
 #ifndef _HTTP2_COMMON_H
  #define _HTTP2_COMMON_H
 
- #define DATA_BUFFER    4096
+ #define DATA_BUFFER    	4096
+ #define HALF_DATA_BUFFER	(4096/2) 
  
 #define READBYTE(ch, cur, _sz, v) do{       \
     v               = 0;                    \
