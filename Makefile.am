@@ -1,5 +1,5 @@
 ACLOCAL_AMFLAGES=-I m4
-SUBDIRS = d03
+SUBDIRS = d03 libs
 CLEANFILES =
 DISTCLEANFILES =
 MAINTAINERCLEANFILES = aclocal.m4 install-sh mkinstalldirs \

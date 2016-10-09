@@ -23,5 +23,8 @@ AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 
 AC_CONFIG_FILES([Makefile
+                 libs/Makefile
+                 libs/stacks/Makefile
+                 libs/stacks/cassandra/Makefile
                  d03/Makefile])
 AC_OUTPUT
