@@ -1,7 +1,7 @@
 # CassandraAPI
 ## What's new?
-Providing RESTful API by HTTP protocol
-This API will supporte the following method.
+Provide RESTful API by HTTP protocol
+This API will support the following method.
 - GET is similar to a query statement.
 - POST is similar to a insert statement.
 - DELETE is similar to a delete statement.
