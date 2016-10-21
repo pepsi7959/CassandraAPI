@@ -6,6 +6,7 @@
 #include "cassandra_api.h"
 #include "testcase.h"
 
+
 void print_error(CassFuture* future) {
     const char* message;
     size_t message_length;
@@ -38,6 +39,7 @@ int test_select_version(){
     /* Setup and connect to cluster */
     CassError rc = CASS_OK;
     CassFuture* future = NULL;
+    
     CassCluster* cluster = cass_api_create_cluster("127.0.0.1", "cassandra", "cassandra", 2, 10000, 1, 2);
     CassSession* session = cass_session_new();
     
@@ -83,10 +85,10 @@ int test_select_simpledb(){
     /* Setup and connect to cluster */
     CassError rc = CASS_OK;
     CassFuture* future = NULL;
+   
     CassCluster* cluster = cass_api_create_cluster("127.0.0.1", "cassandra", "cassandra", 2, 10000, 1, 2);
     CassSession* session = cass_session_new();
     
-
     future = cass_session_connect(session, cluster);
     cass_future_wait(future);
 
@@ -98,7 +100,7 @@ int test_select_simpledb(){
         return TEST_RESULT_FAILURE;
     }
     
-    int ret = execute_query(session,  "select emp_name, emp_city from simpledb.emp", &future);
+    int ret = execute_query(session,  "select uid,name,lasname,phone from examples.peaw", &future);
     if( ret == CASS_OK){
         const CassResult* result = cass_future_get_result(future);
         size_t row_count = cass_result_row_count(result);
@@ -113,7 +115,7 @@ int test_select_simpledb(){
                 const char* col_value;
                 size_t length;
                 cass_value_get_string(value, &col_value, &length);
-                DEBUG("emp_city: '%.*s'", (int)length,col_value);
+                DEBUG(":name'%.*s'", (int)length,col_value);
             }
         }
     }
@@ -131,10 +133,10 @@ int test_cass_api_get_result_json(){
     char error[1024]; error[0] = 0;
     CassError rc = CASS_OK;
     CassFuture* future = NULL;
+    
     CassCluster* cluster = cass_api_create_cluster("127.0.0.1", "cassandra", "cassandra", 2, 10000, 1, 2);
     CassSession* session = cass_session_new();
     
-
     future = cass_session_connect(session, cluster);
     cass_future_wait(future);
 
@@ -146,7 +148,7 @@ int test_cass_api_get_result_json(){
         return TEST_RESULT_FAILURE;
     }
     
-    int ret = execute_query(session,  "select emp_name, emp_city from simpledb.emp", &future);
+    int ret = execute_query(session,  "select uid,name,lasname,phone from examples.peaw", &future);
     const CassResult* result = cass_future_get_result(future);
     CASS_API_BUFFER *buffer = NULL;
     ASSERT( cass_api_get_result_json(result, buffer, error) == CASS_API_OK );
@@ -158,9 +160,54 @@ int test_cass_api_get_result_json(){
     return TEST_RESULT_SUCCESS;
 }
 
+int test_cass_api_get_result_column(){
+/* Setup and connect to cluster */
+    char error[1024]; error[0] = 0;
+    CassError rc = CASS_OK;
+    CassFuture* future = NULL;
+    
+    CassCluster* cluster = cass_api_create_cluster("127.0.0.1", "cassandra", "cassandra", 2, 10000, 1, 2);
+    CassSession* session = cass_session_new();
+    
+    future = cass_session_connect(session, cluster);
+    cass_future_wait(future);
+
+    rc = cass_future_error_code(future);
+    if (rc != CASS_OK) {
+        print_error(future);
+        cass_cluster_free(cluster);
+        cass_session_free(session);
+        return TEST_RESULT_FAILURE;
+    }
+    //print_keyspace(session,"examples");
+   // print_table(session,"examples","peaw");
+
+
+    
+    int ret = execute_query(session, "select * from examples.peaw ", &future);
+    const CassResult* result = cass_future_get_result(future);
+    CASS_API_BUFFER *buffer = NULL;
+    ASSERT( cass_api_get_result_column(result, buffer, error,session) == CASS_API_OK ); 
+
+
+
+
+    cass_future_free(future);
+    cass_cluster_free(cluster);
+    cass_session_free(session);
+
+    return TEST_RESULT_SUCCESS;
+}
+
+
 int main(){
     UNIT_TEST(test_select_version());
     UNIT_TEST(test_select_simpledb());
     UNIT_TEST(test_cass_api_get_result_json());
+    UNIT_TEST(test_cass_api_get_result_column());
+    
     REPORT();
+    
 }
+
+
