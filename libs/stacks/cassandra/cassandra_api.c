@@ -87,10 +87,10 @@ int cass_api_get_result_column(const CassResult *result, CASS_API_BUFFER *buffer
       if(row){
           i += sprintf(&buffer->data[i], "{");
 
-        CassIterator* iterator_table = cass_iterator_tables_from_keyspace_meta(keyspace_meta);
 
-        
-        
+
+       /*Get_Table*/ 
+       /*CassIterator* iterator_table = cass_iterator_tables_from_keyspace_meta(keyspace_meta);
         while (cass_iterator_next(iterator_table)) {
               const CassTableMeta* meta_table = cass_iterator_get_table_meta(iterator_table);
                     const char* name;
@@ -103,7 +103,7 @@ int cass_api_get_result_column(const CassResult *result, CASS_API_BUFFER *buffer
 
                     }
                   }
-              
+              */
 
           int col = 0;
           //for(;;col++){
@@ -155,7 +155,7 @@ int cass_api_get_result_column(const CassResult *result, CASS_API_BUFFER *buffer
 
 
 
-void print_keyspace_meta(const CassKeyspaceMeta* meta, int indent);
+/*void print_keyspace_meta(const CassKeyspaceMeta* meta, int indent);
 void print_table_meta(const CassTableMeta* meta, int indent);
 void print_column_meta(const CassColumnMeta* meta, int indent);
 
@@ -252,4 +252,4 @@ void print_table_meta(const CassTableMeta* meta, int indent) {
   //print_meta_fields(cass_iterator_fields_from_column_meta(meta), indent + 1);
 
   printf("\n");
-} 
+} */
