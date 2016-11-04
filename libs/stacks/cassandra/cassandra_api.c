@@ -69,7 +69,7 @@ int cass_api_get_result_column(const CassResult *result, CASS_API_BUFFER *buffer
 
     const CassSchemaMeta* schema_meta = cass_session_get_schema_meta(session);
     const CassKeyspaceMeta* keyspace_meta = cass_schema_meta_keyspace_by_name(schema_meta, "peaw");
-    const CassTableMeta* table_meta = cass_keyspace_meta_table_by_name(keyspace_meta, "test_table");
+    const CassTableMeta* table_meta = cass_keyspace_meta_table_by_name(keyspace_meta, "dearall");
 
     
     int indent=0;
@@ -95,7 +95,7 @@ int cass_api_get_result_column(const CassResult *result, CASS_API_BUFFER *buffer
                 while (cass_iterator_next(iterator_colunm)) {
                   const CassValue* value = cass_row_get_column(row, col);
                   if( value == NULL){break;}
-                
+
                       //get_name_column
                       const CassColumnMeta* meta = cass_iterator_get_column_meta(iterator_colunm);
                       const char* name;
@@ -103,16 +103,23 @@ int cass_api_get_result_column(const CassResult *result, CASS_API_BUFFER *buffer
                       cass_column_meta_name(meta, &name, &name_length);
 
 
+                      CassIterator* iterator_list = cass_iterator_from_collection(value);
+                      //cass_bool_t is_first = cass_true;
+                        
+
+
+                      //get_string
                       const char* col_value = NULL;
                       size_t length;
 
+                      //cass_valueType
                       cass_int64_t t;
                       cass_int32_t it;
                       cass_bool_t b;
                       cass_double_t d;
                       CassUuid u;
                       char us[CASS_UUID_STRING_LENGTH];
-
+                      
                       //time
                       struct tm  timeinfo;
                       char       buf[80];
@@ -196,6 +203,7 @@ int cass_api_get_result_column(const CassResult *result, CASS_API_BUFFER *buffer
                         }
 
                        case CASS_VALUE_TYPE_TIMESTAMP:
+                       //case CASS_VALUE_TYPE_DATE:
 
                          if (cass_value_is_null(value)) {
                               i += sprintf(&buffer->data[i], "\"%.*s\":", (int)name_length,name);
@@ -218,6 +226,38 @@ int cass_api_get_result_column(const CassResult *result, CASS_API_BUFFER *buffer
                           break;
                         }
 
+                       case CASS_VALUE_TYPE_LIST:
+
+                     
+                        //printf("[ ");
+                        while (cass_iterator_next(iterator_list)) {
+                          int count_row=count_row+1;
+                          //if (!is_first) i += sprintf(&buffer->data[i], ",");//printf(", ");
+                          const CassValue* value = cass_iterator_get_value(iterator_list);
+                          //const char* col_value = NULL;
+                          //size_t length;
+                          //is_first = cass_false;
+
+                          cass_value_get_string(value, &col_value, &length);
+                          i += sprintf(&buffer->data[i], "\"%.*s\":", (int)name_length,name);
+                          i += sprintf(&buffer->data[i], "\"%.*s\",\n", (int)length,col_value);
+
+                          //printf("\"%.*s\"\n", (int)length, col_value);
+                        }
+                        //printf(" ]");
+              
+                      
+
+                          break;
+
+                        case CASS_VALUE_TYPE_MAP:
+                          //print_schema_map(value);
+                          break;
+
+                        case CASS_VALUE_TYPE_BLOB:
+                          //print_schema_bytes(value);
+                          break;
+
                         default:
                           
                             if (cass_value_is_null(value)) {
@@ -231,14 +271,50 @@ int cass_api_get_result_column(const CassResult *result, CASS_API_BUFFER *buffer
 
                           break;
                       }
+
                   }  
+                    cass_iterator_free(iterator_colunm);
+
    
                 i += sprintf(&buffer->data[i], "},\n");
               }
             }
 
+             cass_iterator_free(iterator);
+
         i += sprintf(&buffer->data[i], "}");
         printf("%s\n", buffer->data);
         return CASS_API_OK;
     }
+
+
+
+
+
+
+
+                        /*void print_schema_list(const CassValue* value) {
+                        CassIterator* iterator = cass_iterator_from_collection(value);
+                        cass_bool_t is_first = cass_true;
+
+                        printf("[ ");
+                        while (cass_iterator_next(iterator)) {
+
+                          if (!is_first) printf(", ");
+                          CassValue* value = cass_iterator_get_value(iterator);
+                          const char* col_value = NULL;
+                          size_t length;
+                          is_first = cass_false;
+                          cass_value_get_string(value, &col_value, &length);
+
+                          i += sprintf(&buffer->data[i], "\"%.*s\":", (int)name_length,name);
+                          i += sprintf(&buffer->data[i], "\"%.*s\",\n", (int)length,col_value);
+                          //printf("\"%.*s\"\n", (int)length, col_value);
+                        }
+                        printf(" ]");
+                        cass_iterator_free(iterator);
+                      }*/
+
+
+
 
