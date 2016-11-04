@@ -102,11 +102,13 @@ int cass_api_get_result_column(const CassResult *result, CASS_API_BUFFER *buffer
                       size_t name_length;
                       cass_column_meta_name(meta, &name, &name_length);
 
-
+                      //time_list
                       CassIterator* iterator_list = cass_iterator_from_collection(value);
+                      int count_row=0;
                       //cass_bool_t is_first = cass_true;
+                      
                         
-
+                      
 
                       //get_string
                       const char* col_value = NULL;
@@ -123,7 +125,7 @@ int cass_api_get_result_column(const CassResult *result, CASS_API_BUFFER *buffer
                       //time
                       struct tm  timeinfo;
                       char       buf[80];
-
+                      
 
                       if( col_value != NULL || col_value == NULL){col = col +1;}
 
@@ -228,25 +230,22 @@ int cass_api_get_result_column(const CassResult *result, CASS_API_BUFFER *buffer
 
                        case CASS_VALUE_TYPE_LIST:
 
-                     
-                        //printf("[ ");
                         while (cass_iterator_next(iterator_list)) {
-                          int count_row=count_row+1;
+                          count_row = count_row+1;
+                          printf("%d\n", count_row);
                           //if (!is_first) i += sprintf(&buffer->data[i], ",");//printf(", ");
                           const CassValue* value = cass_iterator_get_value(iterator_list);
-                          //const char* col_value = NULL;
-                          //size_t length;
-                          //is_first = cass_false;
 
                           cass_value_get_string(value, &col_value, &length);
-                          i += sprintf(&buffer->data[i], "\"%.*s\":", (int)name_length,name);
-                          i += sprintf(&buffer->data[i], "\"%.*s\",\n", (int)length,col_value);
 
-                          //printf("\"%.*s\"\n", (int)length, col_value);
+                          if ( count_row == 1 ){
+                            i += sprintf(&buffer->data[i], "\"%.*s\":", (int)name_length,name);
+                            i += sprintf(&buffer->data[i], "[\"%.*s\"", (int)length,col_value);
+                          }else if ( count_row > 1 ){
+                            i += sprintf(&buffer->data[i], ",\"%.*s\"", (int)length,col_value);
+                          }
                         }
-                        //printf(" ]");
-              
-                      
+                        i += sprintf(&buffer->data[i], "],\n");
 
                           break;
 
