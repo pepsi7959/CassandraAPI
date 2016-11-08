@@ -1,321 +1,49 @@
 
-//Keyspace_phenix 
-CREATE KEYSPACE phenix WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+/*Keyspace_phenix*/ 
+    CREATE KEYSPACE phenix WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
 
 /**************************************************************************/
 
 /*Table Stock_Adjustment*/
-	CREATE TABLE Stock_Adjustment ( transactionId text, transactionType text, adjustStockNo text, company text, memoNo text, remark text, adjustDateTime timestamp, mmDocYear text, mmDocNo text, docRef text, moveMentType text, locationCode text, locationName text, locationType text, locationSubType text, locationRegion text, locationProvince text ,adjustStatus text, createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp, matchCode_key frozen <list<text>>, brand_key frozen <list<text>>, model_key frozen <list<text>>, commercialName_key frozen <list<text>>, productType_key frozen <list<text>>, productSubType_key frozen <list<text>>, serial_key frozen <list<text>>, adjustDetail text, PRIMARY KEY ((transactionId), adjustStockNo, company, adjustDateTime, matchCode_key, brand_key,model_key,commercialName_key,productType_key,productSubType_key,serial_key));
-
-/*Insert stock_adjustment*/
-INSERT INTO stock_adjustment (transactionId , transactionType, adjustStockNo , company, memoNo , remark , adjustDateTime, mmDocYear , mmDocNo , docRef , moveMentType , locationCode , locationName , locationType ,locationSubType , locationRegion , locationProvince ,adjustStatus , createBy , createDateTime , updateBy, updateDateTime , matchCode_key , brand_key , model_key , commercialName_key , productType_key , productSubType_key, serial_key, adjustDetail) VALUES ('0000000001','AdjustStock','AJ1177160500009','AWN','1223322333','','2016-09-09 15:37:50+0700','2016','4904856098','','','1177','AIS Online Store By Online Marketing Team','AIS','Back Office','CB','Bangkok','','Davika','2016-09-09 15:37:50+0700','','',['NEWASUZC550-BK01’,’NEWASUZC550-BK01'],['ASUS'],['ZC550KL'],['ASUS 16G'],['DEVICE'],['HANDSET'],['000000000000001', '000000000000002'],'[{
-            "matCode": "NEWASUZC550-BK01",
-            "matType": "serial",
-            "brand": "ASUS",
-            "model": "ZC550KL",
-            "color": "BLACK",
-            "commercialName": "ASUS 16G",
-            "matDescription": "NEW 4G ASU MAX 16/2GB,5000mAh-BLACK 01",
-            "productType": "DEVICE",
-            "productSubType": "HANDSET",
-            "itemNo": "0002",
-            "fromPlant": "1123",
-            "fromStorage": "4351",
-            "qty": "2",
-            "serialList": [{
-                "serial": "000000000000001",
-                "reason": "",
-                "subStock": "Sale@Shop"
-            },
-            {
-                "serial": "000000000000002",
-                "reason": "text",
-                "subStock": "Sale@Shop"
-            }]
-        }]');
+	 CREATE TABLE Stock_Adjustment ( transactionId bigint , transactionType text, adjustStockNo text, company text, memoNo bigint , remark text, adjustDateTime timestamp, mmDocYear int, mmDocNo bigint , docRef text, moveMentType int, locationCode int, locationName text, locationType text, locationSubType text, locationRegion text, locationProvince text ,adjustStatus text, createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp, matchCode_key frozen <list<text>>, brand_key frozen <list<text>>, model_key frozen <list<text>>, commercialName_key frozen <list<text>>, productType_key frozen <list<text>>, productSubType_key frozen <list<text>>, serial_key frozen <list<text>>, adjustDetail text, PRIMARY KEY ((transactionId), adjustStockNo, company, adjustDateTime, matchCode_key, brand_key,model_key,commercialName_key,productType_key,productSubType_key,serial_key));
 
 
 /**************************************************************************/
 
 
 /*Table Pickup_and_Rereturn*/
-	CREATE TABLE Pickup_and_Rereturn (transactionId text, transactionType text, obtainNo text, obtainStatus text,locationCode text, locationName text, locationType text, locationSubType text, locationRegion text, locationProvince text ,docRef text, obtainDateTime timestamp, createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp, salesCode_key frozen <list<text>>,matCode_key frozen <list<text>>, serial_key frozen <list<text>>,obtainDetail text, PRIMARY KEY ((obtainNo),obtainDateTime,salesCode_key,matCode_key,serial_key));
-
-/*Insert Pickup_and_Rereturn*/
-INSERT INTO pickup_and_rereturn (transactionId , transactionType , obtainNo , obtainStatus ,locationCode , locationName , locationType , locationSubType , locationRegion , locationProvince ,docRef , obtainDateTime , createBy , createDateTime , updateBy, updateDateTime , salesCode_key,matCode_key , serial_key,obtainDetail ) VALUES ('00000000004','Pickup','PU1177160500009','Open','1177','AIS Online Store By Online Marketing Team','AIS','Back Office','CB','Bangkok','','2016-09-09 15:37:50+0700','Davika','2016-09-09 15:37:50+0700','','',['000000000000001'],['NEWASUZC550-BK01'],['000000000000001', '000000000000002'],'[
-                {
-                    "serial": "000000000000001",
-                    "reason": "",
-                    "fromSubStock": "Sale@Shop"
-                },
-                {
-                    "serial": "000000000000002",
-                    "reason": "text",
-                    "fromSubStock": "Sale@Shop"
-                }]
-        },
-        {
-            "matCode": "Aunjai16",
-            "matType": "Nonserial",
-            "brand": "AIS",
-            "model": "",
-            "color": "Green",
-            "commercialName": "ตุ๊กตาอุ่นใจ 16 นิ้ว",
-            "matDescription": "",
-            "company": "AIS",
-            "productType": "",
-            "productSubType": "",
-            "itemNo": "0002",
-            "qty": "10",
-            "serialList": [
-                {
-                    "serial": "",
-                    "reason": "",
-                    "fromSubStock": "Sale@Shop"
-                },
-                {
-                    "serial": "",
-                    "reason": "",
-                    "fromSubStock": "Sale@Shop"
-                }
-            ]
-        }]');
+	 CREATE TABLE Pickup_and_Rereturn (transactionId bigint , transactionType text, obtainNo text, obtainStatus text,locationCode int, locationName text, locationType text, locationSubType text, locationRegion text, locationProvince text ,docRef text, obtainDateTime timestamp, createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp, salesCode_key frozen <list<text>>,matCode_key frozen <list<text>>, serial_key frozen <list<text>>,obtainDetail text, PRIMARY KEY ((obtainNo),obtainDateTime,salesCode_key,matCode_key,serial_key));
 
 
 /**************************************************************************/
 
 /*Table Sub_Stock_Detail_Transfer*/
-	CREATE TABLE Sub_Stock_Detail_Transfer (transactionId text, transactionType text, transferSubStockNo text ,company text , transferSubStockStatus text , fromSubStock text , toSubStock text, locationCode text, locationName text, locationType text, locationSubType text, locationRegion text, locationProvince text ,docRef text, transferSubStockDateTime timestamp, createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,qtyTotal text,matCode_key frozen <list<text>>,serial_key frozen <list<text>>,transferSubStockDetail text, PRIMARY KEY ((transactionId),transferSubStockNo,fromSubStock,toSubStock,transferSubStockDateTime,matCode_key,serial_key));
-
-
-
-/*Insert Sub_Stock_Detail_Transfer*/
-INSERT INTO sub_stock_detail_transfer (transactionId , transactionType , transferSubStockNo  ,company  , transferSubStockStatus  , fromSubStock , toSubStock , locationCode , locationName , locationType , locationSubType , locationRegion , locationProvince  ,docRef , transferSubStockDateTime , createBy , createDateTime , updateBy , updateDateTime ,qtyTotal,matCode_key ,serial_key,transferSubStockDetail) VALUES ('00000000008','TransactionSubStock','TS1177160500009','AWN','','Sale@Shop','Bad','1177','AIS Online Store By Online Marketing Team','AIS','Back Office','CB','BKK','','2016-09-09 15:37:50+0700','Christ Horwang','2016-09-09 15:37:50+0700','Nana Raibena','2016-09-09 15:37:50+0700','20',['NEWASUZC550-BK01','Aunjai30N'],['000000000000001','000000000000001'],'[
-          {
-            "serial": "000000000000001",
-            "reason": ""
-          },
-          {
-            "serial": "000000000000002",
-            "reason": "text"
-          }
-        ]
-      },
-      {
-        "matCode": "Aunjai30N",
-        "matType": "Nonserial",
-        "brand": "AIS",
-        "model": "",
-        "color": "Green",
-        "commercialName": "ตุ๊กตาอุ่นใจ 30 นิ้ว",
-        "matDescription": "",
-        "qtyOut": "20",
-        "unit": "set",
-        "serialList": [
-          {
-            "serial": "",
-            "reason": ""
-          }
-        ]
-      }]');
+	 CREATE TABLE Sub_Stock_Detail_Transfer (transactionId bigint , transactionType text, transferSubStockNo text ,company text , transferSubStockStatus text , fromSubStock text , toSubStock text, locationCode int, locationName text, locationType text, locationSubType text, locationRegion text, locationProvince text ,docRef text, transferSubStockDateTime timestamp, createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,qtyTotal int,matCode_key frozen <list<text>>,serial_key frozen <list<text>>,transferSubStockDetail text, PRIMARY KEY ((transactionId),transferSubStockNo,fromSubStock,toSubStock,transferSubStockDateTime,matCode_key,serial_key));
 
 
  /************************************************************************/
 
 
 /*Table Sub_Stock_Dialy_Detail*/
- 	CREATE TABLE Sub_Stock_Dialy_Detail (transactionId text, transactionType text , subStockDailyNo text, dateForSales timestamp, salesFor text,dailyStatus text ,locationCode text, locationName text, locationType text, locationSubType text, locationRegion text, locationProvince text, controllerName text, devicePaymentName text, createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,subStockDailyDetail text, PRIMARY KEY ((transactionId),subStockDailyNo,dateForSales,dailyStatus,devicePaymentName,createDateTime));
-
-
-
-/*Insert sub_stock_dialy_detail*/
- INSERT INTO sub_stock_dialy_detail (transactionId , transactionType, subStockDailyNo , dateForSales, salesFor,dailyStatus ,locationCode , locationName , locationType, locationSubType , locationRegion , locationProvince , controllerName , devicePaymentName , createBy , createDateTime , updateBy , updateDateTime,subStockDailyDetail ) VALUES ('00000000007','SubSotckDaily','SS1177160500009','2016-09-09 15:37:50+0700','front','Complete','1177','AIS Online Store By Online Marketing Team','AIS','Back Office','CB','BKK','Nunii','Nadiana','Christ Horwang','2016-09-09 15:37:50+0700','Nana Raibena','2016-09-09 15:37:50+0700','[{
-      "matCode": "NEWASUZC550-BK01",
-      "matType": "serial",
-      "brand": "ASUS",
-      "model": "ZC550KL",
-      "color": "BLACK",
-      "commercialName": "ASUS 16G",
-      "matDescription": "NEW 4G ASU MAX 16/2GB,5000mAh-BLACK 01",
-      "productType": "DEVICE",
-      "productSubType": "HANDSET",
-      "salesName": "somza",
-      "receiptNo": "S01609090001",
-      "msisdn": "66890009878",
-      "serialList": [{
-        "serial": "000000000000001",
-        "reason": "",
-        "statusBySerial": "Sold",
-        "fromSubStock": "sale@shop",
-        "qtyByStatus": "1",
-        "qtyByPickup": "1",
-        "createBy": "somza"
-      },
-      {
-        "serial": "000000000000002",
-        "reason": "",
-        "statusBySerial": "Sold",
-        "fromSubStock": "sale@shop",
-        "qtyByStatus": "1",
-        "qtyByPickup": "1",
-        "createBy": "somza"
-      }]
-      },
-      {
-      "matCode": "Aunjai30N",
-      "matType": "Nonserial",
-      "brand": "AIS",
-      "model": "",
-      "color": "Green",
-      "commercialName": "ตุ๊กตาอุ่นใจ 30 นิ้ว",
-      "matDescription": "",
-      "productType": "RREMIUM",
-          "productSubType": "N/A",
-      "salesName": "somza",
-      "receiptNo": "",
-      "msisdn": "",
-      "serialList": [{
-        "serial": "",
-        "reason": "",
-        "statusBySerial": "Sold",
-        "fromSubStock": "",
-        "qtyByStatus": "10",
-        "qtyByPickup": "25",
-        "createBy": ""
-      },
-      {
-        "serial": "",
-        "reason": "",
-        "statusBySerial": "Move",
-        "fromSubStock": "",
-        "qtyByStatus": "10",
-        "qtyByPickup": "25",
-        "createBy": ""
-      }]
-  }]');
-
-
+  	CREATE TABLE Sub_Stock_Dialy_Detail (transactionId bigint , transactionType text , subStockDailyNo text, dateForSales timestamp, salesFor text,dailyStatus text ,locationCode int, locationName text, locationType text, locationSubType text, locationRegion text, locationProvince text, controllerName text, devicePaymentName text, createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,subStockDailyDetail text, PRIMARY KEY ((transactionId),subStockDailyNo,dateForSales,dailyStatus,devicePaymentName,createDateTime));
 
   /***********************************************************************/
 
 
 /*Table Data_Error*/
-  CREATE TABLE Data_Error (transactionId text ,transactionType text , requestNo text , company text, dataErrorDateTime timestamp,createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,dataErrorDetail text, PRIMARY KEY (requestNo));
-
-/*Insert data_error*/
-  INSERT INTO data_error (transactionId ,transactionType , requestNo , company , dataErrorDateTime ,createBy , createDateTime , updateBy, updateDateTime,dataErrorDetail ) VALUES ('','','0874238131','','','','','','','[{
-      "matCode": "NEWAPP0SE16-GD01",
-      "matType": "serial",
-      "brand": "APPLE",
-      "model": "IPHONESE16GB",
-      "color": "GOLD",
-      "commercialName": "NEW LTE APP IPHONESE 16GB-GOLD 01",
-      "company": "AWN",
-      "productType": "DEVICE",
-      "productSubType": "HANDSET",
-      "qtyOver": "10",
-      "qtyMissing": "10"
-    }]');
+    CREATE TABLE Data_Error (transactionId bigint  ,transactionType text , requestNo text  , company text, dataErrorDateTime timestamp,createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,dataErrorDetail text, PRIMARY KEY (requestNo));
 
 
  /***********************************************************************/
 
  /*Table Request_Goods*/
- 	CREATE TABLE Request_Goods (transactionId text ,transactionType text , requestNo text , company text,forSubStock text, requestStatus text, fromLocationCode text, fromLocationName text, fromLocationType text, fromLocationSubType text, fromLocationRegion text ,fromLocationProvince text , toLocationCode text,toLocationName text , toLocationType text, toLocationSubType text,toLocationRegion text , toLocationProvince text, pickingDateTime text, reservedNo text, doNo text, moveMentType text, createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,cancelBy text, cancelDateTime timestamp , shipToCode text, shipToName text, shipToProvince text ,shipToAddress text, shipToDistributionChannel text, receiveBy text, mobileNo text, routeGroup text, remark text, reason text, stampDelivery text, matCode_key frozen <list<text>>,brand_key frozen <list<text>>, model_key frozen <list<text>>, productType_key frozen <list<text>>, productSubType_key frozen <list<text>>, commercialName_key frozen <list<text>>,requestDetail text, PRIMARY KEY ((transactionId),requestNo,requestStatus,matCode_key,brand_key,model_key,productType_key,productSubType_key,commercialName_key));
-
-/*Insert Request_Goods*/
-	INSERT INTO request_goods (transactionId ,transactionType , requestNo , company ,forSubStock , requestStatus , fromLocationCode , fromLocationName , fromLocationType , fromLocationSubType , fromLocationRegion ,fromLocationProvince , toLocationCode ,toLocationName , toLocationType , toLocationSubType ,toLocationRegion , toLocationProvince , pickingDateTime , reservedNo , doNo , moveMentType , createBy , createDateTime , updateBy , updateDateTime ,cancelBy , cancelDateTime  , shipToCode , shipToName , shipToProvince  ,shipToAddress , shipToDistributionChannel , receiveBy , mobileNo , routeGroup , remark , reason , stampDelivery , matCode_key ,brand_key , model_key , productType_key , productSubType_key , commercialName_key ,requestDetail) VALUES ('0000000001','RequestGoods','RW1177160500009','AWN','Sale@Shop','RequestGoods','1012','Warehouse','AIS','Back Office','CB','BKK','1177','AIS Online Store By Online Marketing Team','AIS','Back Office','CB','BKK','2016-09-09 15:37:50+0700','3343453322','1250047410','301','Patcharapa','2016-09-09 15:37:50+0700','Patcharapa','20160907103750','','','1400006267','ชื่อในการจัดส่ง','กรุงเทพมหานคร','บริษัท แอดวานซ์ ไวร์เลส เน็ทเวอร์ค จำกัด 408/60 อาคารพหลโยธินเพลส ชั้น 15 ถนนพหลโยธิน แขวงสามเสนใน เขตพญาไท กรุงเทพมหานคร 10400','','Araya','0801234567','BKK','texxxt','text','BK2',['NEWASUZC550-BK01'],['ASUS'],['ZC550KL'],['DEVICE'],['HANDSET'],['ASUS 16G'],'[
-      {
-        "matCode": "NEWASUZC550-BK01",
-        "brand": "ASUS",
-        "model": "ZC550KL",
-        "color": "BLACK",
-        "commercialName": "ASUS 16G",
-        "matDescription": "NEW 4G ASU MAX 16/2GB,5000mAh-BLACK 01",
-        "division": "11text",
-        "productType": "DEVICE",
-        "productSubType": "HANDSET",
-        "qtyReq": "10",
-        "unit": "SET",
-        "quotaFlag": "Y",
-        "quotaMstId": "",
-        "quotaDtlId": "",
-        "itemNo": "0001",
-        "plantFrom": "1111",
-        "storageFrom": "2222",
-        "plantTo": "3333",
-        "storageTo": "4444"
-      }]');
-
+ 	  CREATE TABLE Request_Goods (transactionId bigint  ,transactionType text , requestNo text , company text,forSubStock text, requestStatus text, fromLocationCode int, fromLocationName text, fromLocationType text, fromLocationSubType text, fromLocationRegion text ,fromLocationProvince text , toLocationCode int,toLocationName text , toLocationType text, toLocationSubType text,toLocationRegion text , toLocationProvince text, pickingDateTime text, reservedNo bigint, doNo bigint, moveMentType int, createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,cancelBy text, cancelDateTime timestamp , shipToCode bigint, shipToName text, shipToProvince text ,shipToAddress text, shipToDistributionChannel text, receiveBy text, mobileNo int, routeGroup text, remark text, reason text, stampDelivery text, matCode_key frozen <list<text>>,brand_key frozen <list<text>>, model_key frozen <list<text>>, productType_key frozen <list<text>>, productSubType_key frozen <list<text>>, commercialName_key frozen <list<text>>,requestDetail text, PRIMARY KEY ((transactionId),requestNo,requestStatus,matCode_key,brand_key,model_key,productType_key,productSubType_key,commercialName_key));
 
  /***********************************************************************/
  
  /*Table Order_Transfer*/
 
- CREATE TABLE Order_Transfer (transactionId text ,transactionType text, transferNo text, company text, fromSubStock text, toSubStock text, transferStatus text, fromLocationCode text, fromLocationName text, fromLocationType text, fromLocationSubType text, fromLocationRegion text ,fromLocationProvince text , toLocationCode text,toLocationName text , toLocationType text, toLocationSubType text,toLocationRegion text , toLocationProvince text,docRef text, transferDateTime timestamp, mmDocYear text, mmDocNo text, doNo text, movementType text, distributionChannel text,createBy text,createDateTime timestamp ,updateBy text, updateDateTime timestamp ,cancelBy text, cancelDateTime timestamp, shipToCode text, shipToName text, shipToProvince text, shipToAddress text, vendorCode text, vendorName text, remark text, matCode_key frozen <list<text>>,brand_key frozen <list<text>>, model_key frozen <list<text>>, productType_key frozen <list<text>>, productSubType_key frozen <list<text>>,transferDetail text, PRIMARY KEY ((transactionId),transactionType,transferStatus,matCode_key,brand_key,model_key,productType_key,productSubType_key));
+    CREATE TABLE Order_Transfer (transactionId bigint ,transactionType text, transferNo text, company text, fromSubStock text, toSubStock text, transferStatus text, fromLocationCode int, fromLocationName text, fromLocationType text, fromLocationSubType text, fromLocationRegion text ,fromLocationProvince text , toLocationCode int,toLocationName text , toLocationType text, toLocationSubType text,toLocationRegion text , toLocationProvince text,docRef text, transferDateTime timestamp, mmDocYear int, mmDocNo bigint, doNo bigint, movementType int, distributionChannel text,createBy text,createDateTime timestamp ,updateBy text, updateDateTime timestamp ,cancelBy text, cancelDateTime timestamp, shipToCode bigint, shipToName text, shipToProvince text, shipToAddress text, vendorCode text, vendorName text, remark text, matCode_key frozen <list<text>>,brand_key frozen <list<text>>, model_key frozen <list<text>>, productType_key frozen <list<text>>, productSubType_key frozen <list<text>>,transferDetail text, PRIMARY KEY ((transactionId),transactionType,transferStatus,matCode_key,brand_key,model_key,productType_key,productSubType_key));
 
-
-/*Insert Order_Transfer*/
-
-INSERT INTO order_transfer (transactionId,transactionType , transferNo , company , fromSubStock , toSubStock , transferStatus , fromLocationCode , fromLocationName , fromLocationType, fromLocationSubType, fromLocationRegion,fromLocationProvince , toLocationCode ,toLocationName , toLocationType , toLocationSubType ,toLocationRegion, toLocationProvince ,docRef , transferDateTime , mmDocYear , mmDocNo , doNo , movementType , distributionChannel,createBy ,createDateTime ,updateBy , updateDateTime  ,cancelBy , cancelDateTime , shipToCode , shipToName , shipToProvince , shipToAddress , vendorCode , vendorName , remark , matCode_key,brand_key , model_key , productType_key , productSubType_key ,transferDetail ) VALUES ('0000000002','TransferOut','OS1139160500001','AWN','','Sale@Shop','TransferOut','1012','Warehouse','AIS','Back Office','CB','BKK','1177','AIS Online Store By Online Marketing Team','AIS','Back Office','CB','BKK','RW1177160500009','2016-09-09 15:37:50+0700','2016','4904856098','1250047410','301','','YAYA','2016-09-09 15:37:50+0700','YAYA','2016-09-09 15:37:50+0700','','','1400006267','ชื่อในการจัดส่ง','กรุงเทพมหานคร','บริษัท แอดวานซ์ ไวร์เลส เน็ทเวอร์ค จำกัด 408/60 อาคารพหลโยธินเพลส ชั้น 15 ถนนพหลโยธิน แขวงสามเสนใน เขตพญาไท กรุงเทพมหานคร 10400','','','text',['NEWASUZC550-BK01'],['ASUS'],['ZC550KL'],['DEVICE'],['HANDSET'],'[
-      {
-        "matCode": "NEWASUZC550-BK01",
-        "matType":"serial",
-        "brand": "ASUS",
-        "model": "ZC550KL",
-        "color": "BLACK",
-        "commercialName": "ASUS 16G",
-        "matDescription": "NEW 4G ASU MAX 16/2GB,5000mAh-BLACK 01",
-        "productType": "DEVICE",
-        "productSubType": "HANDSET",
-        "qtyTransfer": "10",
-        "unit": "SET",
-        "itemNo": "0001",
-        "fromPlant": "1111",
-        "fromStorage": "2222",
-        "toPlant": "3333",
-        "toStorage": "4444",
-        "serialList": [
-          {
-            "serial": "000000000000001",
-            "toPlant": "",
-            "toStorage": "",
-            "reason": ""
-          },
-          {
-            "serial": "000000000000002",
-            "toPlant": "",
-            "toStorage": "",
-            "reason": "abcdefg"
-          }]
-      },
-      {
-        "matCode": "NEWAPP0SE16-GD01",
-        "matType":"non-serial",
-        "brand": "AunJai",
-        "model": "AunJai18",
-        "color": "GREEN",
-        "commercialName": "ตุ๊กตา Aunjai 18 นิ้ว",
-        "productType": "",
-        "productSubType": "",
-        "qtyTransfer": "10",
-        "unit": "SET",
-        "itemNo": "0001",
-        "fromPlant": "1111",
-        "fromStorage": "2222",
-        "toPlant": "3333",
-        "toStorage": "4444",
-        "serialList": [
-          {
-            "serial": "",
-            "toPlant": "",
-            "toStorage": "",
-            "reason": ""
-          },
-          {
-            "serial": "",
-            "toPlant": "",
-            "toStorage": "",
-            "reason": ""
-          }]
-       }]');
+/***********************************************************************/
+ 
