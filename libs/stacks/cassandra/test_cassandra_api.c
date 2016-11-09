@@ -111,7 +111,6 @@ int test_select_simpledb(){
             const CassRow* row = cass_iterator_get_row(iterator);
             if(row){
                 const CassValue* value = cass_row_get_column(row, 1);
-                //const CassValue* value = cass_row_get_column_by_name(row, "emp_city");
                 const char* col_value;
                 size_t length;
                 cass_value_get_string(value, &col_value, &length);
@@ -179,9 +178,6 @@ int test_cass_api_get_result_column(){
         cass_session_free(session);
         return TEST_RESULT_FAILURE;
     }
-    //print_keyspace(session,"examples");
-   // print_table(session,"examples","peaw");
-
 
     
     int ret = execute_query(session, "select * from examples.peaw ", &future);

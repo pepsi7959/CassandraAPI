@@ -290,30 +290,3 @@ int cass_api_get_result_column(const CassResult *result, CASS_API_BUFFER *buffer
 
 
 
-
-
-                        /*void print_schema_list(const CassValue* value) {
-                        CassIterator* iterator = cass_iterator_from_collection(value);
-                        cass_bool_t is_first = cass_true;
-
-                        printf("[ ");
-                        while (cass_iterator_next(iterator)) {
-
-                          if (!is_first) printf(", ");
-                          CassValue* value = cass_iterator_get_value(iterator);
-                          const char* col_value = NULL;
-                          size_t length;
-                          is_first = cass_false;
-                          cass_value_get_string(value, &col_value, &length);
-
-                          i += sprintf(&buffer->data[i], "\"%.*s\":", (int)name_length,name);
-                          i += sprintf(&buffer->data[i], "\"%.*s\",\n", (int)length,col_value);
-                          //printf("\"%.*s\"\n", (int)length, col_value);
-                        }
-                        printf(" ]");
-                        cass_iterator_free(iterator);
-                      }*/
-
-
-
-
