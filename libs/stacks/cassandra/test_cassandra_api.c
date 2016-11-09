@@ -195,7 +195,7 @@ int test_cass_api_get_result_column(){
     return TEST_RESULT_SUCCESS;
 }
 
-
+/*main*/
 int main(){
     UNIT_TEST(test_select_version());
     UNIT_TEST(test_select_simpledb());
