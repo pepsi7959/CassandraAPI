@@ -38,7 +38,6 @@ public class KafkaReader {
          		return;
       		}
       
-
       		//Assign topicName to string variable
       		String topicName = args[0].toString();
 
