@@ -1,4 +1,9 @@
 
+//*****************************************************************************//
+//************ run.sh testreadtextfile tempfile.txt localhost:9092 ************//
+//*****************************************************************************//
+
+
 package com.ais.damolces.kafka;
 
 
@@ -28,10 +33,12 @@ public class KafkaReader {
 		int i=0;
       		// Check arguments length value
       		if(args.length == 0){
-         		System.out.println("Enter topic name");
+         		System.out.println("Enter topic name, file name and IP:Port");
+			System.out.println("run.sh topic_name file_name localhost:Port");
          		return;
       		}
       
+
       		//Assign topicName to string variable
       		String topicName = args[0].toString();
 
@@ -39,11 +46,10 @@ public class KafkaReader {
 		String filename = args[1].toString();
 		//System.out.println(filename);
 
-
 		//Input IP and Port
 		String IPPort = args[2].toString();
-		System.out.println(IPPort);
-      
+		//System.out.println(IPPort);
+
       		// create instance for properties to access producer configs   
       		Properties props = new Properties();
       
@@ -71,16 +77,13 @@ public class KafkaReader {
       
       		Producer<String, String> producer = new KafkaProducer<String, String>(props);
             
-
-
-
 		try {
 		    //br = new BufferedReader(new FileReader("tempfile.txt"));
 		    br = new BufferedReader(new FileReader(filename));
 		    String line;
 		    while ((line = br.readLine()) != null) {
-			i++;
-			System.out.println("loop :"+i);
+			//i++;
+			//System.out.println("loop :"+i);
 			producer.send(new ProducerRecord<String, String>(topicName,line,line));
 		        //System.out.println(line);
 		    }
@@ -95,10 +98,9 @@ public class KafkaReader {
 		        ex.printStackTrace();
 		    }
 		}
-
-
-
-		System.out.println("Message sent successfully");
+		System.out.println("\t*************************************");
+		System.out.println("\t***** Message sent successfully *****");
+		System.out.println("\t*************************************");
    		producer.close();
    	}
 }
