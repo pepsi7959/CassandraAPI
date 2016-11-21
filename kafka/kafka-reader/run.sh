@@ -18,6 +18,6 @@ else
 	echo -e '\t' "*********************************"
 	echo -e '\t' "***** Information completed *****"
 	echo -e '\t' "*********************************"
-	java -cp ./target/dependency/*:./target/kafka-reader-0.0.1.jar com.ais.damolces.kafka.KafkaReader $1 $2 $3	
+	java -cp ./target/kafka-reader-0.0.1.jar com.ais.damolces.kafka.KafkaReader $1 $2 $3	
 fi
 
