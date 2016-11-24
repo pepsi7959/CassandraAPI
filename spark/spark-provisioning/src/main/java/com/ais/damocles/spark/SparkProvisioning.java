@@ -25,8 +25,8 @@ import org.apache.spark.streaming.api.java.JavaPairDStream;
 import org.apache.spark.streaming.api.java.JavaPairInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.apache.spark.streaming.kafka.KafkaUtils;
-
-//import com.google.common.base.Optional;
+import com.google.common.collect.Lists;
+import com.google.common.base.Optional;
 //import com.ais.damocles.spark.util.aisDataDecoder;
 import com.ais.damocles.spark.util.PropertyFileReader;
 import com.ais.damocles.spark.Usage;
@@ -44,8 +44,7 @@ import scala.Tuple3;
 
 public class SparkProvisioning{
 	 //private static final Logger logger = Logger.getLogger(aisDataProcessor.class);
-	 private static final Pattern SPACE = Pattern.compile(" ");
-	 private final String usage_schema[] = {"user", "type", "usage"};
+	 private static final Pattern SPACE = Pattern.compile(",");
 	 public static void main(String[] args) throws Exception {
 
 		 //read Spark and Cassandra properties and create SparkConf
@@ -82,6 +81,7 @@ public class SparkProvisioning{
  		 //logger.info("Starting Stream Processing");
  		 messages.print();
 	    
+
 	     // Get the lines, split them into words, count the words and print
 	    JavaDStream<String> lines = messages.map(new Function<Tuple2<String, String>, String>() {
 		      @Override
@@ -89,14 +89,18 @@ public class SparkProvisioning{
 		        return tuple2._2();
 		      }
 		    });
+	    lines.print();
 
-	    /*
-	    JavaDStream<String> words = lines.flatMap(new FlatMapFunction<String, String>() {
-		      @Override
-		      public Iterator<String> call(String x) {
-		        return Arrays.asList(SPACE.split(x)).iterator();
-		      }
-		    });
+	    
+        JavaDStream<String> words = lines.flatMap(new FlatMapFunction<String, String>() {
+	      @Override
+	      public Iterable<String> call(String x) {
+	        return Lists.newArrayList(SPACE.split(x));
+	      }   
+	    }); 
+
+	    words.print();
+		
 	    JavaPairDStream<String, Integer> wordCounts = words.mapToPair(
 		      new PairFunction<String, String, Integer>() {
 		        @Override
@@ -110,18 +114,8 @@ public class SparkProvisioning{
 		          return i1 + i2;
 		        }
 		      });
-			wordCounts.print();
-		*/
-		// Map Cassandra table column
-		Map<String, String> columnNameMappings = new HashMap<String, String>();
-		columnNameMappings.put("user", "user");
-		columnNameMappings.put("type", "type");
-		columnNameMappings.put("usage", "usage");
-		Usage myUsage = new Usage("pepsi", "mobile", "10");
-		// call CassandraStreamingJavaUtil function to save in DB
-		//javaFunctions(messages).writerBuilder("simpledb", "usage",
-		//		CassandraJavaUtil.mapToRow(Usage.class, columnNameMappings)).saveToCassandra();
-		System.out.println("Write to total_traffic");
+		wordCounts.print();
+
 		 jssc.start();            
 		 System.out.println("start jssc");
 		 jssc.awaitTermination();  
