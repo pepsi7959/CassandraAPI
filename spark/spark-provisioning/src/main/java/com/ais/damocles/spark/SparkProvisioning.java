@@ -1,50 +1,36 @@
 package com.ais.damocles.spark;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.regex.Pattern;
-import java.util.Iterator;
-import java.util.Arrays;
 
-import org.apache.log4j.Logger;
+import kafka.serializer.StringDecoder;
+
+import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.*;
-import org.apache.spark.api.java.function.FlatMapFunction;
-import org.apache.spark.api.java.function.*;
-import org.apache.spark.api.java.function.Function3;
-import org.apache.spark.broadcast.Broadcast;
 import org.apache.spark.streaming.Durations;
-import org.apache.spark.streaming.State;
-import org.apache.spark.streaming.StateSpec;
-import org.apache.spark.streaming.api.java.JavaDStream;
-import org.apache.spark.streaming.api.java.JavaMapWithStateDStream;
-import org.apache.spark.streaming.api.java.JavaPairDStream;
 import org.apache.spark.streaming.api.java.JavaPairInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.apache.spark.streaming.kafka.KafkaUtils;
-import com.google.common.collect.Lists;
-import com.google.common.base.Optional;
-//import com.ais.damocles.spark.util.aisDataDecoder;
+
+import com.ais.damocles.spark.util.KeyDecoder;
 import com.ais.damocles.spark.util.PropertyFileReader;
-import com.ais.damocles.spark.Usage;
-//import com.ais.damocles.spark.vo.aisData;
-//import com.ais.damocles.spark.vo.POIData;
-
-import static com.datastax.spark.connector.japi.CassandraStreamingJavaUtil.javaFunctions;
-import static com.datastax.spark.connector.japi.CassandraJavaUtil.*;
+import com.ais.damocles.spark.util.ValueDecoder;
+import com.ais.damocles.spark.schema.Usage;
 import com.datastax.spark.connector.japi.CassandraJavaUtil;
+import static com.datastax.spark.connector.japi.CassandraJavaUtil.javaFunctions;
 
-import kafka.serializer.StringDecoder;
-import scala.Tuple2;
-import scala.Tuple3;
 
 
 public class SparkProvisioning{
 	 //private static final Logger logger = Logger.getLogger(aisDataProcessor.class);
-	 private static final Pattern SPACE = Pattern.compile(",");
+
+	 public static JavaSparkContext sc;
 	 public static void main(String[] args) throws Exception {
 
 		 //read Spark and Cassandra properties and create SparkConf
@@ -81,7 +67,33 @@ public class SparkProvisioning{
  		 //logger.info("Starting Stream Processing");
  		 messages.print();
 	    
+ 		 sc = jssc.sparkContext();
+		 messages.foreachRDD((v1, v2) -> {
+			v1.foreach(f -> {
+				System.out.println("Data : " + f._2());
+				String words[] = f._2().split("\\|");
+				List<Usage> usageList = Arrays.asList(new Usage(words[0],
+						words[1], words[2]));
+				JavaRDD<Usage> rdd = sc.parallelize(usageList);
 
+				// Map Cassandra table column
+				Map<String, String> columnNameMappings = new HashMap<String, String>();
+				columnNameMappings.put("user", "user");
+				columnNameMappings.put("type", "type");
+				columnNameMappings.put("usage", "usage");
+				rdd.foreach(x->System.out.println("user: "+x.getUser()+" type: "+x.getType()+" usage: "+x.getUsage()));
+				javaFunctions(rdd).writerBuilder(
+						"damocles",
+						"usage",
+						CassandraJavaUtil.mapToRow(Usage.class,
+								columnNameMappings)).saveToCassandra();
+
+			});
+			return null;
+		});
+
+	    
+ 		 /*
 	     // Get the lines, split them into words, count the words and print
 	    JavaDStream<String> lines = messages.map(new Function<Tuple2<String, String>, String>() {
 		      @Override
@@ -115,7 +127,7 @@ public class SparkProvisioning{
 		        }
 		      });
 		wordCounts.print();
-
+		*/
 		 jssc.start();            
 		 System.out.println("start jssc");
 		 jssc.awaitTermination();  
