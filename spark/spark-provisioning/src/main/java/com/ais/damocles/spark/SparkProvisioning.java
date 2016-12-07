@@ -33,8 +33,15 @@ public class SparkProvisioning{
 	 public static JavaSparkContext sc;
 	 public static void main(String[] args) throws Exception {
 
-		 //read Spark and Cassandra properties and create SparkConf
-		 Properties prop = PropertyFileReader.readPropertyFile();		
+		 // read Spark and Cassandra properties and create SparkConf
+		Properties prop = null;
+		if( args.length == 0 ){
+			prop = PropertyFileReader.readPropertyFile();
+		}else if(args.length == 1){
+			prop = PropertyFileReader.readPropertyFile(args[0]);
+		}else{
+			prop = PropertyFileReader.readPropertyFile();
+		}
 		 SparkConf conf = new SparkConf()
 				 .setAppName(prop.getProperty("com.ais.damocles.spark.damocles.name"))
 				 .setMaster(prop.getProperty("com.ais.damocles.spark.master"))
