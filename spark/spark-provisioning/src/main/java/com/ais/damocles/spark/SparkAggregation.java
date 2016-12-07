@@ -72,7 +72,7 @@ public class SparkAggregation {
 				"damocles", "usage");
 
 		JavaRDD<Usage> usageRDD = allUsage.map(x -> new Usage(x.getString(0), x
-				.getString(1), x.getString(2)));
+				.getString(1), x.getInt(2)));
 
 		System.out.println("All table : " + allUsage.count());
 		usageRDD.foreach(f -> System.out.println("|" + f.getUser() + "|"
