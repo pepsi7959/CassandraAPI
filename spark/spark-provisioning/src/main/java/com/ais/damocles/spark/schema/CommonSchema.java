@@ -11,9 +11,9 @@ public class CommonSchema implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Column(name = "time_event")
+	@Column(name = "timeevent")
 	protected String timeEvent;
-	@Column(name = "event_type")
+	@Column(name = "eventeype")
 	protected String eventType;
 	@Column(name = "identity")
 	protected String identity;
@@ -63,7 +63,7 @@ public class CommonSchema implements Serializable {
 		this.eventType = eventType;
 	}
 
-	public String getEventTString() {
+	public String getEventType() {
 		return this.eventType;
 	}
 
