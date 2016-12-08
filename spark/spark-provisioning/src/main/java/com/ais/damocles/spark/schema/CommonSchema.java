@@ -1,15 +1,36 @@
 package com.ais.damocles.spark.schema;
 
-public class CommonSchema {
-	private String timeEvent;
-	private String eventType;
-	private String identity;
-	private String cycle;
-	private String group;
-	private String promotion;
-	private String service;
-	private String status;
-	private String version;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.datastax.driver.mapping.annotations.Column;
+
+public class CommonSchema implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Column(name = "time_event")
+	protected String timeEvent;
+	@Column(name = "event_type")
+	protected String eventType;
+	@Column(name = "identity")
+	protected String identity;
+	@Column(name = "cycle")
+	protected String cycle;
+	@Column(name = "group")
+	protected String group;
+	@Column(name = "promotion")
+	protected String promotion;
+	@Column(name = "service")
+	protected String service;
+	@Column(name = "status")
+	protected String status;
+	@Column(name = "version")
+	protected String version;
+
+	protected Map<String, String> columnMapper = new HashMap<String, String>();
 
 	public CommonSchema() {
 
@@ -27,6 +48,7 @@ public class CommonSchema {
 		this.service = service;
 		this.status = status;
 		this.version = version;
+		
 	}
 
 	public void setTimeEvent(String timeEvent) {
@@ -99,5 +121,9 @@ public class CommonSchema {
 
 	public String getVersion() {
 		return this.version;
+	}
+	
+	public  Map<String,String> getColumnMapper(){
+		return columnMapper;
 	}
 }
