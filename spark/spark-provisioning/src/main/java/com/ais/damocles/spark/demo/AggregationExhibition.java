@@ -28,11 +28,11 @@ public class AggregationExibition {
 
 		// read Spark and Cassandra properties and create SparkConf
 		Properties prop = null;
-		if( args.length == 0 ){
+		if (args.length == 0) {
 			prop = PropertyFileReader.readPropertyFile();
-		}else if(args.length == 1){
+		} else if (args.length == 1) {
 			prop = PropertyFileReader.readPropertyFile(args[0]);
-		}else{
+		} else {
 			prop = PropertyFileReader.readPropertyFile();
 		}
 		SparkConf conf = new SparkConf()
