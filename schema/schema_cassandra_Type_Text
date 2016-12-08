@@ -85,12 +85,12 @@ INSERT INTO pickup_and_rereturn (transactionId , transactionType , obtainNo , ob
 /**************************************************************************/
 
 /*Table Sub_Stock_Detail_Transfer*/
-	CREATE TABLE Sub_Stock_Detail_Transfer (transactionId text, transactionType text, transferSubStockNo text ,company text , transferSubStockStatus text , fromSubStock text , toSubStock text, locationCode text, locationName text, locationType text, locationSubType text, locationRegion text, locationProvince text ,docRef text, transferSubStockDateTime timestamp, createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,qtyTotal text,matCode_key frozen <list<text>>,serial_key frozen <list<text>>,transferSubStockDetail text, PRIMARY KEY ((transactionId),transferSubStockNo,fromSubStock,toSubStock,transferSubStockDateTime,matCode_key,serial_key));
+	CREATE TABLE Sub_Stock_Detail_Transfer (transactionId text, transactionType text, transferSubStockNo text ,company text , transferSubStockStatus text , fromSubStock text , toSubStock text, locationCode text, locationName text, locationType text, locationSubType text, locationRegion text, locationProvince text ,docRef text, transferSubStockDateTime timestamp, createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,totalQty text,matCode_key frozen <list<text>>,serial_key frozen <list<text>>,transferSubStockDetail text, PRIMARY KEY ((transactionId),transferSubStockNo,fromSubStock,toSubStock,transferSubStockDateTime,matCode_key,serial_key));
 
 
 
 /*Insert Sub_Stock_Detail_Transfer*/
-INSERT INTO sub_stock_detail_transfer (transactionId , transactionType , transferSubStockNo  ,company  , transferSubStockStatus  , fromSubStock , toSubStock , locationCode , locationName , locationType , locationSubType , locationRegion , locationProvince  ,docRef , transferSubStockDateTime , createBy , createDateTime , updateBy , updateDateTime ,qtyTotal,matCode_key ,serial_key,transferSubStockDetail) VALUES ('00000000008','TransactionSubStock','TS1177160500009','AWN','','Sale@Shop','Bad','1177','AIS Online Store By Online Marketing Team','AIS','Back Office','CB','BKK','','2016-09-09 15:37:50+0700','Christ Horwang','2016-09-09 15:37:50+0700','Nana Raibena','2016-09-09 15:37:50+0700','20',['NEWASUZC550-BK01','Aunjai30N'],['000000000000001','000000000000001'],'[
+INSERT INTO sub_stock_detail_transfer (transactionId , transactionType , transferSubStockNo  ,company  , transferSubStockStatus  , fromSubStock , toSubStock , locationCode , locationName , locationType , locationSubType , locationRegion , locationProvince  ,docRef , transferSubStockDateTime , createBy , createDateTime , updateBy , updateDateTime ,totalQty,matCode_key ,serial_key,transferSubStockDetail) VALUES ('00000000008','TransactionSubStock','TS1177160500009','AWN','','Sale@Shop','Bad','1177','AIS Online Store By Online Marketing Team','AIS','Back Office','CB','BKK','','2016-09-09 15:37:50+0700','Christ Horwang','2016-09-09 15:37:50+0700','Nana Raibena','2016-09-09 15:37:50+0700','20',['NEWASUZC550-BK01','Aunjai30N'],['000000000000001','000000000000001'],'[
           {
             "serial": "000000000000001",
             "reason": ""
@@ -109,7 +109,7 @@ INSERT INTO sub_stock_detail_transfer (transactionId , transactionType , transfe
         "color": "Green",
         "commercialName": "ตุ๊กตาอุ่นใจ 30 นิ้ว",
         "matDescription": "",
-        "qtyOut": "20",
+        "outQty": "20",
         "unit": "set",
         "serialList": [
           {
@@ -200,10 +200,10 @@ INSERT INTO sub_stock_detail_transfer (transactionId , transactionType , transfe
 
 
 /*Table Data_Error*/
-  CREATE TABLE Data_Error (transactionId text ,transactionType text , requestNo text , company text, dataErrorDateTime timestamp,createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,dataErrorDetail text, PRIMARY KEY (requestNo));
+  CREATE TABLE Data_Error (transactionId text ,transactionType text , requestNo text , company text, dataErrorDateTime timestamp,createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,misMatchDetail text, PRIMARY KEY (requestNo));
 
 /*Insert data_error*/
-  INSERT INTO data_error (transactionId ,transactionType , requestNo , company , dataErrorDateTime ,createBy , createDateTime , updateBy, updateDateTime,dataErrorDetail ) VALUES ('','','0874238131','','','','','','','[{
+  INSERT INTO data_error (transactionId ,transactionType , requestNo , company , dataErrorDateTime ,createBy , createDateTime , updateBy, updateDateTime,misMatchDetail ) VALUES ('','','0874238131','','','','','','','[{
       "matCode": "NEWAPP0SE16-GD01",
       "matType": "serial",
       "brand": "APPLE",
@@ -213,8 +213,8 @@ INSERT INTO sub_stock_detail_transfer (transactionId , transactionType , transfe
       "company": "AWN",
       "productType": "DEVICE",
       "productSubType": "HANDSET",
-      "qtyOver": "10",
-      "qtyMissing": "10"
+      "overQty ": "10",
+      "missingQty": "10"
     }]');
 
 
@@ -235,7 +235,7 @@ INSERT INTO sub_stock_detail_transfer (transactionId , transactionType , transfe
         "division": "11text",
         "productType": "DEVICE",
         "productSubType": "HANDSET",
-        "qtyReq": "10",
+        "reqQty": "10",
         "unit": "SET",
         "quotaFlag": "Y",
         "quotaMstId": "",
@@ -268,7 +268,7 @@ INSERT INTO order_transfer (transactionId,transactionType , transferNo , company
         "matDescription": "NEW 4G ASU MAX 16/2GB,5000mAh-BLACK 01",
         "productType": "DEVICE",
         "productSubType": "HANDSET",
-        "qtyTransfer": "10",
+        "transferQty": "10",
         "unit": "SET",
         "itemNo": "0001",
         "fromPlant": "1111",
@@ -298,7 +298,7 @@ INSERT INTO order_transfer (transactionId,transactionType , transferNo , company
         "commercialName": "ตุ๊กตา Aunjai 18 นิ้ว",
         "productType": "",
         "productSubType": "",
-        "qtyTransfer": "10",
+        "transferQty": "10",
         "unit": "SET",
         "itemNo": "0001",
         "fromPlant": "1111",

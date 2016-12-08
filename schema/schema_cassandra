@@ -18,7 +18,7 @@
 /**************************************************************************/
 
 /*Table Sub_Stock_Detail_Transfer*/
-	 CREATE TABLE Sub_Stock_Detail_Transfer (transactionId bigint , transactionType text, transferSubStockNo text ,company text , transferSubStockStatus text , fromSubStock text , toSubStock text, locationCode int, locationName text, locationType text, locationSubType text, locationRegion text, locationProvince text ,docRef text, transferSubStockDateTime timestamp, createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,qtyTotal int,matCode_key frozen <list<text>>,serial_key frozen <list<text>>,transferSubStockDetail text, PRIMARY KEY ((transactionId),transferSubStockNo,fromSubStock,toSubStock,transferSubStockDateTime,matCode_key,serial_key));
+	 CREATE TABLE Sub_Stock_Detail_Transfer (transactionId bigint , transactionType text, transferSubStockNo text ,company text , transferSubStockStatus text , fromSubStock text , toSubStock text, locationCode int, locationName text, locationType text, locationSubType text, locationRegion text, locationProvince text ,docRef text, transferSubStockDateTime timestamp, createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,totalQty int,matCode_key frozen <list<text>>,serial_key frozen <list<text>>,transferSubStockDetail text, PRIMARY KEY ((transactionId),transferSubStockNo,fromSubStock,toSubStock,transferSubStockDateTime,matCode_key,serial_key));
 
 
  /************************************************************************/
@@ -31,7 +31,7 @@
 
 
 /*Table Data_Error*/
-    CREATE TABLE Data_Error (transactionId bigint  ,transactionType text , requestNo text  , company text, dataErrorDateTime timestamp,createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,dataErrorDetail text, PRIMARY KEY (requestNo));
+    CREATE TABLE Data_Error (transactionId bigint  ,transactionType text , requestNo text  , company text, dataErrorDateTime timestamp,createBy text, createDateTime timestamp, updateBy text, updateDateTime timestamp,misMatchDetail text, PRIMARY KEY (requestNo));
 
 
  /***********************************************************************/
