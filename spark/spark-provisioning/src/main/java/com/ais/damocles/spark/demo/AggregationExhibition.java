@@ -15,13 +15,14 @@ import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
 import scala.Tuple2;
 
-import com.ais.damocles.spark.schema.SummaryByUser;
-import com.ais.damocles.spark.schema.Usage;
+import com.ais.damocles.spark.schema.demo.SummaryByApp;
+//import com.ais.damocles.spark.schema.Usage;
+import com.ais.damocles.spark.schema.demo.Exhibition;
 import com.ais.damocles.spark.util.PropertyFileReader;
 import com.datastax.spark.connector.japi.CassandraJavaUtil;
 import com.datastax.spark.connector.japi.CassandraRow;
 
-public class AggregationExibition {
+public class AggregationExhibition {
 	public static JavaSparkContext sc;
 
 	public static void main(String[] args) throws Exception {
@@ -63,20 +64,20 @@ public class AggregationExibition {
 	}
 
 	/*
-	 * Aggrate Usage
+	 * AggregationExhibition
 	 */
 	public static void AggregateUsage(JavaStreamingContext jssc) {
 
 		sc = jssc.sparkContext();
 		JavaRDD<CassandraRow> allUsage = javaFunctions(sc).cassandraTable(
-				"damocles", "usage");
+				"damocles", "exhibition_by_app");
 
-		JavaRDD<Usage> usageRDD = allUsage.map(x -> new Usage(x.getString(0), x
-				.getString(1), x.getString(2)));
+		JavaRDD<Exhibition> usageRDD = allUsage.map(x -> new Exhibition(x.getString(0), x
+				.getString(1), x.getString(2), x.getInt(3)));
 
-		System.out.println("All table : " + allUsage.count());
-		usageRDD.foreach(f -> System.out.println("|" + f.getUser() + "|"
-				+ f.getType() + "|" + f.getUsage()));
+		//System.out.println("All table : " + allUsage.count());
+		//usageRDD.foreach(f -> System.out.println("|" + f.getAppName() + "|"
+				//+ f.getTimeEvent() + "|" + f.getUsage()));
 
 		/*
 		 * |user|type|usage| ----------------- |aaaa|mobile|20 | |bbbb|net |30 |
@@ -85,8 +86,7 @@ public class AggregationExibition {
 
 		System.out.println("Summay");
 		JavaPairRDD<String, Integer> flatMappedUsage = allUsage
-				.mapToPair(f -> new Tuple2<>(f.getString(0), Integer.parseInt(f
-						.getString(2))));
+				.mapToPair(f -> new Tuple2<>(f.getString(0)+f.getString(1),f.getInt(3)));
 		JavaPairRDD<String, Integer> reducedUsage_by_user = flatMappedUsage
 				.reduceByKey((a, b) -> a + b);
 		reducedUsage_by_user.foreach(f -> System.out.println("User: " + f._1()
@@ -95,15 +95,16 @@ public class AggregationExibition {
 		/* Inser Sumary to Cassandra */
 		Map<String, String> columnNameMappings = new HashMap<String, String>();
 		columnNameMappings.put("user", "user");
+		columnNameMappings.put("date", "date");
 		columnNameMappings.put("usage", "all_usages");
-		JavaRDD<SummaryByUser> summary = reducedUsage_by_user
-				.map(f -> new SummaryByUser(f._1(), f._2()));
+		JavaRDD<SummaryByApp> summary = reducedUsage_by_user
+				.map(f -> new SummaryByApp(f._1(),"NULL", f._2()));
 		summary.foreach(f -> System.out.println("User: " + f.getUser()
 				+ " Usage: " + f.getUsage()));
 		javaFunctions(summary).writerBuilder(
 				"damocles",
-				"summary_by_user",
-				CassandraJavaUtil.mapToRow(SummaryByUser.class,
+				"summary_by_app",
+				CassandraJavaUtil.mapToRow(SummaryByApp.class,
 						columnNameMappings)).saveToCassandra();
 
 	}
