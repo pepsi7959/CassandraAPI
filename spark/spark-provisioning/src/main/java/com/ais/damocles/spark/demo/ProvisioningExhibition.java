@@ -75,7 +75,7 @@ public class ProvisioningExhibition{
 				System.out.println("Data : " + f._2());
 				String words[] = f._2().split("\\|");
 				List<Usage> usageList = Arrays.asList(new Usage(words[0],
-						words[1], words[2]));
+						words[1], Integer.parseInt(words[2])));
 				JavaRDD<Usage> rdd = sc.parallelize(usageList);
 
 				// Map Cassandra table column
