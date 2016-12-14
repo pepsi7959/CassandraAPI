@@ -26,6 +26,8 @@ import com.datastax.spark.connector.japi.CassandraJavaUtil;
 
 import static com.datastax.spark.connector.japi.CassandraJavaUtil.javaFunctions;
 
+
+
 public class ProvisioningExhibition{
 	 //private static final Logger logger = Logger.getLogger(aisDataProcessor.class);
 
@@ -87,10 +89,9 @@ public class ProvisioningExhibition{
 
 				System.out.println("Data : " + f._2());
 				String words[] = f._2().split("\\|");
-				int usage = Integer.parseInt(words[3]);
 
-				List<Exhibition> usageList = Arrays.asList(new Exhibition(words[0],words[1],words[2], usage));
-
+				int change_usage = Integer.parseInt(words[3]);
+				List<Exhibition> usageList = Arrays.asList(new Exhibition(words[0],words[1],words[2], change_usage));
 				JavaRDD<Exhibition> rdd = sc.parallelize(usageList);
 
 				// Map Cassandra table column
