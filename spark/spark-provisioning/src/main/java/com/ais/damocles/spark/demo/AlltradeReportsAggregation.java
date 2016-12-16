@@ -2,11 +2,8 @@ package com.ais.damocles.spark.demo;
 
 import static com.datastax.spark.connector.japi.CassandraJavaUtil.javaFunctions;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
-import java.util.Date;
-import java.text.*;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
@@ -16,19 +13,18 @@ import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
 import scala.Tuple2;
+import scala.Tuple3;
+
 import com.ais.damocles.spark.schema.alltrade.RequestGoods;
-import com.ais.damocles.spark.schema.demo.SummaryByApp;
 import com.ais.damocles.spark.schema.alltrade.OrderTransfer;
-import com.ais.damocles.spark.schema.demo.Exhibition;
 import com.ais.damocles.spark.util.PropertyFileReader;
-import com.datastax.spark.connector.japi.CassandraJavaUtil;
 import com.datastax.spark.connector.japi.CassandraRow;
 
 public class AlltradeReportsAggregation {
 	public static JavaSparkContext sc;
 	public static final String DAMOCLES_KEYSPACE = "damocles";
-	public static final String REQUESTGOODS_TABLE = "reqeustgoods";
-	public static final String ORDERTRANSFER_TABLE = "orderTransfer";
+	public static final String REQUESTGOODS_TABLE = "requestgoods";
+	public static final String ORDERTRANSFER_TABLE = "ordertransfer";
 
 	public static void main(String[] args) throws Exception {
 
@@ -77,73 +73,114 @@ public class AlltradeReportsAggregation {
 
 		/* Load ReqeustGoods from the Cassandra */
 		JavaRDD<CassandraRow> cassandraRowRequestGoods = javaFunctions(sc)
-				.cassandraTable(DAMOCLES_KEYSPACE, REQUESTGOODS_TABLE).select("requestNo", "requestStatus");
+				.cassandraTable(DAMOCLES_KEYSPACE, REQUESTGOODS_TABLE);
 		JavaPairRDD<String, RequestGoods> requestGoodsPairRDD = cassandraRowRequestGoods
-				.mapToPair(f -> new Tuple2<>("key", new RequestGoods()));
-
-		/* Load OrderTransfer from the Cassandra */
-		JavaRDD<CassandraRow> cassandraRowTransferIn = javaFunctions(sc)
-				.cassandraTable(DAMOCLES_KEYSPACE, ORDERTRANSFER_TABLE).select("transferNo", "transferStatus").where(cqlWhereClause, args);
-		
-		/* Load TransferIn */
-		JavaPairRDD<String, OrderTransfer> transferInPairRDD = cassandraRowOrderTransfer
-				.mapToPair(f -> new Tuple2<>("Key", new OrderTransfer()));
-
-		/* Load TransferOut */
-		JavaPairRDD<String, OrderTransfer> transferOutPairRDD = cassandraRowOrderTransfer
-				.mapToPair(f -> new Tuple2<>("key", new OrderTransfer()));
-
-		JavaRDD<Exhibition> usageRDD = allUsage.map(x -> new Exhibition(x
-				.getString(0), x.getString(1), x.getString(2), x.getInt(3)));
-
-		System.out.println("All table : " + allUsage.count());
-		usageRDD.foreach(f -> System.out.println("|" + f.getAppName() + "|"
-				+ f.getTimeEvent() + "|" + f.getEventType() + "|"
-				+ f.getUsage()));
-
-		System.out.println("Summay");
-
-		// Date myDate = new Date();
-		// System.out.println(new
-		// SimpleDateFormat("yyyy-MM-dd").format(myDate));
-		SummaryByApp sumApp = new SummaryByApp();
-		/*
-		 * String ss = sumApp.todate("2013-09-08 15:37:50+0700");
-		 * System.out.println(ss);
-		 */
-
-		JavaPairRDD<String, SummaryByApp> flatMappedUsage = allUsage
-				.mapToPair(f -> new Tuple2<>(f.getString(0)
-						+ sumApp.format_date(f.getString(1)), new SummaryByApp(
-						f.getString(0), sumApp.format_date(f.getString(1)), f
-								.getInt(3))));
-
-		JavaPairRDD<String, SummaryByApp> reducedUsage_by_user = flatMappedUsage
-				.reduceByKey((a, b) -> {
-
-					a.setUsage(a.getUsage() + b.getUsage());
-
-					return a;
+				.mapToPair(f -> {
+					RequestGoods requestGoods = new RequestGoods();
+					requestGoods.setRequestNo(f.getString(0));
+					requestGoods.setCreateBy(f.getString(1));
+					requestGoods.setRequestStatus(f.getString(2));
+					return new Tuple2<>(requestGoods.getRequestNo(),
+							requestGoods);
 				});
 
-		// reducedUsage_by_user.foreach(f -> System.out.println("key: " + f._1()
-		// +" Usage: " + f._2().getUsage()));
+		cassandraRowRequestGoods.foreach(f -> System.out.println("column 1 : "
+				+ f.getString(0)));
 
-		/* Inser Sumary to Cassandra */
-		Map<String, String> columnNameMappings = new HashMap<String, String>();
-		columnNameMappings.put("user", "user");
-		columnNameMappings.put("date", "date");
-		columnNameMappings.put("usage", "all_usages");
+		/* Load OrderTransferIn from the Cassandra */
+		JavaRDD<CassandraRow> cassandraRowTransferIn = javaFunctions(sc)
+				.cassandraTable(DAMOCLES_KEYSPACE, ORDERTRANSFER_TABLE).where(
+						"transactionType=?", "TransferIn");
 
-		JavaRDD<SummaryByApp> summary = reducedUsage_by_user.map(f -> f._2());
-		summary.foreach(f -> System.out.println("User: " + f.getUser()
-				+ "Date: " + f.getDate() + " Usage: " + f.getUsage()));
+		/* Load OrderTransferOut from the Cassandra */
+		JavaRDD<CassandraRow> cassandraRowTransferOut = javaFunctions(sc)
+				.cassandraTable(DAMOCLES_KEYSPACE, ORDERTRANSFER_TABLE).where(
+						"transactionType=?", "TransferOut");
 
-		javaFunctions(summary).writerBuilder(
-				"damocles",
-				"summary_by_app",
-				CassandraJavaUtil.mapToRow(SummaryByApp.class,
-						columnNameMappings)).saveToCassandra();
+		/* Load TransferIn */
+		JavaPairRDD<String, OrderTransfer> transferInPairRDD = cassandraRowTransferIn
+				.mapToPair(f -> {
+					OrderTransfer orderTransfer = new OrderTransfer();
+					orderTransfer.setTransferNo(f.getString(0));
+					orderTransfer.setDocRef(f.getString(1));
+					orderTransfer.setTransactionType(f.getString(2));
+					orderTransfer.setTransferDetail(f.getString(3));
+					return new Tuple2<>(orderTransfer.getDocRef(),
+							orderTransfer);
+				});
 
+		/* Load TransferOut */
+		JavaPairRDD<String, OrderTransfer> transferOutPairRDD = cassandraRowTransferOut
+				.mapToPair(f -> {
+					OrderTransfer orderTransferOut = new OrderTransfer();
+					orderTransferOut.setTransferNo(f.getString(0));
+					orderTransferOut.setDocRef(f.getString(1));
+					orderTransferOut.setTransactionType(f.getString(2));
+					orderTransferOut.setTransferDetail(f.getString(3));
+					return new Tuple2<>(orderTransferOut.getDocRef(),
+							orderTransferOut);
+				});
+
+		/* show Request Goods */
+		System.out.println("===== Request Goods =====");
+		requestGoodsPairRDD.foreach(f -> System.out.println("RequstNo : "
+				+ f._1()));
+
+		/* show TransferOut */
+		System.out.println("===== TransferOut =====");
+		transferOutPairRDD.foreach(f -> System.out.println("TransferNo : "
+				+ f._1()));
+
+		/* show TransferIn */
+		System.out.println("===== TransferIn =====");
+		transferInPairRDD.foreach(f -> System.out.println("TransferNo : "
+				+ f._1()));
+
+		/* join TransferOut and RequestGoods */
+		JavaPairRDD<String, Tuple2<OrderTransfer, com.google.common.base.Optional<RequestGoods>>> joinTransferRequestGoods = transferOutPairRDD
+				.leftOuterJoin(requestGoodsPairRDD);
+
+		System.out.println("===== Join TransferOut and RequestGoods");
+		joinTransferRequestGoods.foreach(f -> {
+			try {
+				System.out.println("Key : " + f._1() + "CreatedBy : "
+						+ f._2()._2().get().getCreateBy());
+			} catch (IllegalStateException ex) {
+				System.out.println(ex.toString());
+			}
+		});
+
+		/* change key of tranferOutRequestGoods */
+		JavaPairRDD<String, Tuple2<OrderTransfer, com.google.common.base.Optional<RequestGoods>>> joinTransferOutRequestGoodsByDocRef = joinTransferRequestGoods
+				.mapToPair(f -> new Tuple2<String, Tuple2<OrderTransfer, com.google.common.base.Optional<RequestGoods>>>(
+						f._2()._1().getTransferNo(), f._2()));
+
+		System.out.println("===== Change Key of transferOutRequestGoods =====");
+		joinTransferOutRequestGoodsByDocRef.foreach(f -> {
+			try {
+				System.out.println("Key : " + f._1() + "CreatedBy: "
+						+ f._2()._2().get().getCreateBy());
+			} catch (Exception ex) {
+				System.out.println(ex);
+			}
+		});
+
+		/* join TransferOutRequestGoods and TransferIn */
+		JavaPairRDD<String, Tuple2<Tuple2<OrderTransfer, com.google.common.base.Optional<RequestGoods>>, com.google.common.base.Optional<OrderTransfer>>> allAggregation = joinTransferOutRequestGoodsByDocRef
+				.leftOuterJoin(transferInPairRDD);
+
+		System.out.println("======== All aggregation ========");
+		allAggregation.foreach(f -> {
+			
+			String createdBy = f._2()._1()._2()
+					.isPresent() ? f._2()._1()._2().get()
+					.getCreateBy() : null;
+			String transferDetail = f._2()._2().isPresent() ? f._2()._2().get()
+					.getTransferDetail() : null;
+			System.out.println("key : " + f._1() + " TransferNo : "
+					+ f._2()._1()._1().getTransferNo() + " transferDetail : "
+					+ f._2()._1()._1().getTransferDetail() + " CreateBy : "
+					+ createdBy + " TransferDetail : " + transferDetail);
+		});
 	}
 }
