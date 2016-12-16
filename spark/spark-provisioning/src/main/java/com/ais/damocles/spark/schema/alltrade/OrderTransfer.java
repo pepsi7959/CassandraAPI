@@ -7,140 +7,140 @@ public class OrderTransfer extends com.ais.damocles.spark.schema.CommonSchema {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Column (name = "transactionId")
+	@Column(name = "transactionId")
 	private String transactionId;
 
-	@Column (name = "transactionType")
+	@Column(name = "transactionType")
 	private String transactionType;
 
-	@Column (name = "transferNo")
+	@Column(name = "transferNo")
 	private String transferNo;
 
-	@Column (name = "company")
+	@Column(name = "company")
 	private String company;
 
-	@Column (name = "fromSubStock")
+	@Column(name = "fromSubStock")
 	private String fromSubStock;
 
-	@Column (name = "toSubStock")
+	@Column(name = "toSubStock")
 	private String toSubStock;
 
-	@Column (name = "transferStatus")
+	@Column(name = "transferStatus")
 	private String transferStatus;
 
-	@Column (name = "fromLocationCode")
+	@Column(name = "fromLocationCode")
 	private String fromLocationCode;
 
-	@Column (name = "fromLocationName")
+	@Column(name = "fromLocationName")
 	private String fromLocationName;
 
-	@Column (name = "fromLocationType")
+	@Column(name = "fromLocationType")
 	private String fromLocationType;
 
-	@Column (name = "fromLocationSubType")
+	@Column(name = "fromLocationSubType")
 	private String fromLocationSubType;
 
-	@Column (name = "fromLocationRegion")
+	@Column(name = "fromLocationRegion")
 	private String fromLocationRegion;
 
-	@Column (name = "fromLocationProvince")
+	@Column(name = "fromLocationProvince")
 	private String fromLocationProvince;
 
-	@Column (name = "toLocationCode")
+	@Column(name = "toLocationCode")
 	private String toLocationCode;
 
-	@Column (name = "toLocationName")
+	@Column(name = "toLocationName")
 	private String toLocationName;
 
-	@Column (name = "toLocationType")
+	@Column(name = "toLocationType")
 	private String toLocationType;
 
-	@Column (name = "toLocationSubType")
+	@Column(name = "toLocationSubType")
 	private String toLocationSubType;
 
-	@Column (name = "toLocationRegion")
+	@Column(name = "toLocationRegion")
 	private String toLocationRegion;
 
-	@Column (name = "toLocationProvince")
+	@Column(name = "toLocationProvince")
 	private String toLocationProvince;
 
-	@Column (name = "docRef")
+	@Column(name = "docRef")
 	private String docRef;
 
-	@Column (name = "transferDateTime")
+	@Column(name = "transferDateTime")
 	private String transferDateTime;
 
-	@Column (name = "mmDocYear")
+	@Column(name = "mmDocYear")
 	private String mmDocYear;
 
-	@Column (name = "mmDocNo")
+	@Column(name = "mmDocNo")
 	private String mmDocNo;
 
-	@Column (name = "doNo")
+	@Column(name = "doNo")
 	private String doNo;
 
-	@Column (name = "movementType")
+	@Column(name = "movementType")
 	private String movementType;
 
-	@Column (name = "distributionChannel")
+	@Column(name = "distributionChannel")
 	private String distributionChannel;
 
-	@Column (name = "createBy ")
-	private String createBy ;
+	@Column(name = "createBy ")
+	private String createBy;
 
-	@Column (name = "createDateTime")
+	@Column(name = "createDateTime")
 	private String createDateTime;
 
-	@Column (name = "updateBy") 
-	private String updateBy ;
+	@Column(name = "updateBy")
+	private String updateBy;
 
-	@Column (name = "updateDateTime ")
-	private String updateDateTime ;
+	@Column(name = "updateDateTime ")
+	private String updateDateTime;
 
-	@Column (name = "cancelBy")
+	@Column(name = "cancelBy")
 	private String cancelBy;
 
-	@Column (name = "cancelDateTime")
+	@Column(name = "cancelDateTime")
 	private String cancelDateTime;
 
-	@Column (name = "shipToCode")
+	@Column(name = "shipToCode")
 	private String shipToCode;
 
-	@Column (name = "shipToName")
+	@Column(name = "shipToName")
 	private String shipToName;
 
-	@Column (name = "shipToProvince")
+	@Column(name = "shipToProvince")
 	private String shipToProvince;
 
-	@Column (name = "shipToAddress")
+	@Column(name = "shipToAddress")
 	private String shipToAddress;
 
-	@Column (name = "vendorCode")
+	@Column(name = "vendorCode")
 	private String vendorCode;
 
-	@Column (name = "vendorName")
+	@Column(name = "vendorName")
 	private String vendorName;
 
-	@Column (name = "remark")
+	@Column(name = "remark")
 	private String remark;
 
-	@Column (name = "matCode_key")
+	@Column(name = "matCode_key")
 	private String matCode_key;
 
-	@Column (name = "brand_key")
+	@Column(name = "brand_key")
 	private String brand_key;
 
-	@Column (name = "model_key")
+	@Column(name = "model_key")
 	private String model_key;
 
-	@Column (name = "productType_key")
+	@Column(name = "productType_key")
 	private String productType_key;
 
-	@Column (name = "productSubType_key")
+	@Column(name = "productSubType_key")
 	private String productSubType_key;
 
-	@Column (name = "transferDetail ")
-	private String transferDetail ;
+	@Column(name = "transferDetail ")
+	private String transferDetail;
 
 	/*
 	 * TODO: add other attribute from schema
@@ -149,186 +149,158 @@ public class OrderTransfer extends com.ais.damocles.spark.schema.CommonSchema {
 	public OrderTransfer() {
 
 	}
-	
-	public OrderTransfer(String transactionId,
-			String transactionType,
-			String transferNo,
-			String company,
-			String fromSubStock,
-			String toSubStock,
-			String transferStatus,
-			String fromLocationCode,
-			String fromLocationName,
-			String fromLocationType,
-			String fromLocationSubType,
-			String fromLocationRegion,
-			String fromLocationProvince,
-			String toLocationCode,
-			String toLocationName,
-			String toLocationType,
-			String toLocationSubType,
-			String toLocationRegion,
-			String toLocationProvince,
-			String docRef,
-			String transferDateTime,
-			String mmDocYear,
-			String mmDocNo,
-			String doNo,
-			String movementType,
-			String distributionChannel,
-			String createBy ,
-			String createDateTime,
-			String updateBy ,
-			String updateDateTime ,
-			String cancelBy,
-			String cancelDateTime,
-			String shipToCode,
-			String shipToName,
-			String shipToProvince,
-			String shipToAddress,
-			String vendorCode,
-			String vendorName,
-			String remark,
-			String matCode_key,
-			String brand_key,
-			String model_key,
-			String productType_key,
-			String productSubType_key,
-			String transferDetail ) {
-		
-		this.transactionId =transactionId;
+
+	public OrderTransfer(String transactionId, String transactionType,
+			String transferNo, String company, String fromSubStock,
+			String toSubStock, String transferStatus, String fromLocationCode,
+			String fromLocationName, String fromLocationType,
+			String fromLocationSubType, String fromLocationRegion,
+			String fromLocationProvince, String toLocationCode,
+			String toLocationName, String toLocationType,
+			String toLocationSubType, String toLocationRegion,
+			String toLocationProvince, String docRef, String transferDateTime,
+			String mmDocYear, String mmDocNo, String doNo, String movementType,
+			String distributionChannel, String createBy, String createDateTime,
+			String updateBy, String updateDateTime, String cancelBy,
+			String cancelDateTime, String shipToCode, String shipToName,
+			String shipToProvince, String shipToAddress, String vendorCode,
+			String vendorName, String remark, String matCode_key,
+			String brand_key, String model_key, String productType_key,
+			String productSubType_key, String transferDetail) {
+
+		this.transactionId = transactionId;
 		this.columnMapper.put("transactionId", "transactionId");
 
-		this.transactionType =transactionType;
+		this.transactionType = transactionType;
 		this.columnMapper.put("transactionType", "transactionType");
 
-		this.transferNo =transferNo;
+		this.transferNo = transferNo;
 		this.columnMapper.put("transferNo", "transferNo");
 
-		this.company =company;
+		this.company = company;
 		this.columnMapper.put("company", "company");
 
-		this.fromSubStock =fromSubStock;
+		this.fromSubStock = fromSubStock;
 		this.columnMapper.put("fromSubStock", "fromSubStock");
 
-		this.toSubStock =toSubStock;
+		this.toSubStock = toSubStock;
 		this.columnMapper.put("toSubStock", "toSubStock");
 
-		this.transferStatus =transferStatus;
+		this.transferStatus = transferStatus;
 		this.columnMapper.put("transferStatus", "transferStatus");
 
-		this.fromLocationCode =fromLocationCode;
+		this.fromLocationCode = fromLocationCode;
 		this.columnMapper.put("fromLocationCode", "fromLocationCode");
 
-		this.fromLocationName =fromLocationName;
+		this.fromLocationName = fromLocationName;
 		this.columnMapper.put("fromLocationName", "fromLocationName");
 
-		this.fromLocationType =fromLocationType;
+		this.fromLocationType = fromLocationType;
 		this.columnMapper.put("fromLocationType", "fromLocationType");
 
-		this.fromLocationSubType =fromLocationSubType;
+		this.fromLocationSubType = fromLocationSubType;
 		this.columnMapper.put("fromLocationSubType", "fromLocationSubType");
 
-		this.fromLocationRegion =fromLocationRegion;
+		this.fromLocationRegion = fromLocationRegion;
 		this.columnMapper.put("fromLocationRegion", "fromLocationRegion");
 
-		this.fromLocationProvince =fromLocationProvince;
+		this.fromLocationProvince = fromLocationProvince;
 		this.columnMapper.put("fromLocationProvince", "fromLocationProvince");
 
-		this.toLocationCode =toLocationCode;
+		this.toLocationCode = toLocationCode;
 		this.columnMapper.put("toLocationCode", "toLocationCode");
 
-		this.toLocationName =toLocationName;
+		this.toLocationName = toLocationName;
 		this.columnMapper.put("toLocationName", "toLocationName");
 
-		this.toLocationType =toLocationType;
+		this.toLocationType = toLocationType;
 		this.columnMapper.put("toLocationType", "toLocationType");
 
-		this.toLocationSubType =toLocationSubType;
+		this.toLocationSubType = toLocationSubType;
 		this.columnMapper.put("toLocationSubType", "toLocationSubType");
 
-		this.toLocationRegion =toLocationRegion;
+		this.toLocationRegion = toLocationRegion;
 		this.columnMapper.put("toLocationRegion", "toLocationRegion");
 
-		this.toLocationProvince =toLocationProvince;
+		this.toLocationProvince = toLocationProvince;
 		this.columnMapper.put("toLocationProvince", "toLocationProvince");
 
-		this.docRef =docRef;
+		this.docRef = docRef;
 		this.columnMapper.put("docRef", "docRef");
 
-		this.transferDateTime =transferDateTime;
+		this.transferDateTime = transferDateTime;
 		this.columnMapper.put("transferDateTime", "transferDateTime");
 
-		this.mmDocYear =mmDocYear;
+		this.mmDocYear = mmDocYear;
 		this.columnMapper.put("mmDocYear", "mmDocYear");
 
-		this.mmDocNo =mmDocNo;
+		this.mmDocNo = mmDocNo;
 		this.columnMapper.put("mmDocNo", "mmDocNo");
 
-		this.doNo =doNo;
+		this.doNo = doNo;
 		this.columnMapper.put("doNo", "doNo");
 
-		this.movementType =movementType;
+		this.movementType = movementType;
 		this.columnMapper.put("movementType", "movementType");
 
-		this.distributionChannel =distributionChannel;
+		this.distributionChannel = distributionChannel;
 		this.columnMapper.put("distributionChannel", "distributionChannel");
 
-		this.createBy  =createBy ;
+		this.createBy = createBy;
 		this.columnMapper.put("createBy ", "createBy ");
 
-		this.createDateTime =createDateTime;
+		this.createDateTime = createDateTime;
 		this.columnMapper.put("createDateTime", "createDateTime");
 
-		this.updateBy  =updateBy ;
+		this.updateBy = updateBy;
 		this.columnMapper.put("updateBy ", "updateBy ");
 
-		this.updateDateTime  =updateDateTime ;
+		this.updateDateTime = updateDateTime;
 		this.columnMapper.put("updateDateTime ", "updateDateTime ");
 
-		this.cancelBy =cancelBy;
+		this.cancelBy = cancelBy;
 		this.columnMapper.put("cancelBy", "cancelBy");
 
-		this.cancelDateTime =cancelDateTime;
+		this.cancelDateTime = cancelDateTime;
 		this.columnMapper.put("cancelDateTime", "cancelDateTime");
 
-		this.shipToCode =shipToCode;
+		this.shipToCode = shipToCode;
 		this.columnMapper.put("shipToCode", "shipToCode");
 
-		this.shipToName =shipToName;
+		this.shipToName = shipToName;
 		this.columnMapper.put("shipToName", "shipToName");
 
-		this.shipToProvince =shipToProvince;
+		this.shipToProvince = shipToProvince;
 		this.columnMapper.put("shipToProvince", "shipToProvince");
 
-		this.shipToAddress =shipToAddress;
+		this.shipToAddress = shipToAddress;
 		this.columnMapper.put("shipToAddress", "shipToAddress");
 
-		this.vendorCode =vendorCode;
+		this.vendorCode = vendorCode;
 		this.columnMapper.put("vendorCode", "vendorCode");
 
-		this.vendorName =vendorName;
+		this.vendorName = vendorName;
 		this.columnMapper.put("vendorName", "vendorName");
 
-		this.remark =remark;
+		this.remark = remark;
 		this.columnMapper.put("remark", "remark");
 
-		this.matCode_key =matCode_key;
+		this.matCode_key = matCode_key;
 		this.columnMapper.put("matCode_key", "matCode_key");
 
-		this.brand_key =brand_key;
+		this.brand_key = brand_key;
 		this.columnMapper.put("brand_key", "brand_key");
 
-		this.model_key =model_key;
+		this.model_key = model_key;
 		this.columnMapper.put("model_key", "model_key");
 
-		this.productType_key =productType_key;
+		this.productType_key = productType_key;
 		this.columnMapper.put("productType_key", "productType_key");
 
-		this.productSubType_key =productSubType_key;
+		this.productSubType_key = productSubType_key;
 		this.columnMapper.put("productSubType_key", "productSubType_key");
 
-		this.transferDetail  =transferDetail ;
+		this.transferDetail = transferDetail;
 		this.columnMapper.put("transferDetail ", "transferDetail ");
 
 	}
@@ -696,26 +668,5 @@ public class OrderTransfer extends com.ais.damocles.spark.schema.CommonSchema {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
-	
-	
-	
-	
 
-/*	public String getDocRef() {
-		return this.docRef;
-	}
-
-	public void setDocRef(String docRef) {
-		this.docRef = docRef;
-	}
-
-	public String getTransferNo() {
-		return this.transferNo;
-	}
-
-	public void setTransferNo(String transferNo) {
-		this.transferNo = transferNo;
-	}*/
 }

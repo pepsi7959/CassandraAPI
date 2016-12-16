@@ -8,156 +8,130 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Column (name = "transactionId")
+	@Column(name = "transactionId")
 	private String transactionId;
-	@Column (name = "transactionType")
+	@Column(name = "transactionType")
 	private String transactionType;
-	@Column (name = "requestNo")
+	@Column(name = "requestNo")
 	private String requestNo;
-	@Column (name = "company")
+	@Column(name = "company")
 	private String company;
-	@Column (name = "forSubStock")
+	@Column(name = "forSubStock")
 	private String forSubStock;
-	@Column (name = "requestStatus")
+	@Column(name = "requestStatus")
 	private String requestStatus;
-	@Column (name = "fromLocationCode")
+	@Column(name = "fromLocationCode")
 	private String fromLocationCode;
-	@Column (name = "fromLocationName")
+	@Column(name = "fromLocationName")
 	private String fromLocationName;
-	@Column (name = "fromLocationType")
+	@Column(name = "fromLocationType")
 	private String fromLocationType;
-	@Column (name = "fromLocationSubType")
+	@Column(name = "fromLocationSubType")
 	private String fromLocationSubType;
-	@Column (name = "fromLocationRegion")
+	@Column(name = "fromLocationRegion")
 	private String fromLocationRegion;
-	@Column (name = "fromLocationProvince")
+	@Column(name = "fromLocationProvince")
 	private String fromLocationProvince;
-	@Column (name = "toLocationCode")
+	@Column(name = "toLocationCode")
 	private String toLocationCode;
-	@Column (name = "toLocationName")
+	@Column(name = "toLocationName")
 	private String toLocationName;
-	@Column (name = "toLocationType")
+	@Column(name = "toLocationType")
 	private String toLocationType;
-	@Column (name = "toLocationRegion")
+	@Column(name = "toLocationRegion")
 	private String toLocationRegion;
-	@Column (name = "toLocationSubType")
+	@Column(name = "toLocationSubType")
 	private String toLocationSubType;
-	@Column (name = "toLocationProvince")
+	@Column(name = "toLocationProvince")
 	private String toLocationProvince;
-	@Column (name = "pickingDateTime")
+	@Column(name = "pickingDateTime")
 	private String pickingDateTime;
-	@Column (name = "reservedNo")
+	@Column(name = "reservedNo")
 	private String reservedNo;
-	@Column (name = "doNo")
+	@Column(name = "doNo")
 	private String doNo;
-	@Column (name = "moveMentType")
+	@Column(name = "moveMentType")
 	private String moveMentType;
-	@Column (name = "createBy")
+	@Column(name = "createBy")
 	private String createBy;
-	@Column (name = "createDateTime")
+	@Column(name = "createDateTime")
 	private String createDateTime;
-	@Column (name = "updateBy ")
-	private String updateBy ;
-	@Column (name = "updateDateTime ")
-	private String updateDateTime ;
-	@Column (name = "cancelBy ")
-	private String cancelBy ;
-	@Column (name = "cancelDateTime")
+	@Column(name = "updateBy ")
+	private String updateBy;
+	@Column(name = "updateDateTime ")
+	private String updateDateTime;
+	@Column(name = "cancelBy ")
+	private String cancelBy;
+	@Column(name = "cancelDateTime")
 	private String cancelDateTime;
-	@Column (name = "shipToCode")
+	@Column(name = "shipToCode")
 	private String shipToCode;
-	@Column (name = "shipToName")
+	@Column(name = "shipToName")
 	private String shipToName;
-	@Column (name = "shipToProvince")
+	@Column(name = "shipToProvince")
 	private String shipToProvince;
-	@Column (name = "shipToAddress")
+	@Column(name = "shipToAddress")
 	private String shipToAddress;
-	@Column (name = "shipToDistributionChannel")
+	@Column(name = "shipToDistributionChannel")
 	private String shipToDistributionChannel;
-	@Column (name = "receiveBy")
+	@Column(name = "receiveBy")
 	private String receiveBy;
-	@Column (name = "mobileNo")
+	@Column(name = "mobileNo")
 	private String mobileNo;
-	@Column (name = "routeGroup")
+	@Column(name = "routeGroup")
 	private String routeGroup;
-	@Column (name = "remark")
+	@Column(name = "remark")
 	private String remark;
-	@Column (name = "reason")
+	@Column(name = "reason")
 	private String reason;
-	@Column (name = "stampDelivery")
+	@Column(name = "stampDelivery")
 	private String stampDelivery;
-	@Column (name = "matCode_key")
+	@Column(name = "matCode_key")
 	private String matCode_key;
-	@Column (name = "brand_key")
+	@Column(name = "brand_key")
 	private String brand_key;
-	@Column (name = "model_key")
+	@Column(name = "model_key")
 	private String model_key;
-	@Column (name = "productType_key")
+	@Column(name = "productType_key")
 	private String productType_key;
-	@Column (name = "productSubType_key")
+	@Column(name = "productSubType_key")
 	private String productSubType_key;
-	@Column (name = "commercialName_key ")
-	private String commercialName_key ;
-	@Column (name = "requestDetail ")
-	private String requestDetail ;
+	@Column(name = "commercialName_key ")
+	private String commercialName_key;
+	@Column(name = "requestDetail ")
+	private String requestDetail;
 
 	public RequestGoods() {
-	
+
 	}
 
-	public RequestGoods(String transactionId,
-			String transactionType,
-			String requestNo,
-			String company,
-			String forSubStock,
-			String requestStatus,
-			String fromLocationCode,
-			String fromLocationName,
-			String fromLocationType,
-			String fromLocationSubType,
-			String fromLocationRegion,
-			String fromLocationProvince,
-			String toLocationCode,
-			String toLocationName,
-			String toLocationType,
-			String toLocationRegion,
-			String toLocationSubType,
-			String toLocationProvince,
-			String pickingDateTime,
-			String reservedNo,
-			String doNo,
-			String moveMentType,
-			String createBy,
-			String createDateTime,
-			String updateBy ,
-			String updateDateTime ,
-			String cancelBy ,
-			String cancelDateTime,
-			String shipToCode,
-			String shipToName,
-			String shipToProvince,
-			String shipToAddress,
-			String shipToDistributionChannel,
-			String receiveBy,
-			String mobileNo,
-			String routeGroup,
-			String remark,
-			String reason,
-			String stampDelivery,
-			String matCode_key,
-			String brand_key,
-			String model_key,
-			String productType_key,
-			String productSubType_key,
-			String commercialName_key ,
-			String requestDetail ) {
-		this.transactionId= transactionId;
+	public RequestGoods(String transactionId, String transactionType,
+			String requestNo, String company, String forSubStock,
+			String requestStatus, String fromLocationCode,
+			String fromLocationName, String fromLocationType,
+			String fromLocationSubType, String fromLocationRegion,
+			String fromLocationProvince, String toLocationCode,
+			String toLocationName, String toLocationType,
+			String toLocationRegion, String toLocationSubType,
+			String toLocationProvince, String pickingDateTime,
+			String reservedNo, String doNo, String moveMentType,
+			String createBy, String createDateTime, String updateBy,
+			String updateDateTime, String cancelBy, String cancelDateTime,
+			String shipToCode, String shipToName, String shipToProvince,
+			String shipToAddress, String shipToDistributionChannel,
+			String receiveBy, String mobileNo, String routeGroup,
+			String remark, String reason, String stampDelivery,
+			String matCode_key, String brand_key, String model_key,
+			String productType_key, String productSubType_key,
+			String commercialName_key, String requestDetail) {
+		
+		this.transactionId = transactionId;
 		this.columnMapper.put("transactionId", "transactionId");
 
 		this.transactionType = transactionType;
 		this.columnMapper.put("transactionType", "transactionType");
 
-		this.requestNo= requestNo;
+		this.requestNo = requestNo;
 		this.columnMapper.put("requestNo", "requestNo");
 
 		this.company = company;
@@ -208,7 +182,7 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
 		this.pickingDateTime = pickingDateTime;
 		this.columnMapper.put("pickingDateTime", "pickingDateTime");
 
-		this.reservedNo= reservedNo;
+		this.reservedNo = reservedNo;
 		this.columnMapper.put("reservedNo", "reservedNo");
 
 		this.doNo = doNo;
@@ -223,19 +197,19 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
 		this.createDateTime = createDateTime;
 		this.columnMapper.put("createDateTime", "createDateTime");
 
-		this.updateBy = updateBy ;
+		this.updateBy = updateBy;
 		this.columnMapper.put("updateBy ", "updateBy ");
 
-		this.updateDateTime  = updateDateTime ;
+		this.updateDateTime = updateDateTime;
 		this.columnMapper.put("updateDateTime ", "updateDateTime ");
 
-		this.cancelBy = cancelBy ;
+		this.cancelBy = cancelBy;
 		this.columnMapper.put("cancelBy ", "cancelBy ");
 
 		this.cancelDateTime = cancelDateTime;
 		this.columnMapper.put("cancelDateTime", "cancelDateTime");
 
-		this.shipToCode= shipToCode;
+		this.shipToCode = shipToCode;
 		this.columnMapper.put("shipToCode", "shipToCode");
 
 		this.shipToName = shipToName;
@@ -244,13 +218,14 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
 		this.shipToProvince = shipToProvince;
 		this.columnMapper.put("shipToProvince", "shipToProvince");
 
-		this.shipToAddress= shipToAddress;
+		this.shipToAddress = shipToAddress;
 		this.columnMapper.put("shipToAddress", "shipToAddress");
 
 		this.shipToDistributionChannel = shipToDistributionChannel;
-		this.columnMapper.put("shipToDistributionChannel", "shipToDistributionChannel");
+		this.columnMapper.put("shipToDistributionChannel",
+				"shipToDistributionChannel");
 
-		this.receiveBy= receiveBy;
+		this.receiveBy = receiveBy;
 		this.columnMapper.put("receiveBy", "receiveBy");
 
 		this.mobileNo = mobileNo;
@@ -283,10 +258,10 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
 		this.productSubType_key = productSubType_key;
 		this.columnMapper.put("productSubType_key", "productSubType_key");
 
-		this.commercialName_key  = commercialName_key ;
+		this.commercialName_key = commercialName_key;
 		this.columnMapper.put("commercialName_key ", "commercialName_key ");
 
-		this.requestDetail  = requestDetail ;
+		this.requestDetail = requestDetail;
 		this.columnMapper.put("requestDetail ", "requestDetail ");
 
 	}
@@ -661,6 +636,6 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}	
+	}
 
 }
