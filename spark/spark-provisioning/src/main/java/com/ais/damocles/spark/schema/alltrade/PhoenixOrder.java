@@ -34,6 +34,9 @@ public class PhoenixOrder extends com.ais.damocles.spark.schema.CommonSchema {
 	@Column(name = "BaCategory")
 	private String BaCategory;
 
+	@Column(name = "BaSegment")
+	private String BaSegment;
+
 	@Column(name = "BillingSystem")
 	private String BillingSystem;
 
@@ -68,8 +71,8 @@ public class PhoenixOrder extends com.ais.damocles.spark.schema.CommonSchema {
 	public PhoenixOrder(String orderNo, String orderType, String mobileNo,
 			String simSerialNo, String StatusCd, String ChargeType,
 			String ErrorDestination, String LocationCode, String BaCategory,
-			String BillingSystem, String PromotionCode, String ServiceCode,
-			String WoItemErrorMsg, String DcpDestination,
+			String BaSegment, String BillingSystem, String PromotionCode,
+			String ServiceCode, String WoItemErrorMsg, String DcpDestination,
 			String DcpDestinationStatus, String BaNo, String CaNo, String SaNo) {
 
 		this.orderNo = orderNo;
@@ -98,6 +101,9 @@ public class PhoenixOrder extends com.ais.damocles.spark.schema.CommonSchema {
 
 		this.BaCategory = BaCategory;
 		this.columnMapper.put("BaCategory", "BaCategory");
+
+		this.BaSegment = BaSegment;
+		this.columnMapper.put("BaSegment", "BaSegment");
 
 		this.BillingSystem = BillingSystem;
 		this.columnMapper.put("BillingSystem", "BillingSystem");
@@ -198,6 +204,14 @@ public class PhoenixOrder extends com.ais.damocles.spark.schema.CommonSchema {
 
 	public void setBaCategory(String baCategory) {
 		BaCategory = baCategory;
+	}
+
+	public String getBaSegment() {
+		return BaSegment;
+	}
+
+	public void setBaSegment(String baSegment) {
+		BaSegment = baSegment;
 	}
 
 	public String getBillingSystem() {
