@@ -2,7 +2,7 @@ package com.ais.damocles.spark.schema.alltrade;
 
 import com.datastax.driver.mapping.annotations.Column;
 
-public class RequestGoodsDetailReport extends com.ais.damocles.spark.schema.CommonSchema {
+public class AdjustStockReport extends com.ais.damocles.spark.schema.CommonSchema {
 
     private static final long serialVersionUID = 1L;
 
@@ -103,11 +103,11 @@ public class RequestGoodsDetailReport extends com.ais.damocles.spark.schema.Comm
     /*
      * TODO: add other attribute from schema
      */
-    public RequestGoodsDetailReport() {
+    public AdjustStockReport() {
 
     }
 
-    public RequestGoodsDetailReport(String reportName, String transactionType,
+    public AdjustStockReport(String reportName, String transactionType,
                                     String createDateTimeFrom, String createDateTimeTo,
                                     String fromLocationCodeList, String fromLocationCodeFrom,
                                     String fromLocationCodeTo, String locationType,
@@ -151,76 +151,72 @@ public class RequestGoodsDetailReport extends com.ais.damocles.spark.schema.Comm
 
         ---*----------------
 
-        this.requestStatusList =matCodeList;
+        this.matCodeList =matCodeList;
         this.columnMapper.put("matCodeList", "matCodeList");
 
-        this.companyList =serialList;
+        this.serialList =serialList;
         this.columnMapper.put("serialList", "serialList");
 
-        this.companyList =adjustStatusList
+        this.adjustStatusList =adjustStatusList
         this.columMapper.put("adjustStatusList","adjustStatusList");
 
         this.company =company;
         this.columnMapper.put("company", "company");
 
-        this.toLocationCode = locationCode;
+        this.locationCode = locationCode;
         this.columnMapper.put("locationCode", "locationCode");
 
-        this.toLocationName =locationName;
+        this.locationName =locationName;
         this.columnMapper.put("locationName", "locationName");
 
-        this.forSubStock =adjustDateTime;
+        this.adjustDateTime =adjustDateTime;
         this.columnMapper.put("adjustDateTime", "adjustDateTime");
 
-        this.createDateTime =adjustStockNo;
+        this.adjustStockNo =adjustStockNo;
         this.columnMapper.put("adjustStockNo", "adjustStockNo");
 
-        this.requestNo =itemNo;
+        this.itemNo =itemNo;
         this.columnMapper.put("itemNo", "itemNo");
 
-        this.requestStatus =commercialName;
+        this.commercialName =commercialName;
         this.columnMapper.put("commercialName", "commercialName");
 
-        this.reservedNo  =matCode ;
+        this.matCode  =matCode ;
         this.columnMapper.put("matCode ", "matCode ");
 
-        this.mmDocNo =matDescription;
+        this.matDescription =matDescription;
         this.columnMapper.put("matDescription", "matDescription");
 
-        this.doNo =productType;
+        this.productType =productType;
         this.columnMapper.put("productType", "productType");
 
-        this.pickingDateTime =productSubType;
+        this.productSubType =productSubType;
         this.columnMapper.put("productSubType", "productSubType");
 
-        this.transferOutNo =brand;
+        this.brand =brand;
         this.columnMapper.put("brand", "brand");
 
-        this.transferOutDateTime =model;
+        this.model =model;
         this.columnMapper.put("model", "model");
 
-        this.createBy =subStock;
+        this.subStock =subStock;
         this.columnMapper.put("subStock", "subStock");
 
-        this.transferInNo =adjustTyped;
+        this.adjustTyped =adjustTyped;
         this.columnMapper.put("adjustTyped", "adjustTyped");
 
-        this.transferInDateTime  =serial ;
+        this.serial  =serial ;
         this.columnMapper.put("serial ", "serial ");
 
-        this.quotaFlag =adjustQty;
+        this.adjustQty =adjustQty;
         this.columnMapper.put("adjustQty", "adjustQty");
 
-        this.itemNo =reason;
+        this.reason =reason;
         this.columnMapper.put("reason", "reason");
 
-        this.brand =remark;
+        this.remark =remark;
         this.columnMapper.put("remark", "remark");
 
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public String getReportName() {
