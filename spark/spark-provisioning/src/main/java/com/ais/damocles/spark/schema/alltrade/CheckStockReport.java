@@ -213,7 +213,7 @@ public class CheckStockReport extends com.ais.damocles.spark.schema.CommonSchema
         this.columnMapper.put("totalScanQty", "totalScanQty");
 
         this.diffQty =diffQty;
-        this.columnMapper.put("diffQty", "reportName");
+        this.columnMapper.put("diffQty", "diffQty");
 
         this.matchQty =matchQty;
         this.columnMapper.put("matchQty", "matchQty");
@@ -230,9 +230,7 @@ public class CheckStockReport extends com.ais.damocles.spark.schema.CommonSchema
         this.substock =substock;
         this.columnMapper.put("substock", "substock");
 
-
     }
-}
 
     public String getReportName() {
         return reportName;
@@ -505,3 +503,5 @@ public class CheckStockReport extends com.ais.damocles.spark.schema.CommonSchema
     public void setCheckStockOnHand(String checkStockOnHand) {
         this.checkStockOnHand = checkStockOnHand;
     }
+
+}
