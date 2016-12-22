@@ -47,7 +47,7 @@ public class ProvisioningExhibition {
 
 		SparkConf conf = new SparkConf()
 				.setAppName(
-						prop.getProperty("com.ais.damocles.spark.damocles.name"))
+						prop.getProperty("com.ais.damocles.spark.name"))
 				.setMaster(prop.getProperty("com.ais.damocles.spark.master"))
 				.set("spark.cassandra.connection.host",
 						prop.getProperty("com.ais.damocles.cassandra.host"))

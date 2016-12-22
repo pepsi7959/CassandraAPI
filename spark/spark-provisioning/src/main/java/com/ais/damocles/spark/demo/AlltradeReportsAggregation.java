@@ -2,9 +2,13 @@ package com.ais.damocles.spark.demo;
 
 import static com.datastax.spark.connector.japi.CassandraJavaUtil.javaFunctions;
 
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 
+import org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos.SetReplicationRequestProto;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -14,10 +18,15 @@ import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
 import scala.Tuple2;
 import scala.Tuple3;
+import scala.reflect.internal.Trees.Return;
+import tachyon.thrift.BlockMasterService.AsyncProcessor.getBlockInfo;
 
 import com.ais.damocles.spark.schema.alltrade.RequestGoods;
 import com.ais.damocles.spark.schema.alltrade.OrderTransfer;
+//import com.ais.damocles.spark.schema.demo.SummaryByApp;
+import com.ais.damocles.spark.schema.alltrade.RequestGoodsDetailReport;
 import com.ais.damocles.spark.util.PropertyFileReader;
+import com.datastax.spark.connector.japi.CassandraJavaUtil;
 import com.datastax.spark.connector.japi.CassandraRow;
 
 public class AlltradeReportsAggregation {
@@ -25,6 +34,7 @@ public class AlltradeReportsAggregation {
 	public static final String DAMOCLES_KEYSPACE = "damocles";
 	public static final String REQUESTGOODS_TABLE = "requestgoods";
 	public static final String ORDERTRANSFER_TABLE = "ordertransfer";
+	public static final String REQUESTGOODSDETAILREPORT_TABLE = "RequestGoodsDetailReport";
 
 	public static void main(String[] args) throws Exception {
 
@@ -71,7 +81,7 @@ public class AlltradeReportsAggregation {
 
 		sc = jssc.sparkContext();
 
-		/* Load ReqeustGoods from the Cassandra */
+		/* Load ReqeustGoods from the Cassandrar */
 		JavaRDD<CassandraRow> cassandraRowRequestGoods = javaFunctions(sc)
 				.cassandraTable(DAMOCLES_KEYSPACE, REQUESTGOODS_TABLE);
 		JavaPairRDD<String, RequestGoods> requestGoodsPairRDD = cassandraRowRequestGoods
@@ -87,12 +97,12 @@ public class AlltradeReportsAggregation {
 		cassandraRowRequestGoods.foreach(f -> System.out.println("column 1 : "
 				+ f.getString(0)));
 
-		/* Load OrderTransferIn from the Cassandra */
+		/* Load OrderTransferIn from the Cassandrar */
 		JavaRDD<CassandraRow> cassandraRowTransferIn = javaFunctions(sc)
 				.cassandraTable(DAMOCLES_KEYSPACE, ORDERTRANSFER_TABLE).where(
 						"transactionType=?", "TransferIn");
 
-		/* Load OrderTransferOut from the Cassandra */
+		/* Load OrderTransferOut from the Cassandrar */
 		JavaRDD<CassandraRow> cassandraRowTransferOut = javaFunctions(sc)
 				.cassandraTable(DAMOCLES_KEYSPACE, ORDERTRANSFER_TABLE).where(
 						"transactionType=?", "TransferOut");
@@ -171,16 +181,81 @@ public class AlltradeReportsAggregation {
 
 		System.out.println("======== All aggregation ========");
 		allAggregation.foreach(f -> {
-			
-			String createdBy = f._2()._1()._2()
-					.isPresent() ? f._2()._1()._2().get()
-					.getCreateBy() : null;
+
+			String createdBy = f._2()._1()._2().isPresent() ? f._2()._1()._2()
+					.get().getCreateBy() : null;
 			String transferDetail = f._2()._2().isPresent() ? f._2()._2().get()
 					.getTransferDetail() : null;
 			System.out.println("key : " + f._1() + " TransferNo : "
 					+ f._2()._1()._1().getTransferNo() + " transferDetail : "
+					
 					+ f._2()._1()._1().getTransferDetail() + " CreateBy : "
 					+ createdBy + " TransferDetail : " + transferDetail);
 		});
+		
+		 /*Inser Sumary to Cassandra */
+		Map<String, String> columnNameMappings = new HashMap<String, String>();
+		columnNameMappings.put("requestNo", "requestNo");
+		columnNameMappings.put("transferOutNo", "transferOutNo");
+		columnNameMappings.put("transferInNo", "transferInNo");
+
+
+		JavaRDD<RequestGoodsDetailReport> requestGoodsRDD = allAggregation
+				.map(f ->{
+					
+				/*	f._1() = String
+					f._2() = Tuple2<Tuple2<OrderTransfer, com.google.common.base.Optional<RequestGoods>>, com.google.common.base.Optional<OrderTransfer>>
+					f._2()._1() = Tuple2<Tuple2<OrderTransfer, com.google.common.base.Optional<RequestGoods>>
+					f._2()._1()._1() = OrderTransfer
+					f._2()._1()._2() = com.google.common.base.Optional<RequestGoods>
+					f._2()._2() = com.google.common.base.Optional<OrderTransfer*/
+					
+					RequestGoodsDetailReport requestGoods = new RequestGoodsDetailReport();
+					
+					requestGoods.setTransactionType(f._2()._1()._2().get().getTransactionType());
+					requestGoods.setToLocationCode(f._2()._1()._2().get().getToLocationCode());
+					requestGoods.setToLocationName(f._2()._1()._2().get().getToLocationName());
+					requestGoods.setForSubStock(f._2()._1()._2().get().getForSubStock());
+					requestGoods.setCreateDateTime(f._2()._1()._2().get().getCreateDateTime());
+
+					try {
+					/*get_number of request goods*/
+					requestGoods.setRequestNo(f._2()._1()._2().get().getRequestNo());
+					
+					} catch (Exception ex) {
+						// TODO: handle exception
+						System.out
+						.println("Wanning :Cannot get Request Number of RequestGoods");
+						requestGoods.setRequestNo("");
+					}
+
+					requestGoods.setRequestStatus(f._2()._1()._2().get().getRequestStatus());
+					requestGoods.setReservedNo(f._2()._1()._2().get().getReservedNo());
+					requestGoods.setMmDocNo(f._2()._1()._1().getMmDocNo());
+					requestGoods.setDoNo(f._2()._1()._2().get().getDoNo());
+					requestGoods.setPickingDateTime(f._2()._1()._2().get().setPickingDateTime());
+
+					requestGoods.setTransferOutNo(f._2()._1()._1().getTransferNo());
+					requestGoods.setTransferOutDateTime(f._2()._1()._1().setTransferDateTime());
+
+					requestGoods.setTransferInNo(f._2()._2().get().getTransferNo());
+					requestGoods.setCreateBy(f._2()._2().get().getCreateBy());
+
+					/*get transaction detail of transferOut*/
+					/*requestGoods.setRequestDetail(f._2()._1()._1().getTransferDetail());*/
+					/*requestGoods.setRequestNo(f._2()._1()._1().getTransferDetail());*/
+					
+					/*get status of transferIn*/
+					/*requestGoods.setStatus(f._2()._2().get().getStatus());*/
+
+					return requestGoods;
+					});
+		
+		javaFunctions(requestGoodsRDD).writerBuilder(
+				DAMOCLES_KEYSPACE, REQUESTGOODSDETAILREPORT_TABLE,
+				CassandraJavaUtil.mapToRow(RequestGoodsDetailReport.class,columnNameMappings)).saveToCassandra();
+
 	}
 }
+	
+
