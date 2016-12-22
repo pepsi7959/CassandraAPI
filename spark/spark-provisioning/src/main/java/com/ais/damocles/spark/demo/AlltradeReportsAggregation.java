@@ -212,7 +212,8 @@ public class AlltradeReportsAggregation {
 					
 					RequestGoodsDetailReport requestGoods = new RequestGoodsDetailReport();
 					
-					requestGoods.setTransactionType(f._2()._1()._2().get().getTransactionType());
+					/*requestGoods.setTransactionType(f._2()._1()._2().get().getTransactionType());*/
+					requestGoods.setCompany(f._2()._1()._2().get().getCompany());
 					requestGoods.setToLocationCode(f._2()._1()._2().get().getToLocationCode());
 					requestGoods.setToLocationName(f._2()._1()._2().get().getToLocationName());
 					requestGoods.setForSubStock(f._2()._1()._2().get().getForSubStock());
@@ -233,14 +234,25 @@ public class AlltradeReportsAggregation {
 					requestGoods.setReservedNo(f._2()._1()._2().get().getReservedNo());
 					requestGoods.setMmDocNo(f._2()._1()._1().getMmDocNo());
 					requestGoods.setDoNo(f._2()._1()._2().get().getDoNo());
-					requestGoods.setPickingDateTime(f._2()._1()._2().get().setPickingDateTime());
+					requestGoods.setPickingDateTime(f._2()._1()._2().get().getPickingDateTime());
 
 					requestGoods.setTransferOutNo(f._2()._1()._1().getTransferNo());
-					requestGoods.setTransferOutDateTime(f._2()._1()._1().setTransferDateTime());
+					requestGoods.setTransferOutDateTime(f._2()._1()._1().getTransferDateTime());
 
 					requestGoods.setTransferInNo(f._2()._2().get().getTransferNo());
 					requestGoods.setCreateBy(f._2()._2().get().getCreateBy());
-
+					requestGoods.setTransferInDateTime(f._2()._2().get().getTransferDateTime());
+					
+					requestGoods.setBrand(f._2()._1()._2().get().getBrand_key());
+					requestGoods.setModel(f._2()._1()._2().get().getModel_key());
+					requestGoods.setMatCode(f._2()._1()._2().get().getMatCode_key());
+					requestGoods.setCommercialName(f._2()._1()._2().get().getCommercialName_key());
+					requestGoods.setReceiveBy(f._2()._1()._2().get().getReceiveBy());
+					requestGoods.setMobileNo(f._2()._1()._2().get().getMobileNo());
+					requestGoods.setRemark(f._2()._1()._2().get().getRemark());
+					requestGoods.setShipToCode(f._2()._1()._2().get().getShipToCode());
+					requestGoods.setShipToProvince(f._2()._1()._2().get().getShipToProvince());
+	
 					/*get transaction detail of transferOut*/
 					/*requestGoods.setRequestDetail(f._2()._1()._1().getTransferDetail());*/
 					/*requestGoods.setRequestNo(f._2()._1()._1().getTransferDetail());*/
