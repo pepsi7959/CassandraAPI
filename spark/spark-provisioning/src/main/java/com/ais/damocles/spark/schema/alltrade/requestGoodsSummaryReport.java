@@ -2,7 +2,7 @@ package com.ais.damocles.spark.schema.alltrade;
 
 import com.datastax.driver.mapping.annotations.Column;
 
-public class directsaleDetailReport extends com.ais.damocles.spark.schema.CommonSchema {
+public class RequestGoodsSummaryReport extends com.ais.damocles.spark.schema.CommonSchema {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,6 +20,9 @@ public class directsaleDetailReport extends com.ais.damocles.spark.schema.Common
 
     @Column(name = "fromLocationCodeList")
     private String fromLocationCodeList;
+
+    @Column(name ="locationCodeList")
+    private String locationCodeList;
 
     @Column(name = "fromLocationCode")
     private String fromLocationCode;
@@ -44,9 +47,6 @@ public class directsaleDetailReport extends com.ais.damocles.spark.schema.Common
 
     @Column(name = "company")
     private String company;
-
-    @Column(name = "toLocationCode")
-    private String toLocationCode;
 
     @Column(name = "toLocationName")
     private String toLocationName;
@@ -126,15 +126,15 @@ public class directsaleDetailReport extends com.ais.damocles.spark.schema.Common
     @Column(name = "remark")
     private String remark;
 
-    public requestGoodsSummaryReport(){
+    public RequestGoodsSummaryReport(){
 
     }
 
-    public requestGoodsSummaryReport(String reportName, String transactionType, String createDateTimeFrom,
+    public RequestGoodsSummaryReport(String reportName, String transactionType, String createDateTimeFrom,
                                      String createDateTimeTo, String locationCodeList, String fromLocationCode,
                                      String toLocationCode, String locationType, String locationSubType,
                                      String region, String requestStatusList, String companyList ,
-                                     String company, String toLocationCode, String toLocationName,
+                                     String company, String toLocationName,
                                      String forSubStock, String createBy, String createDateTime,
                                      String requestNo, String requestStatus, String OrderNo,
                                      String reservedNo, String MMDocNo, String doNo,
@@ -143,8 +143,6 @@ public class directsaleDetailReport extends com.ais.damocles.spark.schema.Common
                                      String TransferInTime, String DeviceHandsetQty,String DeviceHandsetBundleQty,
                                      String SIMPrepaidQty,String SIMPostpaidQty,String PremiumQty,
                                      String OtherQty, String receiveBy, String mobileNo, String remark){
-
-    }
 
         this.reportName =reportName;
         this.columnMapper.put("reportName", "reportName");
@@ -576,3 +574,5 @@ public class directsaleDetailReport extends com.ais.damocles.spark.schema.Common
     public void setCompany(String company) {
         this.company = company;
     }
+
+}

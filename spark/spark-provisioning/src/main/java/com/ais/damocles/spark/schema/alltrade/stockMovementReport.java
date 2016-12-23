@@ -102,9 +102,6 @@ public class StockMovementReport extends com.ais.damocles.spark.schema.CommonSch
     @Column(name = "stockAfterQuantity")
     private String stockAfterQuantity;
 
-    @Column(name = "refDoc")
-    private String refDoc;
-
     @Column(name = "refDocType")
     private String refDocType;
 
@@ -128,7 +125,7 @@ public class StockMovementReport extends com.ais.damocles.spark.schema.CommonSch
                                 String brand, String model, String unit, String serial,
                                 String movementQuantity, String type, String locationBefore,
                                 String locationAfter, String stockBeforeQuantity, String stockAfterQuantity,
-                                String refDoc, String refDocType, String movementType, String createDateTime){
+                                String refDocType, String movementType, String createDateTime){
 
      this.reportName =reportName;
      this.columnMapper.put("reportName", "reportName");

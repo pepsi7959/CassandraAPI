@@ -99,6 +99,11 @@ public class AdjustStockReport extends com.ais.damocles.spark.schema.CommonSchem
     @Column(name = "remark")
     private String remark;
 
+    @Column(name = "region")
+    private String region;
+
+    @Column(name = "adjustTyped")
+    private String adjustTyped;
 
     /*
      * TODO: add other attribute from schema
@@ -149,16 +154,14 @@ public class AdjustStockReport extends com.ais.damocles.spark.schema.CommonSchem
         this.region = region;
         this.columnMapper.put("region", "region");
 
-        --- * ----------------
-
-                this.matCodeList = matCodeList;
+        this.matCodeList = matCodeList;
         this.columnMapper.put("matCodeList", "matCodeList");
 
         this.serialList = serialList;
         this.columnMapper.put("serialList", "serialList");
 
-        this.adjustStatusList = adjustStatusList
-        this.columMapper.put("adjustStatusList", "adjustStatusList");
+        this.adjustStatusList = adjustStatusList;
+        this.columnMapper.put("adjustStatusList", "adjustStatusList");
 
         this.company = company;
         this.columnMapper.put("company", "company");

@@ -60,9 +60,6 @@ public class CheckStockReport extends com.ais.damocles.spark.schema.CommonSchema
     @Column(name = "checkStockOnHand")
     private String checkStockOnHand;
 
-    @Column(name = "company")
-    private String company;
-
     @Column(name = "matCode")
     private String matCode;
 
@@ -122,7 +119,7 @@ public class CheckStockReport extends com.ais.damocles.spark.schema.CommonSchema
                              String locationSubType, String regionlocationCode ,
                              String locationName , String confirmUser ,
                              String confirmDateTime , String confirmNo ,
-                             String checkStockOnHand , String company ,
+                             String checkStockOnHand ,
                              String matCode , String matType , String brand ,
                              String model , String color , String commercialName ,
                              String matDescription , String productType ,

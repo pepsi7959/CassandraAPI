@@ -84,9 +84,6 @@ public class TransferDetailReport extends com.ais.damocles.spark.schema.CommonSc
     @Column(name = "forSubStock")
     private String forSubStock;
 
-    @Column(name = "transferOutStatus")
-    private String transferOutStatus;
-
     @Column(name = "brand")
     private String brand;
 

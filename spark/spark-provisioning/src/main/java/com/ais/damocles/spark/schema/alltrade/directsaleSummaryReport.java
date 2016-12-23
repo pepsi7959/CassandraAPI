@@ -51,9 +51,6 @@ public class DirectsaleSummaryReport extends com.ais.damocles.spark.schema.Commo
     @Column(name = "locationName")
     private String locationName;
 
-    @Column(name = "salesCode")
-    private String salesCode;
-
     @Column(name = "salesName")
     private String salesName;
 
@@ -97,7 +94,7 @@ public class DirectsaleSummaryReport extends com.ais.damocles.spark.schema.Commo
                                     String fromLocationCodeTo ,  String salesCode ,  String status ,
                                     String locationType ,  String locationSubType ,  String region,
                                     String company ,  String locationCode ,  String locationName ,
-                                    String salesCode ,  String salesName ,  String productType ,
+                                    String salesName ,  String productType ,
                                     String productSubType ,  String brand ,  String model ,
                                     String color ,  String commercialName ,  String matCode ,
                                     String matDescription ,  String qtyPickUp ,  String qtyReturn){

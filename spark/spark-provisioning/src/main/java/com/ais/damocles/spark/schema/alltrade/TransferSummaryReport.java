@@ -84,9 +84,6 @@ public class TransferSummaryReport extends com.ais.damocles.spark.schema.CommonS
     @Column(name = "forSubStock")
     private String forSubStock;
 
-    @Column(name = "transferOutStatus")
-    private String transferOutStatus;
-
     @Column(name = "brand")
     private String brand;
 
@@ -159,7 +156,7 @@ public class TransferSummaryReport extends com.ais.damocles.spark.schema.CommonS
                                   String fromLocationCode, String fromLocationName, String toLocationCode,
                                   String toLocationName, String transferOutDateTime, String transferOutNo,
                                   String transferInDateTime, String transferInNo, String requestDateTime,
-                                  String requestNo, String forSubStock, String transferOutStatus1, String brand,
+                                  String requestNo, String forSubStock, String brand,
                                   String model, String item, String commercialName, String matCode,
                                   String matDescription, String matType, String fromSubStock, String toSubStock,
                                   String serialNo, String qtyOut, String qtyIn, String createBy, String updateBy,
@@ -243,9 +240,6 @@ public class TransferSummaryReport extends com.ais.damocles.spark.schema.CommonS
 
         this.forSubStock = forSubStock;
         this.columnMapper.put("forSubStock", "forSubStock");
-
-        this.transferOutStatus = transferOutStatus1;
-        this.columnMapper.put("transferOutStatus1", "transferOutStatus1");
 
         this.brand = brand;
         this.columnMapper.put("brand", "brand");
