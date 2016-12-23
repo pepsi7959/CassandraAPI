@@ -108,113 +108,113 @@ public class AdjustStockReport extends com.ais.damocles.spark.schema.CommonSchem
     }
 
     public AdjustStockReport(String reportName, String transactionType,
-                                    String createDateTimeFrom, String createDateTimeTo,
-                                    String fromLocationCodeList, String fromLocationCodeFrom,
-                                    String fromLocationCodeTo, String locationType,
-                                    String locationSubType, String region, String matCodeList,
-                                    String serialList, String adjustStatusList, String company,
-                                    String locationCode, String locationName, String adjustDateTime,
-                                    String adjustStockNo, String itemNo, String commercialName,
-                                    String matCode, String matDescription, String productType,
-                                    String productSubType, String brand, String model, String subStock,
-                                    String adjustType, String serial, String adjustQty, String reason, String remark
-                                    ) {
-        this.reportName =reportName;
+                             String createDateTimeFrom, String createDateTimeTo,
+                             String fromLocationCodeList, String fromLocationCodeFrom,
+                             String fromLocationCodeTo, String locationType,
+                             String locationSubType, String region, String matCodeList,
+                             String serialList, String adjustStatusList, String company,
+                             String locationCode, String locationName, String adjustDateTime,
+                             String adjustStockNo, String itemNo, String commercialName,
+                             String matCode, String matDescription, String productType,
+                             String productSubType, String brand, String model, String subStock,
+                             String adjustType, String serial, String adjustQty, String reason, String remark
+    ) {
+        this.reportName = reportName;
         this.columnMapper.put("reportName", "reportName");
 
-        this.transactionType =transactionType;
+        this.transactionType = transactionType;
         this.columnMapper.put("transactionType", "transactionType");
 
-        this.createDateTimeFrom =createDateTimeFrom;
+        this.createDateTimeFrom = createDateTimeFrom;
         this.columnMapper.put("createDateTimeFrom", "createDateTimeFrom");
 
-        this.createDateTimeTo =createDateTimeTo;
+        this.createDateTimeTo = createDateTimeTo;
         this.columnMapper.put("createDateTimeTo", "createDateTimeTo");
 
-        this.fromLocationCodeList =fromLocationCodeList;
+        this.fromLocationCodeList = fromLocationCodeList;
         this.columnMapper.put("fromLocationCodeList", "fromLocationCodeList");
 
-        this.fromLocationCodeFrom =fromLocationCodeFrom;
+        this.fromLocationCodeFrom = fromLocationCodeFrom;
         this.columnMapper.put("fromLocationCodeFrom", "fromLocationCodeFrom");
 
-        this.fromLocationCodeTo =fromLocationCodeTo;
+        this.fromLocationCodeTo = fromLocationCodeTo;
         this.columnMapper.put("fromLocationCodeTo", "fromLocationCodeTo");
 
-        this.locationType =locationType;
+        this.locationType = locationType;
         this.columnMapper.put("locationType", "locationType");
 
-        this.locationSubType =locationSubType;
+        this.locationSubType = locationSubType;
         this.columnMapper.put("locationSubType", "locationSubType");
 
-        this.region =region;
+        this.region = region;
         this.columnMapper.put("region", "region");
 
-        ---*----------------
+        --- * ----------------
 
-        this.matCodeList =matCodeList;
+                this.matCodeList = matCodeList;
         this.columnMapper.put("matCodeList", "matCodeList");
 
-        this.serialList =serialList;
+        this.serialList = serialList;
         this.columnMapper.put("serialList", "serialList");
 
-        this.adjustStatusList =adjustStatusList
-        this.columMapper.put("adjustStatusList","adjustStatusList");
+        this.adjustStatusList = adjustStatusList
+        this.columMapper.put("adjustStatusList", "adjustStatusList");
 
-        this.company =company;
+        this.company = company;
         this.columnMapper.put("company", "company");
 
         this.locationCode = locationCode;
         this.columnMapper.put("locationCode", "locationCode");
 
-        this.locationName =locationName;
+        this.locationName = locationName;
         this.columnMapper.put("locationName", "locationName");
 
-        this.adjustDateTime =adjustDateTime;
+        this.adjustDateTime = adjustDateTime;
         this.columnMapper.put("adjustDateTime", "adjustDateTime");
 
-        this.adjustStockNo =adjustStockNo;
+        this.adjustStockNo = adjustStockNo;
         this.columnMapper.put("adjustStockNo", "adjustStockNo");
 
-        this.itemNo =itemNo;
+        this.itemNo = itemNo;
         this.columnMapper.put("itemNo", "itemNo");
 
-        this.commercialName =commercialName;
+        this.commercialName = commercialName;
         this.columnMapper.put("commercialName", "commercialName");
 
-        this.matCode  =matCode ;
+        this.matCode = matCode;
         this.columnMapper.put("matCode ", "matCode ");
 
-        this.matDescription =matDescription;
+        this.matDescription = matDescription;
         this.columnMapper.put("matDescription", "matDescription");
 
-        this.productType =productType;
+        this.productType = productType;
         this.columnMapper.put("productType", "productType");
 
-        this.productSubType =productSubType;
+        this.productSubType = productSubType;
         this.columnMapper.put("productSubType", "productSubType");
 
-        this.brand =brand;
+        this.brand = brand;
         this.columnMapper.put("brand", "brand");
 
-        this.model =model;
+        this.model = model;
         this.columnMapper.put("model", "model");
 
-        this.subStock =subStock;
+        this.subStock = subStock;
         this.columnMapper.put("subStock", "subStock");
 
-        this.adjustTyped =adjustTyped;
+        this.adjustTyped = adjustTyped;
         this.columnMapper.put("adjustTyped", "adjustTyped");
 
-        this.serial  =serial ;
+        this.serial = serial;
         this.columnMapper.put("serial ", "serial ");
 
-        this.adjustQty =adjustQty;
+        this.adjustQty = adjustQty;
         this.columnMapper.put("adjustQty", "adjustQty");
 
-        this.reason =reason;
+        this.reason = reason;
         this.columnMapper.put("reason", "reason");
 
-        this.remark =remark;
+        this.remark = remark;
         this.columnMapper.put("remark", "remark");
 
     }
@@ -467,6 +467,6 @@ public class AdjustStockReport extends com.ais.damocles.spark.schema.CommonSchem
         this.remark = remark;
     }
 
-
+}
 
 

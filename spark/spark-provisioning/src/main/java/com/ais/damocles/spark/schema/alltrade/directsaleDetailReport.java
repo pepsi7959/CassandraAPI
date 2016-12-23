@@ -2,7 +2,7 @@ package com.ais.damocles.spark.schema.alltrade;
 
 import com.datastax.driver.mapping.annotations.Column;
 
-public class directsaleDetailReport extends com.ais.damocles.spark.schema.CommonSchema {
+public class DirectsaleDetailReport extends com.ais.damocles.spark.schema.CommonSchema {
 
     private static final long serialVersionUID = 1L;
 
@@ -117,11 +117,11 @@ public class directsaleDetailReport extends com.ais.damocles.spark.schema.Common
     @Column(name = "refDoc")
     private String refDoc;
 
-    public directsaleDetailReport() {
+    public DirectsaleDetailReport() {
 
     }
 
-    public directsaleDetailReport( String reportName , String transactionType ,
+    public DirectsaleDetailReport( String reportName , String transactionType ,
                                    String createDateTimeFrom ,  String createDateTimeTo ,
                                    String fromLocationCodeList ,  String fromLocationCodeFrom ,
                                    String fromLocationCodeTo ,  String salesCode ,  String status ,

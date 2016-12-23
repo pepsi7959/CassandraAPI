@@ -2,7 +2,7 @@ package com.ais.damocles.spark.schema.alltrade;
 
 import com.datastax.driver.mapping.annotations.Column;
 
-public class directsaleDetailReport extends com.ais.damocles.spark.schema.CommonSchema {
+public class StockMovementReport extends com.ais.damocles.spark.schema.CommonSchema {
 
     private static final long serialVersionUID = 1L;
 
@@ -114,11 +114,11 @@ public class directsaleDetailReport extends com.ais.damocles.spark.schema.Common
     @Column(name = "createDateTime")
     private String createDateTime;
 
-    public stockMovementReport (){
+    public StockMovementReport (){
 
     }
 
-    public stockMovementReport (String reportName, String transactionType, String createDateTimeFrom,
+    public StockMovementReport (String reportName, String transactionType, String createDateTimeFrom,
                                 String createDateTimeTo, String locationCodeList, String fromLocationCode,
                                 String toLocationCode, String locationType, String locationSubType,
                                 String region, String refDoc, String matCodeList, String serialList,
@@ -129,7 +129,6 @@ public class directsaleDetailReport extends com.ais.damocles.spark.schema.Common
                                 String movementQuantity, String type, String locationBefore,
                                 String locationAfter, String stockBeforeQuantity, String stockAfterQuantity,
                                 String refDoc, String refDocType, String movementType, String createDateTime){
-    }
 
      this.reportName =reportName;
      this.columnMapper.put("reportName", "reportName");
@@ -520,3 +519,5 @@ public class directsaleDetailReport extends com.ais.damocles.spark.schema.Common
     public void setStockAfterQuantity(String stockAfterQuantity) {
         this.stockAfterQuantity = stockAfterQuantity;
     }
+
+}

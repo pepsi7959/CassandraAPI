@@ -111,11 +111,11 @@ public class CheckStockReport extends com.ais.damocles.spark.schema.CommonSchema
     @Column(name = "substock")
     private String substock;
 
-    public AdjustStockReport() {
+    public CheckStockReport() {
 
     }
 
-    public AdjustStockReport(String reportName, String transactionType, String createDateTimeFrom,
+    public CheckStockReport(String reportName, String transactionType, String createDateTimeFrom,
                              String createDateTimeTo, String fromLocationCodeList,
                              String fromLocationCodeFrom, String fromLocationCodeTo,
                              String company, String subStock, String locationType,
