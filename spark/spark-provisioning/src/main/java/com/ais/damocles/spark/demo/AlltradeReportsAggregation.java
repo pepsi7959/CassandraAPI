@@ -2,13 +2,14 @@ package com.ais.damocles.spark.demo;
 
 import static com.datastax.spark.connector.japi.CassandraJavaUtil.javaFunctions;
 
-import java.security.Principal;
+import java.security.PublicKey;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 
-import org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos.SetReplicationRequestProto;
+import com.datastax.spark.connector.japi.CassandraJavaUtil;
+import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -18,23 +19,20 @@ import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
 import scala.Tuple2;
 import scala.Tuple3;
-import scala.reflect.internal.Trees.Return;
-import tachyon.thrift.BlockMasterService.AsyncProcessor.getBlockInfo;
 
 import com.ais.damocles.spark.schema.alltrade.RequestGoods;
 import com.ais.damocles.spark.schema.alltrade.OrderTransfer;
-//import com.ais.damocles.spark.schema.demo.SummaryByApp;
 import com.ais.damocles.spark.schema.alltrade.RequestGoodsDetailReport;
 import com.ais.damocles.spark.util.PropertyFileReader;
-import com.datastax.spark.connector.japi.CassandraJavaUtil;
 import com.datastax.spark.connector.japi.CassandraRow;
+
 
 public class AlltradeReportsAggregation {
     public static JavaSparkContext sc;
     public static final String DAMOCLES_KEYSPACE = "damocles";
     public static final String REQUESTGOODS_TABLE = "requestgoods";
     public static final String ORDERTRANSFER_TABLE = "ordertransfer";
-    public static final String REQUESTGOODSDETAILREPORT_TABLE = "RequestGoodsDetailReport";
+    //public static final String REQUESTGOODSDETAILREPORT_TABLE = "requestgoodsreport";
 
     public static void main(String[] args) throws Exception {
 
@@ -81,28 +79,46 @@ public class AlltradeReportsAggregation {
 
         sc = jssc.sparkContext();
 
-		/* Load ReqeustGoods from the Cassandrar */
+		/* Load ReqeustGoods from the Cassandra */
         JavaRDD<CassandraRow> cassandraRowRequestGoods = javaFunctions(sc)
                 .cassandraTable(DAMOCLES_KEYSPACE, REQUESTGOODS_TABLE);
+
         JavaPairRDD<String, RequestGoods> requestGoodsPairRDD = cassandraRowRequestGoods
                 .mapToPair(f -> {
+
                     RequestGoods requestGoods = new RequestGoods();
-                    requestGoods.setRequestNo(f.getString(0));
-                    requestGoods.setCreateBy(f.getString(1));
+                    requestGoods.setCompany(f.getString(11));
+                    requestGoods.setToLocationCode(f.getString(37));
+                    requestGoods.setToLocationName(f.getString(38));
+                    requestGoods.setForSubStock(f.getString(15));
+                    requestGoods.setCreateDateTime(f.getString(13));
+                    requestGoods.setRequestNo(f.getString(1));
                     requestGoods.setRequestStatus(f.getString(2));
-                    return new Tuple2<>(requestGoods.getRequestNo(),
-                            requestGoods);
+                    requestGoods.setReservedNo(f.getString(28));
+                    requestGoods.setDoNo(f.getString(14));
+                    requestGoods.setPickingDateTime(f.getString(24));
+                    /*requestGoods.setQuotaFlag(f.getString());*/
+                    /*requestGoods.setItemNo(f.getString());*/
+                    requestGoods.setBrand_key(f.getString(4));
+                    requestGoods.setModel_key(f.getString(5));
+                    requestGoods.setMatCode_key(f.getString(3));
+                    /*requestGoods.setMatDescription_key(f.getString());*/
+                    requestGoods.setCommercialName_key(f.getString(8));
+                    requestGoods.setRemark(f.getString(27));
+                    requestGoods.setShipToCode(f.getString(32));
+                    requestGoods.setShipToProvince(f.getString(35));
+                    return new Tuple2<>(requestGoods.getRequestNo(), requestGoods);
                 });
 
         cassandraRowRequestGoods.foreach(f -> System.out.println("column 1 : "
                 + f.getString(0)));
 
-		/* Load OrderTransferIn from the Cassandrar */
+		/* Load OrderTransferIn from the Cassandra */
         JavaRDD<CassandraRow> cassandraRowTransferIn = javaFunctions(sc)
                 .cassandraTable(DAMOCLES_KEYSPACE, ORDERTRANSFER_TABLE).where(
                         "transactionType=?", "TransferIn");
 
-		/* Load OrderTransferOut from the Cassandrar */
+		/* Load OrderTransferOut from the Cassandra */
         JavaRDD<CassandraRow> cassandraRowTransferOut = javaFunctions(sc)
                 .cassandraTable(DAMOCLES_KEYSPACE, ORDERTRANSFER_TABLE).where(
                         "transactionType=?", "TransferOut");
@@ -110,25 +126,28 @@ public class AlltradeReportsAggregation {
 		/* Load TransferIn */
         JavaPairRDD<String, OrderTransfer> transferInPairRDD = cassandraRowTransferIn
                 .mapToPair(f -> {
-                    OrderTransfer orderTransfer = new OrderTransfer();
-                    orderTransfer.setTransferNo(f.getString(0));
-                    orderTransfer.setDocRef(f.getString(1));
-                    orderTransfer.setTransactionType(f.getString(2));
-                    orderTransfer.setTransferDetail(f.getString(3));
-                    return new Tuple2<>(orderTransfer.getDocRef(),
-                            orderTransfer);
+
+                    OrderTransfer orderTransferIn = new OrderTransfer();
+                    orderTransferIn.setTransferDateTime(f.getString(38));
+                    orderTransferIn.setCreateBy(f.getString(11));
+                    orderTransferIn.setTransferNo(f.getString(40));
+                    orderTransferIn.setDocRef(f.getString(14));
+                    orderTransferIn.setTransactionType(f.getString(1));
+                    orderTransferIn.setTransferDetail(f.getString(39));
+                    return new Tuple2<>(orderTransferIn.getDocRef(), orderTransferIn);
                 });
 
 		/* Load TransferOut */
         JavaPairRDD<String, OrderTransfer> transferOutPairRDD = cassandraRowTransferOut
                 .mapToPair(f -> {
                     OrderTransfer orderTransferOut = new OrderTransfer();
-                    orderTransferOut.setTransferNo(f.getString(0));
-                    orderTransferOut.setDocRef(f.getString(1));
-                    orderTransferOut.setTransactionType(f.getString(2));
-                    orderTransferOut.setTransferDetail(f.getString(3));
-                    return new Tuple2<>(orderTransferOut.getDocRef(),
-                            orderTransferOut);
+                    orderTransferOut.setTransferDateTime(f.getString(38));
+                    orderTransferOut.setCreateBy(f.getString(11));
+                    orderTransferOut.setTransferNo(f.getString(40));
+                    orderTransferOut.setDocRef(f.getString(14));
+                    orderTransferOut.setTransactionType(f.getString(1));
+                    orderTransferOut.setTransferDetail(f.getString(39));
+                    return new Tuple2<>(orderTransferOut.getDocRef(), orderTransferOut);
                 });
 
 		/* show Request Goods */
@@ -146,11 +165,11 @@ public class AlltradeReportsAggregation {
         transferInPairRDD.foreach(f -> System.out.println("TransferNo : "
                 + f._1()));
 
-		/* join TransferOut and RequestGoods */
-        JavaPairRDD<String, Tuple2<OrderTransfer, com.google.common.base.Optional<RequestGoods>>> joinTransferRequestGoods = transferOutPairRDD
-                .leftOuterJoin(requestGoodsPairRDD);
+        /* join RequestGoods and TransferOut  */
+        JavaPairRDD<String, Tuple2<RequestGoods, com.google.common.base.Optional<OrderTransfer>>> joinTransferRequestGoods = requestGoodsPairRDD
+                .leftOuterJoin(transferOutPairRDD);
 
-        System.out.println("===== Join TransferOut and RequestGoods");
+        System.out.println("===== Join RequestGoods and TransferOut  =====");
         joinTransferRequestGoods.foreach(f -> {
             try {
                 System.out.println("Key : " + f._1() + "CreatedBy : "
@@ -160,135 +179,106 @@ public class AlltradeReportsAggregation {
             }
         });
 
-		/* change key of tranferOutRequestGoods */
-        JavaPairRDD<String, Tuple2<OrderTransfer, com.google.common.base.Optional<RequestGoods>>> joinTransferOutRequestGoodsByDocRef = joinTransferRequestGoods
-                .mapToPair(f -> new Tuple2<String, Tuple2<OrderTransfer, com.google.common.base.Optional<RequestGoods>>>(
-                        f._2()._1().getTransferNo(), f._2()));
+        /* change key of RequestGoodstranferOut */
+        JavaPairRDD<String, Tuple2<RequestGoods, com.google.common.base.Optional<OrderTransfer>>> joinTransferOutRequestGoodsByDocRef = joinTransferRequestGoods
+                .mapToPair(f -> new Tuple2<String, Tuple2<RequestGoods, com.google.common.base.Optional<OrderTransfer>>>(
+                        f._2()._2().get().getTransferNo(), f._2()));
 
-        System.out.println("===== Change Key of transferOutRequestGoods =====");
+        System.out.println("===== Change Key of RequestGoodstranferOut =====");
         joinTransferOutRequestGoodsByDocRef.foreach(f -> {
             try {
-                System.out.println("Key : " + f._1() + "CreatedBy: "
+                System.out.println("Key : " + f._1() + "CreatedBy : "
                         + f._2()._2().get().getCreateBy());
             } catch (Exception ex) {
                 System.out.println(ex);
             }
         });
 
-		/* join TransferOutRequestGoods and TransferIn */
-        JavaPairRDD<String, Tuple2<Tuple2<OrderTransfer, com.google.common.base.Optional<RequestGoods>>, com.google.common.base.Optional<OrderTransfer>>> allAggregation = joinTransferOutRequestGoodsByDocRef
-                .leftOuterJoin(transferInPairRDD);
+        /* join RequestGoodstranferOut and TransferIn */
+        JavaPairRDD<String, Tuple2<Tuple2<RequestGoods, com.google.common.base.Optional<OrderTransfer>>, com.google.common.base.Optional<OrderTransfer>>>
+                allAggregation = joinTransferOutRequestGoodsByDocRef.leftOuterJoin(transferInPairRDD);
 
         System.out.println("======== All aggregation ========");
         allAggregation.foreach(f -> {
 
-            String createdBy = f._2()._1()._2().isPresent() ? f._2()._1()._2()
-                    .get().getCreateBy() : null;
-            String transferDetail = f._2()._2().isPresent() ? f._2()._2().get()
-                    .getTransferDetail() : null;
-            System.out.println("key : " + f._1() + " TransferNo : "
-                    + f._2()._1()._1().getTransferNo() + " transferDetail : "
+            /*	f._1() = String
+                    f._2() = Tuple2<Tuple2<RequestGoods, com.google.common.base.Optional<OrderTransfer>>, com.google.common.base.Optional<OrderTransfer>>>
+					f._2()._1() = Tuple2<RequestGoods, com.google.common.base.Optional<OrderTransfer>>  //join RequestGoods and TransferOut
+					f._2()._1()._1() = RequestGoods //requestGoods
+					f._2()._1()._2() = com.google.common.base.Optional<OrderTransfer> //TransferOut
+					f._2()._2() = com.google.common.base.Optional<OrderTransfer> //TransferIn */
 
-                    + f._2()._1()._1().getTransferDetail() + " CreateBy : "
-                    + createdBy + " TransferDetail : " + transferDetail);
+            /*Condition*/
+            String createdBy = f._2()._1()._2().isPresent() ? f._2()._1()._2().get().getCreateBy() : null;
+            String transferInNo = f._2()._2().isPresent() ? f._2()._2().get().getTransferNo() : null;
+            String transferInDateTime = f._2()._2().isPresent() ? f._2()._2().get().getTransferDateTime() : null;
+
+            System.out.println("key : " + f._1()
+                    + "TransferNo : " + f._2()._1()._2().get().getTransferNo() + "\n"
+                    + "RequestNo : " + f._2()._1()._1().getRequestNo() + "\n"
+                    + "Company : " + f._2()._1()._1().getCompany() + "\n"
+                    + "ToLocationName : " + f._2()._1()._1().getToLocationName() + "\n"
+                    + "ForSubStock : " + f._2()._1()._1().getForSubStock() + "\n"
+                    + "CreateDateTime : " + f._2()._1()._1().getCreateDateTime() + "\n"
+                    + "RequestStatus : " + f._2()._1()._1().getRequestStatus() + "\n"
+                    + "ReservedNo : " + f._2()._1()._1().getReservedNo() + "\n"
+                    + "DoNo : " + f._2()._1()._1().getDoNo() + "\n"
+                    + "PickingDateTime : " + f._2()._1()._1().getPickingDateTime() + "\n"
+                    + "TransferOutNo : " + f._2()._1()._2().get().getTransferNo() + "\n"
+                    + "TransferOutDateTime : " + f._2()._1()._2().get().getTransferDateTime() + "\n"
+                    + "CreateBy : " + createdBy + "\n"
+                    + "TransferInNo : " + transferInNo + "\n"
+                    + "TransferInDateTime : " + transferInDateTime + "\n"
+                    /* + "QuotaFlag : " + f._2()._1()._1().getQuotaFlag()+"\n"*/
+                    /*+ "ItemNo : " + f._2()._1()._1().getItemNo()+"\n"*/
+                    + "Brand_key : " + f._2()._1()._1().getBrand_key() + "\n"
+                    + "Model : " + f._2()._1()._1().getModel_key() + "\n"
+                    + "MatCode_key : " + f._2()._1()._1().getMatCode_key() + "\n"
+                    /*+ "MatDescription_key : " + f._2()._1()._1().getMatDescription_key()+"\n"*/
+                    + "CommercialName_key : " + f._2()._1()._1().getCommercialName_key() + "\n"
+                    + "Remark : " + f._2()._1()._1().getRemark() + "\n"
+                    + "ShipToCode : " + f._2()._1()._1().getShipToCode() + "\n"
+                    + "ShipToProvince : " + f._2()._1()._1().getShipToProvince());
         });
 
-		 /*Inser Sumary to Cassandra */
+        /*MapColumn schema to cassandra*/
         Map<String, String> columnNameMappings = new HashMap<String, String>();
-        columnNameMappings.put("company", "company");
-        columnNameMappings.put("toLocationCode", "toLocationCode");
-        columnNameMappings.put("toLocationName", "toLocationName");
-        columnNameMappings.put("forSubStock", "forSubStock");
-        columnNameMappings.put("createDateTime", "createDateTime");
-        columnNameMappings.put("requestNo", "requestNo");
-        columnNameMappings.put("requestStatus", "requestStatus");
-        columnNameMappings.put("reservedNo", "reservedNo");
-        columnNameMappings.put("mmDocNo", "mmDocNo");
-        columnNameMappings.put("doNo", "doNo");
-        columnNameMappings.put("pickingDateTime", "pickingDateTime");
-        columnNameMappings.put("transferOutNo", "transferOutNo");
-        columnNameMappings.put("transferOutDateTime", "transferOutDateTime");
-        columnNameMappings.put("transferInNo", "transferInNo");
-        columnNameMappings.put("createBy", "createBy");
-        columnNameMappings.put("transferInDateTime ", "transferInDateTime ");
-        columnNameMappings.put("brand", "brand");
-        columnNameMappings.put("model", "model");
-        columnNameMappings.put("matCode", "matCode");
-        columnNameMappings.put("commercialName", "commercialName");
-        columnNameMappings.put("receiveBy", "receiveBy");
-        columnNameMappings.put("mobileNo", "mobileNo");
-        columnNameMappings.put("remark", "remark");
-        columnNameMappings.put("shipToCode", "shipToCode");
-        columnNameMappings.put("shipToCode", "shipToCode");
-        columnNameMappings.put("shipToProvince", "shipToProvince");
+        columnNameMappings.put("requestNo", "requestno");
+        columnNameMappings.put("transferOutNo", "transferoutno");
+        columnNameMappings.put("transferInNo", "transferinno");
+        columnNameMappings.put("createBy", "createby");
+        columnNameMappings.put("matCode_key", "matcode_key");
 
+        /*insert data to cassandra*/
         JavaRDD<RequestGoodsDetailReport> requestGoodsRDD = allAggregation
                 .map(f -> {
-					
-				/*	f._1() = String
-					f._2() = Tuple2<Tuple2<OrderTransfer, com.google.common.base.Optional<RequestGoods>>, com.google.common.base.Optional<OrderTransfer>>
-					f._2()._1() = Tuple2<Tuple2<OrderTransfer, com.google.common.base.Optional<RequestGoods>>
-					f._2()._1()._1() = OrderTransfer
-					f._2()._1()._2() = com.google.common.base.Optional<RequestGoods>
-					f._2()._2() = com.google.common.base.Optional<OrderTransfer*/
+
+                    /*Condition*/
+                    String createdBy = f._2()._1()._2().isPresent() ? f._2()._1()._2().get().getCreateBy() : null;
+                    String transferInNo = f._2()._2().isPresent() ? f._2()._2().get().getTransferNo() : null;
 
                     RequestGoodsDetailReport requestGoods = new RequestGoodsDetailReport();
-					
-					/*requestGoods.setTransactionType(f._2()._1()._2().get().getTransactionType());*/
-                    requestGoods.setCompany(f._2()._1()._2().get().getCompany());
-                    requestGoods.setToLocationCode(f._2()._1()._2().get().getToLocationCode());
-                    requestGoods.setToLocationName(f._2()._1()._2().get().getToLocationName());
-                    requestGoods.setForSubStock(f._2()._1()._2().get().getForSubStock());
-                    requestGoods.setCreateDateTime(f._2()._1()._2().get().getCreateDateTime());
-
-                    try {
-					/*get_number of request goods*/
-                        requestGoods.setRequestNo(f._2()._1()._2().get().getRequestNo());
-
-                    } catch (Exception ex) {
-                        // TODO: handle exception
-                        System.out
-                                .println("Wanning :Cannot get Request Number of RequestGoods");
-                        requestGoods.setRequestNo("");
-                    }
-
-                    requestGoods.setRequestStatus(f._2()._1()._2().get().getRequestStatus());
-                    requestGoods.setReservedNo(f._2()._1()._2().get().getReservedNo());
-                    requestGoods.setMmDocNo(f._2()._1()._1().getMmDocNo());
-                    requestGoods.setDoNo(f._2()._1()._2().get().getDoNo());
-                    requestGoods.setPickingDateTime(f._2()._1()._2().get().getPickingDateTime());
-
-                    requestGoods.setTransferOutNo(f._2()._1()._1().getTransferNo());
-                    requestGoods.setTransferOutDateTime(f._2()._1()._1().getTransferDateTime());
-
-                    requestGoods.setTransferInNo(f._2()._2().get().getTransferNo());
-                    requestGoods.setCreateBy(f._2()._2().get().getCreateBy());
-                    requestGoods.setTransferInDateTime(f._2()._2().get().getTransferDateTime());
-
-                    requestGoods.setBrand(f._2()._1()._2().get().getBrand_key());
-                    requestGoods.setModel(f._2()._1()._2().get().getModel_key());
-                    requestGoods.setMatCode(f._2()._1()._2().get().getMatCode_key());
-                    requestGoods.setCommercialName(f._2()._1()._2().get().getCommercialName_key());
-                    requestGoods.setReceiveBy(f._2()._1()._2().get().getReceiveBy());
-                    requestGoods.setMobileNo(f._2()._1()._2().get().getMobileNo());
-                    requestGoods.setRemark(f._2()._1()._2().get().getRemark());
-                    requestGoods.setShipToCode(f._2()._1()._2().get().getShipToCode());
-                    requestGoods.setShipToProvince(f._2()._1()._2().get().getShipToProvince());
-
-					/*get transaction detail of transferOut*/
-					/*requestGoods.setRequestDetail(f._2()._1()._1().getTransferDetail());*/
-					/*requestGoods.setRequestNo(f._2()._1()._1().getTransferDetail());*/
-					/*get status of transferIn*/
-					/*requestGoods.setStatus(f._2()._2().get().getStatus());*/
-
+                    requestGoods.setRequestNo(f._2()._1()._1().getRequestNo());
+                    requestGoods.setTransferOutNo(f._2()._1()._2().get().getTransferNo());
+                    requestGoods.setCreateBy(createdBy);
+                    requestGoods.setTransferInNo(transferInNo);
+                    requestGoods.setMatCode_key(f._2()._1()._1().getMatCode_key());
                     return requestGoods;
                 });
 
-        javaFunctions(requestGoodsRDD).writerBuilder(
-                DAMOCLES_KEYSPACE, REQUESTGOODSDETAILREPORT_TABLE,
-                CassandraJavaUtil.mapToRow(RequestGoodsDetailReport.class, columnNameMappings)).saveToCassandra();
+        /* show insert data to cassandra */
+        System.out.println("===== insert data to cassandra =====");
+        requestGoodsRDD.foreach(f -> System.out.println("RequestNo: " + f.getRequestNo()
+                + "TransferOutNo : " + f.getTransferOutNo()
+                + "TransferInNo : " + f.getTransferInNo()
+                + "createBy : " + f.getCreateBy()
+                + "matCode_key : " + f.getMatCode_key()
+        ));
 
+        javaFunctions(requestGoodsRDD).writerBuilder(
+                "damocles",
+                "requestgoods_report",
+                CassandraJavaUtil.mapToRow(RequestGoodsDetailReport.class,
+                        columnNameMappings)).saveToCassandra();
     }
 }
-	
-
