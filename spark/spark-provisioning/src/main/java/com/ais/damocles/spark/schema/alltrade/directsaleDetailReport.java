@@ -2,7 +2,7 @@ package com.ais.damocles.spark.schema.alltrade;
 
 import com.datastax.driver.mapping.annotations.Column;
 
-public class directsaleDetailReport extends com.ais.damocles.spark.schema.CommonSchema {
+public class DirectsaleDetailReport extends com.ais.damocles.spark.schema.CommonSchema {
 
     private static final long serialVersionUID = 1L;
 
@@ -57,9 +57,6 @@ public class directsaleDetailReport extends com.ais.damocles.spark.schema.Common
     @Column(name = "pickupDate")
     private String pickupDate;
 
-    @Column(name = "salesCode")
-    private String salesCode;
-
     @Column(name = "salesName")
     private String salesName;
 
@@ -71,9 +68,6 @@ public class directsaleDetailReport extends com.ais.damocles.spark.schema.Common
 
     @Column(name = "returnDate")
     private String returnDate;
-
-    @Column(name = "status")
-    private String status;
 
     @Column(name = "fromSubStock")
     private String fromSubStock;
@@ -89,9 +83,6 @@ public class directsaleDetailReport extends com.ais.damocles.spark.schema.Common
 
     @Column(name = "commercialName")
     private String commercialName;
-
-    @Column(name = "matCode")
-    private String matCode;
 
     @Column(name = "matDescription")
     private String matDescription;
@@ -117,20 +108,20 @@ public class directsaleDetailReport extends com.ais.damocles.spark.schema.Common
     @Column(name = "refDoc")
     private String refDoc;
 
-    public directsaleDetailReport() {
+    public DirectsaleDetailReport() {
 
     }
 
-    public directsaleDetailReport( String reportName , String transactionType ,
+    public DirectsaleDetailReport( String reportName , String transactionType ,
                                    String createDateTimeFrom ,  String createDateTimeTo ,
                                    String fromLocationCodeList ,  String fromLocationCodeFrom ,
                                    String fromLocationCodeTo ,  String salesCode ,  String status ,
                                    String locationType ,  String locationSubType ,  String region,
                                    String company ,  String locationCode ,  String locationName ,
-                                   String pickupNo ,  String pickupDate ,  String salesCode ,
+                                   String pickupNo ,  String pickupDate ,
                                    String salesName ,  String returnNo ,  String returnDate ,
-                                   String status ,  String fromSubStock ,  String brand ,
-                                   String Smodel ,  String color ,  String commercialName ,
+                                   String fromSubStock ,  String brand ,
+                                   String model ,  String color ,  String commercialName ,
                                    String matCode ,  String matDescription ,  String matType ,
                                    String serial ,  String qtyPickUp ,  String qtyReturn ,
                                    String remark ,  String createdBy ,  String refDoc){
@@ -183,9 +174,6 @@ public class directsaleDetailReport extends com.ais.damocles.spark.schema.Common
 
         this.pickupDate =pickupDate;
         this.columnMapper.put("pickupDate", "pickupDate");
-
-        this.salesCode =salesCode;
-        this.columnMapper.put("salesCode", "salesCode");
 
         this.salesName =salesName;
         this.columnMapper.put("salesName", "salesName");

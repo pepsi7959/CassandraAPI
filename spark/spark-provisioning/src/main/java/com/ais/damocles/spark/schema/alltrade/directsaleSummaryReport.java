@@ -2,7 +2,7 @@ package com.ais.damocles.spark.schema.alltrade;
 
 import com.datastax.driver.mapping.annotations.Column;
 
-public class directsaleSummaryReport extends com.ais.damocles.spark.schema.CommonSchema {
+public class DirectsaleSummaryReport extends com.ais.damocles.spark.schema.CommonSchema {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,9 +51,6 @@ public class directsaleSummaryReport extends com.ais.damocles.spark.schema.Commo
     @Column(name = "locationName")
     private String locationName;
 
-    @Column(name = "salesCode")
-    private String salesCode;
-
     @Column(name = "salesName")
     private String salesName;
 
@@ -87,17 +84,17 @@ public class directsaleSummaryReport extends com.ais.damocles.spark.schema.Commo
     @Column(name = "qtyReturn")
     private String qtyReturn;
 
-    public directsaleSummaryReport() {
+    public DirectsaleSummaryReport() {
 
     }
 
-    public directsaleSummaryReport( String reportName , String transactionType ,
+    public DirectsaleSummaryReport( String reportName , String transactionType ,
                                     String createDateTimeFrom ,  String createDateTimeTo ,
                                     String fromLocationCodeList ,  String fromLocationCodeFrom ,
                                     String fromLocationCodeTo ,  String salesCode ,  String status ,
                                     String locationType ,  String locationSubType ,  String region,
                                     String company ,  String locationCode ,  String locationName ,
-                                    String salesCode ,  String salesName ,  String productType ,
+                                    String salesName ,  String productType ,
                                     String productSubType ,  String brand ,  String model ,
                                     String color ,  String commercialName ,  String matCode ,
                                     String matDescription ,  String qtyPickUp ,  String qtyReturn){

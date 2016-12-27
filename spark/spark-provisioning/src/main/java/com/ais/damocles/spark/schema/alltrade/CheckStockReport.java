@@ -60,9 +60,6 @@ public class CheckStockReport extends com.ais.damocles.spark.schema.CommonSchema
     @Column(name = "checkStockOnHand")
     private String checkStockOnHand;
 
-    @Column(name = "company")
-    private String company;
-
     @Column(name = "matCode")
     private String matCode;
 
@@ -111,18 +108,18 @@ public class CheckStockReport extends com.ais.damocles.spark.schema.CommonSchema
     @Column(name = "substock")
     private String substock;
 
-    public AdjustStockReport() {
+    public CheckStockReport() {
 
     }
 
-    public AdjustStockReport(String reportName, String transactionType, String createDateTimeFrom,
+    public CheckStockReport(String reportName, String transactionType, String createDateTimeFrom,
                              String createDateTimeTo, String fromLocationCodeList,
                              String fromLocationCodeFrom, String fromLocationCodeTo,
                              String company, String subStock, String locationType,
                              String locationSubType, String regionlocationCode ,
                              String locationName , String confirmUser ,
                              String confirmDateTime , String confirmNo ,
-                             String checkStockOnHand , String company ,
+                             String checkStockOnHand ,
                              String matCode , String matType , String brand ,
                              String model , String color , String commercialName ,
                              String matDescription , String productType ,
