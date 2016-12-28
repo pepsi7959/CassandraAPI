@@ -4,169 +4,144 @@ import com.datastax.driver.mapping.annotations.Column;
 
 public class OrderTransfer extends com.ais.damocles.spark.schema.CommonSchema {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	@Column(name = "transactionId")
 	private String transactionId;
-
 	@Column(name = "transactionType")
 	private String transactionType;
-
 	@Column(name = "transferNo")
 	private String transferNo;
-
 	@Column(name = "company")
 	private String company;
-
 	@Column(name = "fromSubStock")
 	private String fromSubStock;
-
 	@Column(name = "toSubStock")
 	private String toSubStock;
-
 	@Column(name = "transferStatus")
 	private String transferStatus;
-
 	@Column(name = "fromLocationCode")
 	private String fromLocationCode;
-
 	@Column(name = "fromLocationName")
 	private String fromLocationName;
-
 	@Column(name = "fromLocationType")
 	private String fromLocationType;
-
 	@Column(name = "fromLocationSubType")
 	private String fromLocationSubType;
-
 	@Column(name = "fromLocationRegion")
 	private String fromLocationRegion;
-
 	@Column(name = "fromLocationProvince")
 	private String fromLocationProvince;
-
 	@Column(name = "toLocationCode")
 	private String toLocationCode;
-
 	@Column(name = "toLocationName")
 	private String toLocationName;
-
 	@Column(name = "toLocationType")
 	private String toLocationType;
-
 	@Column(name = "toLocationSubType")
 	private String toLocationSubType;
-
 	@Column(name = "toLocationRegion")
 	private String toLocationRegion;
-
 	@Column(name = "toLocationProvince")
 	private String toLocationProvince;
-
 	@Column(name = "docRef")
 	private String docRef;
-
 	@Column(name = "transferDateTime")
 	private String transferDateTime;
-
 	@Column(name = "mmDocYear")
 	private String mmDocYear;
-
 	@Column(name = "mmDocNo")
 	private String mmDocNo;
-
 	@Column(name = "doNo")
 	private String doNo;
-
 	@Column(name = "movementType")
 	private String movementType;
-
 	@Column(name = "distributionChannel")
 	private String distributionChannel;
-
 	@Column(name = "createBy ")
 	private String createBy;
-
 	@Column(name = "createDateTime")
 	private String createDateTime;
-
 	@Column(name = "updateBy")
 	private String updateBy;
-
 	@Column(name = "updateDateTime ")
 	private String updateDateTime;
-
 	@Column(name = "cancelBy")
 	private String cancelBy;
-
 	@Column(name = "cancelDateTime")
 	private String cancelDateTime;
-
 	@Column(name = "shipToCode")
 	private String shipToCode;
-
 	@Column(name = "shipToName")
 	private String shipToName;
-
 	@Column(name = "shipToProvince")
 	private String shipToProvince;
-
 	@Column(name = "shipToAddress")
 	private String shipToAddress;
-
 	@Column(name = "vendorCode")
 	private String vendorCode;
-
 	@Column(name = "vendorName")
 	private String vendorName;
-
 	@Column(name = "remark")
 	private String remark;
-
 	@Column(name = "matCode_key")
 	private String matCode_key;
-
 	@Column(name = "brand_key")
 	private String brand_key;
-
 	@Column(name = "model_key")
 	private String model_key;
-
 	@Column(name = "productType_key")
 	private String productType_key;
-
 	@Column(name = "productSubType_key")
 	private String productSubType_key;
-
-	@Column(name = "transferDetail ")
+	@Column(name = "transferDetail")
 	private String transferDetail;
+	@Column(name = "transferOutStatus")
+	private String transferOutStatus;
+    @Column(name = "item")
+    private String item;
+    @Column(name = "commercialName")
+    private String commercialName;
+    @Column(name = "matDescription")
+    private String matDescription;
+    @Column(name = "matType")
+    private String matType;
+    @Column(name = "serialNo")
+    private String serialNo;
+    @Column(name = "qtyOut")
+    private String qtyOut;
+    @Column(name = "qtyIn")
+    private String qtyIn;
+    @Column(name = "reason")
+    private String reason;
+    @Column(name = "receiveBy")
+    private String receiveBy;
 
-	/*
-	 * TODO: add other attribute from schema
-	 */
-
-	public OrderTransfer() {
+    public OrderTransfer() {
 
 	}
 
 	public OrderTransfer(String transactionId, String transactionType,
-			String transferNo, String company, String fromSubStock,
-			String toSubStock, String transferStatus, String fromLocationCode,
-			String fromLocationName, String fromLocationType,
-			String fromLocationSubType, String fromLocationRegion,
-			String fromLocationProvince, String toLocationCode,
-			String toLocationName, String toLocationType,
-			String toLocationSubType, String toLocationRegion,
-			String toLocationProvince, String docRef, String transferDateTime,
-			String mmDocYear, String mmDocNo, String doNo, String movementType,
-			String distributionChannel, String createBy, String createDateTime,
-			String updateBy, String updateDateTime, String cancelBy,
-			String cancelDateTime, String shipToCode, String shipToName,
-			String shipToProvince, String shipToAddress, String vendorCode,
-			String vendorName, String remark, String matCode_key,
-			String brand_key, String model_key, String productType_key,
-			String productSubType_key, String transferDetail) {
+			             String transferNo, String company, String fromSubStock,
+			             String toSubStock, String transferStatus, String fromLocationCode,
+                         String fromLocationName, String fromLocationType,
+			             String fromLocationSubType, String fromLocationRegion,
+			             String fromLocationProvince, String toLocationCode,
+			             String toLocationName, String toLocationType,
+			             String toLocationSubType, String toLocationRegion,
+			             String toLocationProvince, String docRef, String transferDateTime,
+			             String mmDocYear, String mmDocNo, String doNo, String movementType,
+			             String distributionChannel, String createBy, String createDateTime,
+			             String updateBy, String updateDateTime, String cancelBy,
+			             String cancelDateTime, String shipToCode, String shipToName,
+			             String shipToProvince, String shipToAddress, String vendorCode,
+			             String vendorName, String remark, String matCode_key,
+			             String brand_key, String model_key, String productType_key,
+			             String productSubType_key, String transferDetail,
+						 String transferOutStatus, String item, String commercialName,
+                         String matDescription, String matType, String serialNo,
+                         String qtyOut, String qtyIn, String reason, String receiveBy) {
 
 		this.transactionId = transactionId;
 		this.columnMapper.put("transactionId", "transactionId");
@@ -302,6 +277,36 @@ public class OrderTransfer extends com.ais.damocles.spark.schema.CommonSchema {
 
 		this.transferDetail = transferDetail;
 		this.columnMapper.put("transferDetail ", "transferDetail ");
+
+        this.transferOutStatus = transferOutStatus;
+        this.columnMapper.put("transferOutStatus ", "transferOutStatus ");
+
+        this.item = item;
+        this.columnMapper.put("item ", "item ");
+
+        this.commercialName = commercialName;
+        this.columnMapper.put("commercialName ", "commercialName ");
+
+        this.matDescription = matDescription;
+        this.columnMapper.put("matDescription ", "matDescription ");
+
+        this.matType = matType;
+        this.columnMapper.put("matType ", "matType ");
+
+        this.serialNo = serialNo;
+        this.columnMapper.put("serialNo ", "serialNo ");
+
+        this.qtyOut = qtyOut;
+        this.columnMapper.put("qtyOut ", "qtyOut ");
+
+        this.qtyIn = qtyIn;
+        this.columnMapper.put("qtyIn ", "qtyIn ");
+
+        this.reason = reason;
+        this.columnMapper.put("reason ", "reason ");
+
+        this.receiveBy = receiveBy;
+        this.columnMapper.put("receiveBy ", "receiveBy ");
 
 	}
 
@@ -669,4 +674,83 @@ public class OrderTransfer extends com.ais.damocles.spark.schema.CommonSchema {
 		return serialVersionUID;
 	}
 
+    public String getTransferOutStatus() {
+        return transferOutStatus;
+    }
+
+    public void setTransferOutStatus(String transferOutStatus) {
+        this.transferOutStatus = transferOutStatus;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public String getCommercialName() {
+        return commercialName;
+    }
+
+    public void setCommercialName(String commercialName) {
+        this.commercialName = commercialName;
+    }
+
+    public String getMatDescription() {
+        return matDescription;
+    }
+
+    public void setMatDescription(String matDescription) {
+        this.matDescription = matDescription;
+    }
+
+    public String getMatType() {
+        return matType;
+    }
+
+    public void setMatType(String matType) {
+        this.matType = matType;
+    }
+
+    public String getSerialNo() {
+        return serialNo;
+    }
+
+    public void setSerialNo(String serialNo) {
+        this.serialNo = serialNo;
+    }
+
+    public String getQtyOut() {
+        return qtyOut;
+    }
+
+    public void setQtyOut(String qtyOut) {
+        this.qtyOut = qtyOut;
+    }
+
+    public String getQtyIn() {
+        return qtyIn;
+    }
+
+    public void setQtyIn(String qtyIn) {
+        this.qtyIn = qtyIn;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public String getReceiveBy() {
+        return receiveBy;
+    }
+
+    public void setReceiveBy(String receiveBy) {
+        this.receiveBy = receiveBy;
+    }
 }

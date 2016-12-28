@@ -106,7 +106,10 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
     private String itemNo;
     @Column(name = "matDescription_key")
     private String matDescription_key;
-
+    @Column(name = "requestDateTime")
+    private String requestDateTime;
+    @Column(name = "contactNo")
+    private String contactNo;
 
     public RequestGoods() {
 
@@ -131,7 +134,8 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
                         String matCode_key, String brand_key, String model_key,
                         String productType_key, String productSubType_key,
                         String commercialName_key, String requestDetail,
-                        String quotaFlag, String itemNo,String matDescription_key) {
+                        String quotaFlag, String itemNo,String matDescription_key,
+                        String requestDateTime, String contactNo) {
 
         this.transactionId = transactionId;
         this.columnMapper.put("transactionId", "transactionId");
@@ -280,6 +284,8 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
         this.matDescription_key = matDescription_key;
         this.columnMapper.put("matDescription_key","matDescription_key");
 
+        this.contactNo = contactNo;
+        this.columnMapper.put("contactNo","contactNo");
 
     }
 
@@ -665,4 +671,19 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
         return serialVersionUID;
     }
 
+    public String getRequestDateTime() {
+        return requestDateTime;
+    }
+
+    public void setRequestDateTime(String requestDateTime) {
+        this.requestDateTime = requestDateTime;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
+    }
 }

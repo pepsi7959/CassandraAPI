@@ -84,14 +84,14 @@ public class TransferDetailReport extends com.ais.damocles.spark.schema.CommonSc
     @Column(name = "forSubStock")
     private String forSubStock;
 
-    @Column(name = "brand")
-    private String brand;
+    @Column(name = "brand_key")
+    private String brand_key;
 
-    @Column(name = "model")
-    private String model;
+    @Column(name = "model_key")
+    private String model_key;
 
-    @Column(name = "matCode")
-    private String matCode;
+    @Column(name = "matCode_key")
+    private String matCode_key;
 
     @Column(name = "matDescription")
     private String matDescription;
@@ -147,6 +147,24 @@ public class TransferDetailReport extends com.ais.damocles.spark.schema.CommonSc
     @Column(name = "vendorName")
     private String vendorName;
 
+    @Column(name = "item")
+    private String item;
+
+    @Column(name = "commercialName")
+    private String commercialName;
+
+    @Column(name = "serialNo")
+    private String serialNo;
+
+    @Column(name = "receiveBy")
+    private String receiveBy;
+
+    @Column(name = "remark")
+    private String remark;
+
+    @Column(name = "contactNo")
+    private String contactNo;
+
     public TransferDetailReport() {
     }
 
@@ -158,12 +176,14 @@ public class TransferDetailReport extends com.ais.damocles.spark.schema.CommonSc
                                   String fromLocationCode, String fromLocationName, String toLocationCode,
                                   String toLocationName, String transferOutDateTime, String transferOutNo,
                                   String transferInDateTime, String transferInNo, String requestDateTime,
-                                  String requestNo, String forSubStock, String transferOutStatus1, String brand,
-                                  String model, String matCode, String matDescription, String matType,
+                                  String requestNo, String forSubStock, String transferOutStatus1, String brand_key,
+                                  String model_key, String matCode_key, String matDescription, String matType,
                                   String fromSubStock, String toSubStock, String qtyOut, String qtyIn,
                                   String createBy, String updateBy, String reason, String shipToCode,
                                   String shipToName, String matCodeNo, String doNo, String pickingDateTime,
-                                  String salesCode, String salesName, String vendorCode, String vendorName) {
+                                  String salesCode, String salesName, String vendorCode, String vendorName,
+                                  String item, String commercialName, String serialNo, String receiveBy,
+                                  String remark, String contactNo) {
 
         this.reportName = reportName;
         this.columnMapper.put("createdBy", "createdBy");
@@ -246,14 +266,14 @@ public class TransferDetailReport extends com.ais.damocles.spark.schema.CommonSc
         this.transferOutStatus = transferOutStatus1;
         this.columnMapper.put("transferOutStatus1", "transferOutStatus1");
 
-        this.brand = brand;
-        this.columnMapper.put("brand", "brand");
+        this.brand_key = brand_key;
+        this.columnMapper.put("brand_key", "brand_key");
 
-        this.model = model;
-        this.columnMapper.put("model", "model");
+        this.model_key = model_key;
+        this.columnMapper.put("model_key", "model_key");
 
-        this.matCode = matCode;
-        this.columnMapper.put("matCode", "matCode");
+        this.matCode_key = matCode_key;
+        this.columnMapper.put("matCode_key", "matCode_key");
 
         this.matDescription = matDescription;
         this.columnMapper.put("matDescription", "matDescription");
@@ -309,6 +329,23 @@ public class TransferDetailReport extends com.ais.damocles.spark.schema.CommonSc
         this.vendorName = vendorName;
         this.columnMapper.put("vendorName", "vendorName");
 
+        this.item = item;
+        this.columnMapper.put("item", "item");
+
+        this.commercialName = commercialName;
+        this.columnMapper.put("commercialName ", "commercialName");
+
+        this.serialNo = serialNo;
+        this.columnMapper.put("serialNo", "serialNo");
+
+        this.receiveBy = receiveBy;
+        this.columnMapper.put("receiveBy ", "receiveBy ");
+
+        this.remark = remark;
+        this.columnMapper.put("remark ", "remark ");
+
+        this.contactNo = contactNo;
+        this.columnMapper.put("contactNo ", "contactNo ");
     }
 
     public String getReportName() {
@@ -423,28 +460,28 @@ public class TransferDetailReport extends com.ais.damocles.spark.schema.CommonSc
         this.transferOutStatus = transferOutStatus;
     }
 
-    public String getBrand() {
-        return brand;
+    public String getBrand_key() {
+        return brand_key;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public void setBrand_key(String brand_key) {
+        this.brand_key = brand_key;
     }
 
-    public String getModel() {
-        return model;
+    public String getModel_key() {
+        return model_key;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setModel_key(String model_key) {
+        this.model_key = model_key;
     }
 
-    public String getMatCode() {
-        return matCode;
+    public String getMatCode_key() {
+        return matCode_key;
     }
 
-    public void setMatCode(String matCode) {
-        this.matCode = matCode;
+    public void setMatCode_key(String matCode_key) {
+        this.matCode_key = matCode_key;
     }
 
     public String getMatDescription() {
@@ -685,5 +722,53 @@ public class TransferDetailReport extends com.ais.damocles.spark.schema.CommonSc
 
     public void setForSubStock(String forSubStock) {
         this.forSubStock = forSubStock;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public String getCommercialName() {
+        return commercialName;
+    }
+
+    public void setCommercialName(String commercialName) {
+        this.commercialName = commercialName;
+    }
+
+    public String getSerialNo() {
+        return serialNo;
+    }
+
+    public void setSerialNo(String serialNo) {
+        this.serialNo = serialNo;
+    }
+
+    public String getReceiveBy() {
+        return receiveBy;
+    }
+
+    public void setReceiveBy(String receiveBy) {
+        this.receiveBy = receiveBy;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
     }
 }
