@@ -4,7 +4,7 @@ import com.datastax.driver.mapping.annotations.Column;
 
 public class OrderTransfer extends com.ais.damocles.spark.schema.CommonSchema {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	@Column(name = "transactionId")
@@ -151,22 +151,22 @@ public class OrderTransfer extends com.ais.damocles.spark.schema.CommonSchema {
 	}
 
 	public OrderTransfer(String transactionId, String transactionType,
-			String transferNo, String company, String fromSubStock,
-			String toSubStock, String transferStatus, String fromLocationCode,
-			String fromLocationName, String fromLocationType,
-			String fromLocationSubType, String fromLocationRegion,
-			String fromLocationProvince, String toLocationCode,
-			String toLocationName, String toLocationType,
-			String toLocationSubType, String toLocationRegion,
-			String toLocationProvince, String docRef, String transferDateTime,
-			String mmDocYear, String mmDocNo, String doNo, String movementType,
-			String distributionChannel, String createBy, String createDateTime,
-			String updateBy, String updateDateTime, String cancelBy,
-			String cancelDateTime, String shipToCode, String shipToName,
-			String shipToProvince, String shipToAddress, String vendorCode,
-			String vendorName, String remark, String matCode_key,
-			String brand_key, String model_key, String productType_key,
-			String productSubType_key, String transferDetail) {
+						 String transferNo, String company, String fromSubStock,
+						 String toSubStock, String transferStatus, String fromLocationCode,
+						 String fromLocationName, String fromLocationType,
+						 String fromLocationSubType, String fromLocationRegion,
+						 String fromLocationProvince, String toLocationCode,
+						 String toLocationName, String toLocationType,
+						 String toLocationSubType, String toLocationRegion,
+						 String toLocationProvince, String docRef, String transferDateTime,
+						 String mmDocYear, String mmDocNo, String doNo, String movementType,
+						 String distributionChannel, String createBy, String createDateTime,
+						 String updateBy, String updateDateTime, String cancelBy,
+						 String cancelDateTime, String shipToCode, String shipToName,
+						 String shipToProvince, String shipToAddress, String vendorCode,
+						 String vendorName, String remark, String matCode_key,
+						 String brand_key, String model_key, String productType_key,
+						 String productSubType_key, String transferDetail) {
 
 		this.transactionId = transactionId;
 		this.columnMapper.put("transactionId", "transactionId");

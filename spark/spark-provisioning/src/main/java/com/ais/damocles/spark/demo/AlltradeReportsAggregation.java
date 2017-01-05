@@ -281,7 +281,7 @@ public class AlltradeReportsAggregation {
                     String transferindatetime = f._2()._2().isPresent() ? f._2()._2().get().getTransferDateTime() : null;
 
 
-                   RequestGoodsDetailReport requestGoods = new RequestGoodsDetailReport();
+                    RequestGoodsDetailReport requestGoods = new RequestGoodsDetailReport();
 
                     requestGoods.setRequestNo(f._2()._1()._1().getRequestNo());
                     requestGoods.setCompany(f._2()._1()._1().getCompany());
@@ -313,8 +313,8 @@ public class AlltradeReportsAggregation {
         System.out.println("===== insert data to cassandra =====");
         requestGoodsRDD.foreach(f -> System.out.println("RequestNo: " + f.getRequestNo()
                 /*+ "transferOutNo : " + f.getTransferOutNo()*/
-                + "transferInNo : " + f.getTransferInNo()
-                + "TransferInDateTime : " + f.getTransferindatetime()
+                        + "transferInNo : " + f.getTransferInNo()
+                        + "TransferInDateTime : " + f.getTransferindatetime()
                 /*+ "createBy : " + f.getCreateBy()
                 + "matCode_key : " + f.getMatCode_key()*/
         ));
