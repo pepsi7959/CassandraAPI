@@ -3,10 +3,9 @@ package com.ais.damocles.spark.demo;
 import static com.datastax.spark.connector.japi.CassandraJavaUtil.javaFunctions;
 
 import java.security.PublicKey;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Properties;
+import java.security.Timestamp;
+import java.util.*;
+
 
 import com.datastax.spark.connector.japi.CassandraJavaUtil;
 import org.apache.hadoop.classification.InterfaceAudience;
@@ -17,6 +16,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
+import scala.StringContext;
 import scala.Tuple2;
 import scala.Tuple3;
 
@@ -25,6 +25,8 @@ import com.ais.damocles.spark.schema.alltrade.OrderTransfer;
 import com.ais.damocles.spark.schema.alltrade.RequestGoodsDetailReport;
 import com.ais.damocles.spark.util.PropertyFileReader;
 import com.datastax.spark.connector.japi.CassandraRow;
+
+import javax.xml.crypto.Data;
 
 
 public class AlltradeReportsAggregation {
@@ -99,11 +101,11 @@ public class AlltradeReportsAggregation {
                     requestGoods.setPickingDateTime(f.getString(24));
                     /*requestGoods.setQuotaFlag(f.getString());*/
                     /*requestGoods.setItemNo(f.getString());*/
-                    requestGoods.setBrand_key(f.getString(4));
-                    requestGoods.setModel_key(f.getString(5));
-                    requestGoods.setMatCode_key(f.getString(3));
+                    requestGoods.setBrand_key(f.getList(4));
+                    requestGoods.setModel_key(f.getList(5));
+                    requestGoods.setMatCode_key(f.getList(3)); /*3*/
                     /*requestGoods.setMatDescription_key(f.getString());*/
-                    requestGoods.setCommercialName_key(f.getString(8));
+                    requestGoods.setCommercialName_key(f.getList(8));
                     requestGoods.setRemark(f.getString(27));
                     requestGoods.setShipToCode(f.getString(32));
                     requestGoods.setShipToProvince(f.getString(35));
@@ -211,12 +213,13 @@ public class AlltradeReportsAggregation {
             /*Condition*/
             String createdBy = f._2()._1()._2().isPresent() ? f._2()._1()._2().get().getCreateBy() : null;
             String transferInNo = f._2()._2().isPresent() ? f._2()._2().get().getTransferNo() : null;
-            String transferInDateTime = f._2()._2().isPresent() ? f._2()._2().get().getTransferDateTime() : null;
+            String transferindatetime = f._2()._2().isPresent() ? f._2()._2().get().getTransferDateTime() : null;
 
             System.out.println("key : " + f._1()
                     + "TransferNo : " + f._2()._1()._2().get().getTransferNo() + "\n"
                     + "RequestNo : " + f._2()._1()._1().getRequestNo() + "\n"
                     + "Company : " + f._2()._1()._1().getCompany() + "\n"
+                    + "ToLocationCode : " + f._2()._1()._1().getToLocationCode() + "\n"
                     + "ToLocationName : " + f._2()._1()._1().getToLocationName() + "\n"
                     + "ForSubStock : " + f._2()._1()._1().getForSubStock() + "\n"
                     + "CreateDateTime : " + f._2()._1()._1().getCreateDateTime() + "\n"
@@ -228,7 +231,7 @@ public class AlltradeReportsAggregation {
                     + "TransferOutDateTime : " + f._2()._1()._2().get().getTransferDateTime() + "\n"
                     + "CreateBy : " + createdBy + "\n"
                     + "TransferInNo : " + transferInNo + "\n"
-                    + "TransferInDateTime : " + transferInDateTime + "\n"
+                    + "TransferInDateTime : " + transferindatetime + "\n"
                     /* + "QuotaFlag : " + f._2()._1()._1().getQuotaFlag()+"\n"*/
                     /*+ "ItemNo : " + f._2()._1()._1().getItemNo()+"\n"*/
                     + "Brand_key : " + f._2()._1()._1().getBrand_key() + "\n"
@@ -243,11 +246,30 @@ public class AlltradeReportsAggregation {
 
         /*MapColumn schema to cassandra*/
         Map<String, String> columnNameMappings = new HashMap<String, String>();
+
         columnNameMappings.put("requestNo", "requestno");
+        columnNameMappings.put("company", "company");
+        columnNameMappings.put("toLocationCode", "tolocationcode");
+        columnNameMappings.put("toLocationName", "tolocationname");
+        columnNameMappings.put("forSubStock", "forsubstock");
+        columnNameMappings.put("createDateTime", "createdatetime");
+        columnNameMappings.put("requestStatus", "requeststatus");
+        columnNameMappings.put("reservedNo", "reservedno");
+        columnNameMappings.put("doNo", "dono");
+        columnNameMappings.put("pickingDateTime", "pickingdatetime");
         columnNameMappings.put("transferOutNo", "transferoutno");
-        columnNameMappings.put("transferInNo", "transferinno");
+        columnNameMappings.put("transferOutDateTime", "transferoutdatetime");
         columnNameMappings.put("createBy", "createby");
+        columnNameMappings.put("transferInNo", "transferinno");
+        columnNameMappings.put("transferindatetime", "transferindatetime");
         columnNameMappings.put("matCode_key", "matcode_key");
+        columnNameMappings.put("brand_key", "brand_key");
+        columnNameMappings.put("model_key", "model_key");
+        columnNameMappings.put("commercialName_key", "commercialname_key");
+        columnNameMappings.put("remark", "remark");
+        columnNameMappings.put("shipToCode", "shiptocode");
+        columnNameMappings.put("shipToProvince", "shiptoprovince");
+
 
         /*insert data to cassandra*/
         JavaRDD<RequestGoodsDetailReport> requestGoodsRDD = allAggregation
@@ -256,23 +278,45 @@ public class AlltradeReportsAggregation {
                     /*Condition*/
                     String createdBy = f._2()._1()._2().isPresent() ? f._2()._1()._2().get().getCreateBy() : null;
                     String transferInNo = f._2()._2().isPresent() ? f._2()._2().get().getTransferNo() : null;
+                    String transferindatetime = f._2()._2().isPresent() ? f._2()._2().get().getTransferDateTime() : null;
 
-                    RequestGoodsDetailReport requestGoods = new RequestGoodsDetailReport();
+
+                   RequestGoodsDetailReport requestGoods = new RequestGoodsDetailReport();
+
                     requestGoods.setRequestNo(f._2()._1()._1().getRequestNo());
+                    requestGoods.setCompany(f._2()._1()._1().getCompany());
+                    requestGoods.setToLocationCode(f._2()._1()._1().getToLocationCode());
+                    requestGoods.setToLocationName(f._2()._1()._1().getToLocationName());
+                    requestGoods.setForSubStock(f._2()._1()._1().getForSubStock());
+                    requestGoods.setCreateDateTime( f._2()._1()._1().getCreateDateTime());
+                    requestGoods.setRequestStatus(f._2()._1()._1().getRequestStatus());
+                    requestGoods.setReservedNo(f._2()._1()._1().getReservedNo());
+                    requestGoods.setDoNo(f._2()._1()._1().getDoNo());
+                    requestGoods.setPickingDateTime(f._2()._1()._1().getPickingDateTime());
                     requestGoods.setTransferOutNo(f._2()._1()._2().get().getTransferNo());
+                    requestGoods.setTransferOutDateTime(f._2()._1()._2().get().getTransferDateTime());
                     requestGoods.setCreateBy(createdBy);
                     requestGoods.setTransferInNo(transferInNo);
+                    requestGoods.setTransferindatetime(transferindatetime);
                     requestGoods.setMatCode_key(f._2()._1()._1().getMatCode_key());
+                    requestGoods.setBrand_key(f._2()._1()._1().getBrand_key());
+                    requestGoods.setModel_key(f._2()._1()._1().getModel_key());
+                    requestGoods.setCommercialName_key(f._2()._1()._1().getCommercialName_key());
+                    requestGoods.setRemark(f._2()._1()._1().getRemark());
+                    requestGoods.setShipToCode(f._2()._1()._1().getShipToCode());
+                    requestGoods.setShipToProvince(f._2()._1()._1().getShipToProvince());
+
                     return requestGoods;
                 });
 
         /* show insert data to cassandra */
         System.out.println("===== insert data to cassandra =====");
         requestGoodsRDD.foreach(f -> System.out.println("RequestNo: " + f.getRequestNo()
-                + "TransferOutNo : " + f.getTransferOutNo()
-                + "TransferInNo : " + f.getTransferInNo()
-                + "createBy : " + f.getCreateBy()
-                + "matCode_key : " + f.getMatCode_key()
+                /*+ "transferOutNo : " + f.getTransferOutNo()*/
+                + "transferInNo : " + f.getTransferInNo()
+                + "TransferInDateTime : " + f.getTransferindatetime()
+                /*+ "createBy : " + f.getCreateBy()
+                + "matCode_key : " + f.getMatCode_key()*/
         ));
 
         javaFunctions(requestGoodsRDD).writerBuilder(

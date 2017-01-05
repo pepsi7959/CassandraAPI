@@ -2,6 +2,8 @@ package com.ais.damocles.spark.schema.alltrade;
 
 import com.datastax.driver.mapping.annotations.Column;
 
+import java.util.List;
+
 public class RequestGoodsDetailReport extends com.ais.damocles.spark.schema.CommonSchema {
     /**
      *
@@ -88,8 +90,9 @@ public class RequestGoodsDetailReport extends com.ais.damocles.spark.schema.Comm
     @Column(name = "transferInNo")
     private String transferInNo;
 
-    @Column(name = "transferInDateTime ")
-    private String transferInDateTime;
+
+    @Column(name = "transferindatetime")
+    private String transferindatetime;
 
     @Column(name = "quotaFlag")
     private String quotaFlag;
@@ -97,20 +100,20 @@ public class RequestGoodsDetailReport extends com.ais.damocles.spark.schema.Comm
     @Column(name = "itemNo")
     private String itemNo;
 
-    @Column(name = "brand")
-    private String brand;
+    @Column(name = "brand_key")
+    private List<Object> brand_key;
 
-    @Column(name = "model")
-    private String model;
+    @Column(name = "model_key")
+    private List<Object> model_key;
 
     @Column(name = "matCode_key")
-    private String matCode_key;
+    private List<Object> matCode_key;
 
-    @Column(name = "matDescription")
-    private String matDescription;
+    @Column(name = "matDescription_key")
+    private List<Object> matDescription_key;
 
-    @Column(name = "commercialName")
-    private String commercialName;
+    @Column(name = "commercialName_key")
+    private List<Object> commercialName_key;
 
     @Column(name = "qtyReq,")
     private String qtyReq;
@@ -133,6 +136,7 @@ public class RequestGoodsDetailReport extends com.ais.damocles.spark.schema.Comm
     @Column(name = "locationCode")
     private String locationCode;
 
+
     /*
      * TODO: add other attribute from schema
      */
@@ -150,9 +154,9 @@ public class RequestGoodsDetailReport extends com.ais.damocles.spark.schema.Comm
                                     String requestNo, String requestStatus, String reservedNo,
                                     String mmDocNo, String doNo, String pickingDateTime,
                                     String transferOutNo, String transferOutDateTime, String createBy,
-                                    String transferInNo, String transferInDateTime, String quotaFlag,
-                                    String itemNo, String brand, String model, String matCode_key,
-                                    String matDescription, String commercialName, String qtyReq,
+                                    String transferInNo, String transferindatetime, String quotaFlag,
+                                    String itemNo, List<Object> brand_key, List<Object> model_key, List<Object> matCode_key,
+                                    List<Object> matDescription_key, List<Object> commercialName_key, String qtyReq,
                                     String receiveBy, String mobileNo, String remark,
                                     String shipToCode, String shipToProvince, String locationCode) {
         this.reportName = reportName;
@@ -234,10 +238,10 @@ public class RequestGoodsDetailReport extends com.ais.damocles.spark.schema.Comm
         this.columnMapper.put("createBy", "createBy");
 
         this.transferInNo = transferInNo;
-        //this.columnMapper.put("transferInNo", "transferInNo");
+        this.columnMapper.put("transferInNo", "transferInNo");
 
-        this.transferInDateTime = transferInDateTime;
-        this.columnMapper.put("transferInDateTime ", "transferInDateTime ");
+        this.transferindatetime = transferindatetime;
+        this.columnMapper.put("transferindatetime","transferindatetime");
 
         this.quotaFlag = quotaFlag;
         this.columnMapper.put("quotaFlag", "quotaFlag");
@@ -245,20 +249,20 @@ public class RequestGoodsDetailReport extends com.ais.damocles.spark.schema.Comm
         this.itemNo = itemNo;
         this.columnMapper.put("itemNo", "itemNo");
 
-        this.brand = brand;
-        this.columnMapper.put("brand", "brand");
+        this.brand_key = brand_key;
+        this.columnMapper.put("brand_key", "brand_key");
 
-        this.model = model;
-        this.columnMapper.put("model", "model");
+        this.model_key = model_key;
+        this.columnMapper.put("model_key", "model_key");
 
         this.matCode_key = matCode_key;
         this.columnMapper.put("matCode_key", "matCode_key");
 
-        this.matDescription = matDescription;
-        this.columnMapper.put("matDescription", "matDescription");
+        this.matDescription_key = matDescription_key;
+        this.columnMapper.put("matDescription_key", "matDescription_key");
 
-        this.commercialName = commercialName;
-        this.columnMapper.put("commercialName", "commercialName");
+        this.commercialName_key = commercialName_key;
+        this.columnMapper.put("commercialName_key", "commercialName_key");
 
         this.qtyReq = qtyReq;
         this.columnMapper.put("qtyReq", "qtyReq");
@@ -280,6 +284,7 @@ public class RequestGoodsDetailReport extends com.ais.damocles.spark.schema.Comm
 
         this.locationCode = locationCode;
         this.columnMapper.put("locationCode", "locationCode");
+
 
     }
 
@@ -489,17 +494,11 @@ public class RequestGoodsDetailReport extends com.ais.damocles.spark.schema.Comm
         return transferInNo;
     }
 
-    public void setTransferInNo(String transferInNo) {
-        this.transferInNo = transferInNo;
-    }
+    public void setTransferInNo(String transferInNo) {this.transferInNo = transferInNo;}
 
-    public String getTransferInDateTime() {
-        return transferInDateTime;
-    }
+    public String getTransferindatetime() {return transferindatetime;}
 
-    public void setTransferInDateTime(String transferInDateTime) {
-        this.transferInDateTime = transferInDateTime;
-    }
+    public void setTransferindatetime(String transferindatetime) {this.transferindatetime = transferindatetime;}
 
     public String getQuotaFlag() {
         return quotaFlag;
@@ -517,42 +516,36 @@ public class RequestGoodsDetailReport extends com.ais.damocles.spark.schema.Comm
         this.itemNo = itemNo;
     }
 
-    public String getBrand() {
-        return brand;
+    public List<Object> getBrand_key() {
+        return brand_key;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public void setBrand_key(List<Object> brand_key) {
+        this.brand_key = brand_key;
     }
 
-    public String getModel() {
-        return model;
-    }
+    public List<Object> getModel_key() {return model_key;}
 
-    public void setModel(String model) {
-        this.model = model;
-    }
+    public void setModel_key(List<Object> model_key) {this.model_key = model_key;}
 
-    public String getMatCode_key() {
+    public List<Object> getMatCode_key() {
         return matCode_key;
     }
 
-    public void setMatCode_key(String matCode_key) {
-        this.matCode_key = matCode_key;
+    public void setMatCode_key(List<Object> matCode_key) {this.matCode_key = matCode_key;}
+
+    public List<Object> getMatDescription_key() {return matDescription_key;}
+
+    public void setMatDescription_key(List<Object> matDescription_key) {
+        this.matDescription_key = matDescription_key;
     }
 
-    public String getMatDescription() {return matDescription;}
-
-    public void setMatDescription(String matDescription) {
-        this.matDescription = matDescription;
+    public List<Object> getCommercialName_key() {
+        return commercialName_key;
     }
 
-    public String getCommercialName() {
-        return commercialName;
-    }
-
-    public void setCommercialName(String commercialName) {
-        this.commercialName = commercialName;
+    public void setCommercialName_key(List<Object> commercialName_key) {
+        this.commercialName_key = commercialName_key;
     }
 
     public String getQtyReq() {
