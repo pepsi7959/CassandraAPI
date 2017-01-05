@@ -321,9 +321,7 @@ public class OrderTransfer extends com.ais.damocles.spark.schema.CommonSchema {
 		this.transactionType = transactionType;
 	}
 
-	public String getTransferNo() {
-		return transferNo;
-	}
+	public String getTransferNo() {return transferNo;}
 
 	public void setTransferNo(String transferNo) {
 		this.transferNo = transferNo;
@@ -465,9 +463,7 @@ public class OrderTransfer extends com.ais.damocles.spark.schema.CommonSchema {
 		this.docRef = docRef;
 	}
 
-	public String getTransferDateTime() {
-		return transferDateTime;
-	}
+	public String getTransferDateTime() {return transferDateTime;}
 
 	public void setTransferDateTime(String transferDateTime) {
 		this.transferDateTime = transferDateTime;
@@ -617,9 +613,7 @@ public class OrderTransfer extends com.ais.damocles.spark.schema.CommonSchema {
 		this.remark = remark;
 	}
 
-	public String getMatCode_key() {
-		return matCode_key;
-	}
+	public String getMatCode_key() {return matCode_key;}
 
 	public void setMatCode_key(String matCode_key) {
 		this.matCode_key = matCode_key;

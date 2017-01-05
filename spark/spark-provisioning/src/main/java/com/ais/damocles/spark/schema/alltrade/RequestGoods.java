@@ -2,6 +2,10 @@ package com.ais.damocles.spark.schema.alltrade;
 
 import com.datastax.driver.mapping.annotations.Column;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
     /**
      *
@@ -87,17 +91,17 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
     @Column(name = "stampDelivery")
     private String stampDelivery;
     @Column(name = "matCode_key")
-    private String matCode_key;
+    private List<Object> matCode_key;
     @Column(name = "brand_key")
-    private String brand_key;
+    private List<Object> brand_key;
     @Column(name = "model_key")
-    private String model_key;
+    private List<Object> model_key;
     @Column(name = "productType_key")
-    private String productType_key;
+    private List<Object> productType_key;
     @Column(name = "productSubType_key")
-    private String productSubType_key;
+    private List<Object> productSubType_key;
     @Column(name = "commercialName_key ")
-    private String commercialName_key;
+    private List<Object> commercialName_key;
     @Column(name = "requestDetail ")
     private String requestDetail;
     @Column(name = "quotaFlag")
@@ -105,7 +109,7 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
     @Column(name = "itemNo")
     private String itemNo;
     @Column(name = "matDescription_key")
-    private String matDescription_key;
+    private List<Object> matDescription_key;
 
 
     public RequestGoods() {
@@ -128,10 +132,10 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
                         String shipToAddress, String shipToDistributionChannel,
                         String receiveBy, String mobileNo, String routeGroup,
                         String remark, String reason, String stampDelivery,
-                        String matCode_key, String brand_key, String model_key,
-                        String productType_key, String productSubType_key,
-                        String commercialName_key, String requestDetail,
-                        String quotaFlag, String itemNo,String matDescription_key) {
+                        List<Object> matCode_key, List<Object> brand_key, List<Object> model_key,
+                        List<Object> productType_key, List<Object> productSubType_key,
+                        List<Object> commercialName_key, String requestDetail,
+                        String quotaFlag, String itemNo,List<Object> matDescription_key) {
 
         this.transactionId = transactionId;
         this.columnMapper.put("transactionId", "transactionId");
@@ -541,9 +545,7 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
         return shipToDistributionChannel;
     }
 
-    public void setShipToDistributionChannel(String shipToDistributionChannel) {
-        this.shipToDistributionChannel = shipToDistributionChannel;
-    }
+    public void setShipToDistributionChannel(String shipToDistributionChannel) {this.shipToDistributionChannel = shipToDistributionChannel;}
 
     public String getReceiveBy() {
         return receiveBy;
@@ -593,51 +595,51 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
         this.stampDelivery = stampDelivery;
     }
 
-    public String getMatCode_key() {
+    public List<Object> getMatCode_key() {
         return matCode_key;
     }
 
-    public void setMatCode_key(String matCode_key) {
+    public void setMatCode_key(List<Object> matCode_key) {
         this.matCode_key = matCode_key;
     }
 
-    public String getBrand_key() {
+    public List<Object> getBrand_key() {
         return brand_key;
     }
 
-    public void setBrand_key(String brand_key) {
+    public void setBrand_key(List<Object> brand_key) {
         this.brand_key = brand_key;
     }
 
-    public String getModel_key() {
+    public List<Object> getModel_key() {
         return model_key;
     }
 
-    public void setModel_key(String model_key) {
+    public void setModel_key(List<Object> model_key) {
         this.model_key = model_key;
     }
 
-    public String getProductType_key() {
+    public List<Object> getProductType_key() {
         return productType_key;
     }
 
-    public void setProductType_key(String productType_key) {
+    public void setProductType_key(List<Object> productType_key) {
         this.productType_key = productType_key;
     }
 
-    public String getProductSubType_key() {
+    public List<Object> getProductSubType_key() {
         return productSubType_key;
     }
 
-    public void setProductSubType_key(String productSubType_key) {
+    public void setProductSubType_key(List<Object> productSubType_key) {
         this.productSubType_key = productSubType_key;
     }
 
-    public String getCommercialName_key() {
+    public List<Object> getCommercialName_key() {
         return commercialName_key;
     }
 
-    public void setCommercialName_key(String commercialName_key) {
+    public void setCommercialName_key(List<Object> commercialName_key) {
         this.commercialName_key = commercialName_key;
     }
 
@@ -657,9 +659,9 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
 
     public void setItemNo(String itemNo) {this.itemNo = itemNo;}
 
-    public String getMatDescription_key() {return matDescription_key;}
+    public List<Object> getMatDescription_key() {return matDescription_key;}
 
-    public void setMatDescription_key(String matDescription_key) {this.matDescription_key = matDescription_key;}
+    public void setMatDescription_key(List<Object> matDescription_key) {this.matDescription_key = matDescription_key;}
 
     public static long getSerialversionuid() {
         return serialVersionUID;
