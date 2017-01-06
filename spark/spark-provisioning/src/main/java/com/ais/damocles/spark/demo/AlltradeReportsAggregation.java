@@ -2,13 +2,14 @@ package com.ais.damocles.spark.demo;
 
 import static com.datastax.spark.connector.japi.CassandraJavaUtil.javaFunctions;
 
-import java.security.PublicKey;
-import java.security.Timestamp;
 import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Properties;
 
 
 import com.datastax.spark.connector.japi.CassandraJavaUtil;
-import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -16,17 +17,13 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
-import scala.StringContext;
 import scala.Tuple2;
-import scala.Tuple3;
 
 import com.ais.damocles.spark.schema.alltrade.RequestGoods;
 import com.ais.damocles.spark.schema.alltrade.OrderTransfer;
 import com.ais.damocles.spark.schema.alltrade.RequestGoodsDetailReport;
 import com.ais.damocles.spark.util.PropertyFileReader;
 import com.datastax.spark.connector.japi.CassandraRow;
-
-import javax.xml.crypto.Data;
 
 
 public class AlltradeReportsAggregation {
@@ -281,7 +278,7 @@ public class AlltradeReportsAggregation {
                     String transferindatetime = f._2()._2().isPresent() ? f._2()._2().get().getTransferDateTime() : null;
 
 
-                   RequestGoodsDetailReport requestGoods = new RequestGoodsDetailReport();
+                    RequestGoodsDetailReport requestGoods = new RequestGoodsDetailReport();
 
                     requestGoods.setRequestNo(f._2()._1()._1().getRequestNo());
                     requestGoods.setCompany(f._2()._1()._1().getCompany());
@@ -313,8 +310,8 @@ public class AlltradeReportsAggregation {
         System.out.println("===== insert data to cassandra =====");
         requestGoodsRDD.foreach(f -> System.out.println("RequestNo: " + f.getRequestNo()
                 /*+ "transferOutNo : " + f.getTransferOutNo()*/
-                + "transferInNo : " + f.getTransferInNo()
-                + "TransferInDateTime : " + f.getTransferindatetime()
+                        + "transferInNo : " + f.getTransferInNo()
+                        + "TransferInDateTime : " + f.getTransferindatetime()
                 /*+ "createBy : " + f.getCreateBy()
                 + "matCode_key : " + f.getMatCode_key()*/
         ));
