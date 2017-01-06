@@ -183,3 +183,6 @@ spark/spark-provisioning/.idea/workspace.xml
 spark/spark-provisioning/dependency-reduced-pom.xml
 spark/spark-provisioning/run-spark-TransferDetailReport.sh
 spark/spark-provisioning/spark-provisioning.iml
+schema/Schema_AllTreade_Report
+.gitignore
+.gitignore
