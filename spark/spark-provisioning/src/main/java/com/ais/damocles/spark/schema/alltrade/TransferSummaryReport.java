@@ -280,8 +280,8 @@ public class TransferSummaryReport extends com.ais.damocles.spark.schema.CommonS
         this.createBy = createBy;
         this.columnMapper.put("createBy", "createBy");
 
-        this.updateBy = createBy;
-        this.columnMapper.put("createBy", "createBy");
+        this.updateBy = updateBy;
+        this.columnMapper.put("updateBy", "updateBy");
 
         this.reason = reason;
         this.columnMapper.put("reason", "reason");
