@@ -329,7 +329,6 @@ public class AlltradeTransferSummaryReport {
                         requestGoods.setShipToName(f._2()._1()._2().get().getShipToName());
                         requestGoods.setDoNo(f._2()._1()._2().get().getDoNo());
                         requestGoods.setPickingDateTime(f._2()._1()._2().get().getPickingDateTime());
-
                         return requestGoods;
                     });
 
