@@ -186,3 +186,4 @@ spark/spark-provisioning/spark-provisioning.iml
 schema/Schema_AllTreade_Report
 .gitignore
 .gitignore
+schema/transferout.company,
