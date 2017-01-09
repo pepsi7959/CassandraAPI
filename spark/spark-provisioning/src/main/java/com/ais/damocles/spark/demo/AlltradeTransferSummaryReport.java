@@ -262,91 +262,91 @@ public class AlltradeTransferSummaryReport {
                     + "shipToName : " + f._2()._1()._2().get().getShipToName()+"\n"
                     + "doNo : " + f._2()._1()._2().get().getDoNo()+"\n"
                     + "pickingDateTime : " + f._2()._1()._2().get().getPickingDateTime()+"\n" );
-             });
+        });
 
             /*MapColumn schema to cassandra*/
-            Map<String, String> columnNameMappings = new HashMap<String, String>();
+        Map<String, String> columnNameMappings = new HashMap<String, String>();
 
-            columnNameMappings.put("company","company");
-            columnNameMappings.put("fromLocationCode","fromlocationcode");
-            columnNameMappings.put("fromLocationName","fromlocationname");
-            columnNameMappings.put("toLocationCode","tolocationcode");
-            columnNameMappings.put("toLocationName","tolocationname");
-            columnNameMappings.put("toLocationName","tolocationname");
-            columnNameMappings.put("transferOutDateTime","transferoutdatetime");
-            columnNameMappings.put("transferOutNo","transferoutno");
-            columnNameMappings.put("transferOutStatus","transferoutstatus");
-            columnNameMappings.put("brand_key","brand_key");
-            columnNameMappings.put("model_key","model_key");
-            columnNameMappings.put("matCode_key","matcode_key");
-            columnNameMappings.put("fromSubStock","fromsubstock");
-            columnNameMappings.put("toSubStock","tosubstock");
-            columnNameMappings.put("createBy","createby");
-            columnNameMappings.put("updateBy","updateby");
+        columnNameMappings.put("company","company");
+        columnNameMappings.put("fromLocationCode","fromlocationcode");
+        columnNameMappings.put("fromLocationName","fromlocationname");
+        columnNameMappings.put("toLocationCode","tolocationcode");
+        columnNameMappings.put("toLocationName","tolocationname");
+        columnNameMappings.put("toLocationName","tolocationname");
+        columnNameMappings.put("transferOutDateTime","transferoutdatetime");
+        columnNameMappings.put("transferOutNo","transferoutno");
+        columnNameMappings.put("transferOutStatus","transferoutstatus");
+        columnNameMappings.put("brand_key","brand_key");
+        columnNameMappings.put("model_key","model_key");
+        columnNameMappings.put("matCode_key","matcode_key");
+        columnNameMappings.put("fromSubStock","fromsubstock");
+        columnNameMappings.put("toSubStock","tosubstock");
+        columnNameMappings.put("createBy","createby");
+        columnNameMappings.put("updateBy","updateby");
 
-            columnNameMappings.put("transferInDateTime","transferindatetime");
-            columnNameMappings.put("transferInNo","transferinno");
+        columnNameMappings.put("transferInDateTime","transferindatetime");
+        columnNameMappings.put("transferInNo","transferinno");
 
-            columnNameMappings.put("requestNo","requestno");
-            columnNameMappings.put("forSubStock","forsubstock");
-            columnNameMappings.put("shipToCode","shiptocode");
-            columnNameMappings.put("shipToName","shiptoname");
-            columnNameMappings.put("doNo","dono");
-            columnNameMappings.put("pickingDateTime","pickingdatetime");
+        columnNameMappings.put("requestNo","requestno");
+        columnNameMappings.put("forSubStock","forsubstock");
+        columnNameMappings.put("shipToCode","shiptocode");
+        columnNameMappings.put("shipToName","shiptoname");
+        columnNameMappings.put("doNo","dono");
+        columnNameMappings.put("pickingDateTime","pickingdatetime");
 
         /*insert data to cassandra*/
-            JavaRDD<TransferSummaryReport> requestGoodsRDD = allAggregation
-                    .map(f -> {
+        JavaRDD<TransferSummaryReport> requestGoodsRDD = allAggregation
+                .map(f -> {
 
                     /*Condition*/
-                        //String createdBy = f._2()._1()._2().isPresent() ? f._2()._1()._2().get().getCreateBy() : null;
-                        String transferInNo = f._2()._2().isPresent() ? f._2()._2().get().getTransferNo() : null;
-                        String transferindatetime = f._2()._2().isPresent() ? f._2()._2().get().getTransferDateTime() : null;
+                    //String createdBy = f._2()._1()._2().isPresent() ? f._2()._1()._2().get().getCreateBy() : null;
+                    String transferInNo = f._2()._2().isPresent() ? f._2()._2().get().getTransferNo() : null;
+                    String transferindatetime = f._2()._2().isPresent() ? f._2()._2().get().getTransferDateTime() : null;
 
-                        TransferSummaryReport requestGoods = new TransferSummaryReport();
-                        requestGoods.setCompany(f._2()._1()._1().getCompany());
-                        requestGoods.setFromLocationCode(f._2()._1()._1().getFromLocationCode());
-                        requestGoods.setFromLocationName(f._2()._1()._1().getFromLocationName());
-                        requestGoods.setToLocationCode(f._2()._1()._1().getToLocationCode());
-                        requestGoods.setToLocationName(f._2()._1()._1().getToLocationName());
-                        requestGoods.setTransferOutDateTime(f._2()._1()._1().getTransferDateTime());
-                        requestGoods.setTransferOutNo(f._2()._1()._1().getTransferNo());
-                        requestGoods.setTransferOutStatus(f._2()._1()._1().getTransferStatus());
-                        requestGoods.setBrand_key(f._2()._1()._1().getBrand_key());
-                        requestGoods.setModel_key(f._2()._1()._1().getModel_key());
-                        requestGoods.setMatCode_key(f._2()._1()._1().getMatCode_key());
-                        requestGoods.setFromSubStock(f._2()._1()._1().getFromSubStock());
-                        requestGoods.setToSubStock(f._2()._1()._1().getToSubStock());
-                        requestGoods.setCreateBy(f._2()._1()._1().getCreateBy());
-                        requestGoods.setUpdateBy(f._2()._1()._1().getUpdateBy());
+                    TransferSummaryReport requestGoods = new TransferSummaryReport();
+                    requestGoods.setCompany(f._2()._1()._1().getCompany());
+                    requestGoods.setFromLocationCode(f._2()._1()._1().getFromLocationCode());
+                    requestGoods.setFromLocationName(f._2()._1()._1().getFromLocationName());
+                    requestGoods.setToLocationCode(f._2()._1()._1().getToLocationCode());
+                    requestGoods.setToLocationName(f._2()._1()._1().getToLocationName());
+                    requestGoods.setTransferOutDateTime(f._2()._1()._1().getTransferDateTime());
+                    requestGoods.setTransferOutNo(f._2()._1()._1().getTransferNo());
+                    requestGoods.setTransferOutStatus(f._2()._1()._1().getTransferStatus());
+                    requestGoods.setBrand_key(f._2()._1()._1().getBrand_key());
+                    requestGoods.setModel_key(f._2()._1()._1().getModel_key());
+                    requestGoods.setMatCode_key(f._2()._1()._1().getMatCode_key());
+                    requestGoods.setFromSubStock(f._2()._1()._1().getFromSubStock());
+                    requestGoods.setToSubStock(f._2()._1()._1().getToSubStock());
+                    requestGoods.setCreateBy(f._2()._1()._1().getCreateBy());
+                    requestGoods.setUpdateBy(f._2()._1()._1().getUpdateBy());
 
-                        requestGoods.setTransferInDateTime(transferindatetime);
-                        requestGoods.setTransferInNo(transferInNo);
+                    requestGoods.setTransferInDateTime(transferindatetime);
+                    requestGoods.setTransferInNo(transferInNo);
 
-                        requestGoods.setRequestNo(f._2()._1()._2().get().getRequestNo());
-                        requestGoods.setForSubStock(f._2()._1()._2().get().getForSubStock());
-                        requestGoods.setShipToCode(f._2()._1()._2().get().getShipToCode());
-                        requestGoods.setShipToName(f._2()._1()._2().get().getShipToName());
-                        requestGoods.setDoNo(f._2()._1()._2().get().getDoNo());
-                        requestGoods.setPickingDateTime(f._2()._1()._2().get().getPickingDateTime());
-                        return requestGoods;
-                    });
+                    requestGoods.setRequestNo(f._2()._1()._2().get().getRequestNo());
+                    requestGoods.setForSubStock(f._2()._1()._2().get().getForSubStock());
+                    requestGoods.setShipToCode(f._2()._1()._2().get().getShipToCode());
+                    requestGoods.setShipToName(f._2()._1()._2().get().getShipToName());
+                    requestGoods.setDoNo(f._2()._1()._2().get().getDoNo());
+                    requestGoods.setPickingDateTime(f._2()._1()._2().get().getPickingDateTime());
+                    return requestGoods;
+                });
 
         /* show insert data to cassandra */
-            System.out.println("===== insert data to cassandra =====");
-            requestGoodsRDD.foreach(f -> System.out.println("RequestNo: " + f.getRequestNo()+"\n"
-                            + "transferOutNo : " + f.getTransferOutNo()+"\n"
-                            + "transferOutDateTime : " + f.getTransferOutDateTime()+"\n"
-                            + "createBy : " + f.getCreateBy()+"\n"
-                            + "company : " + f.getCompany()+"\n"
-                            + "transferInNo : " + f.getTransferInNo()+"\n"
-                            + "transferInDateTime : " + f.getTransferInDateTime()+"\n"
-            ));
-            javaFunctions(requestGoodsRDD).writerBuilder(
-                    "damocles",
-                    "transfersummary_report",
-                    CassandraJavaUtil.mapToRow(TransferSummaryReport.class,
-                            columnNameMappings)).saveToCassandra();
+        System.out.println("===== insert data to cassandra =====");
+        requestGoodsRDD.foreach(f -> System.out.println("RequestNo: " + f.getRequestNo()+"\n"
+                + "transferOutNo : " + f.getTransferOutNo()+"\n"
+                + "transferOutDateTime : " + f.getTransferOutDateTime()+"\n"
+                + "createBy : " + f.getCreateBy()+"\n"
+                + "company : " + f.getCompany()+"\n"
+                + "transferInNo : " + f.getTransferInNo()+"\n"
+                + "transferInDateTime : " + f.getTransferInDateTime()+"\n"
+        ));
+        javaFunctions(requestGoodsRDD).writerBuilder(
+                "damocles",
+                "transfersummary_report",
+                CassandraJavaUtil.mapToRow(TransferSummaryReport.class,
+                        columnNameMappings)).saveToCassandra();
 
     }
 }
