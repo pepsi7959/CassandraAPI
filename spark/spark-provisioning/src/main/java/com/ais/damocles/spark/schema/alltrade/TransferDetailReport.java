@@ -2,6 +2,8 @@ package com.ais.damocles.spark.schema.alltrade;
 
 import com.datastax.driver.mapping.annotations.Column;
 
+import java.util.List;
+
 public class TransferDetailReport extends com.ais.damocles.spark.schema.CommonSchema {
 
     private static final long serialVersionUID = 1L;
@@ -84,14 +86,14 @@ public class TransferDetailReport extends com.ais.damocles.spark.schema.CommonSc
     @Column(name = "forSubStock")
     private String forSubStock;
 
-    @Column(name = "brand")
-    private String brand;
+    @Column(name = "brand_key")
+    private List<Object> brand_key;
 
-    @Column(name = "model")
-    private String model;
+    @Column(name = "model_key")
+    private List<Object> model_key;
 
-    @Column(name = "matCode")
-    private String matCode;
+    @Column(name = "matCode_key")
+    private List<Object> matCode_key;
 
     @Column(name = "matDescription")
     private String matDescription;
@@ -147,23 +149,34 @@ public class TransferDetailReport extends com.ais.damocles.spark.schema.CommonSc
     @Column(name = "vendorName")
     private String vendorName;
 
+    @Column(name = "remark")
+    private String remark;
+
+    @Column(name = "commercialName_key")
+    private String commercialName_key;
+
     public TransferDetailReport() {
     }
 
     public TransferDetailReport(String reportName, String transactionType, String createDateTimeFrom,
-                                  String createDateTimeTo, String fromLocationCodeList, String fromLocationCodeFrom,
-                                  String fromLocationCodeTo, String locationType, String locationSubType,
-                                  String region, String transferFromLocationCodeFrom, String transferToLocationCodeTo,
-                                  String transferInStatus, String transferOutStatus, String company,
-                                  String fromLocationCode, String fromLocationName, String toLocationCode,
-                                  String toLocationName, String transferOutDateTime, String transferOutNo,
-                                  String transferInDateTime, String transferInNo, String requestDateTime,
-                                  String requestNo, String forSubStock, String transferOutStatus1, String brand,
-                                  String model, String matCode, String matDescription, String matType,
-                                  String fromSubStock, String toSubStock, String qtyOut, String qtyIn,
-                                  String createBy, String updateBy, String reason, String shipToCode,
-                                  String shipToName, String matCodeNo, String doNo, String pickingDateTime,
-                                  String salesCode, String salesName, String vendorCode, String vendorName) {
+                                String createDateTimeTo, String fromLocationCodeList, String fromLocationCodeFrom,
+                                String fromLocationCodeTo, String locationType, String locationSubType,
+                                String region, String transferFromLocationCodeFrom, String transferToLocationCodeTo,
+                                String transferInStatus, String transferOutStatus, String company,
+                                String fromLocationCode, String fromLocationName, String toLocationCode,
+                                String toLocationName, String transferOutDateTime, String transferOutNo,
+                                String transferInDateTime, String transferInNo, String requestDateTime,
+                                String requestNo, String forSubStock, String transferOutStatus1,
+                                List<Object> brand_key, List<Object> model_key, List<Object> matCode_key,
+                                String matDescription, String matType,
+                                String fromSubStock, String toSubStock, String qtyOut, String qtyIn,
+                                String createBy, String updateBy, String reason, String shipToCode,
+                                String shipToName, String matCodeNo, String doNo, String pickingDateTime,
+                                String salesCode, String salesName, String vendorCode, String vendorName,
+                                String remark, String commercialName_key) {
+
+        this.commercialName_key = commercialName_key;
+        this.columnMapper.put("commercialName_key","commercialName_key");
 
         this.reportName = reportName;
         this.columnMapper.put("createdBy", "createdBy");
@@ -246,14 +259,14 @@ public class TransferDetailReport extends com.ais.damocles.spark.schema.CommonSc
         this.transferOutStatus = transferOutStatus1;
         this.columnMapper.put("transferOutStatus1", "transferOutStatus1");
 
-        this.brand = brand;
-        this.columnMapper.put("brand", "brand");
+        this.brand_key = brand_key;
+        this.columnMapper.put("brand_key", "brand_key");
 
-        this.model = model;
-        this.columnMapper.put("model", "model");
+        this.model_key = model_key;
+        this.columnMapper.put("model_key", "model_key");
 
-        this.matCode = matCode;
-        this.columnMapper.put("matCode", "matCode");
+        this.matCode_key = matCode_key;
+        this.columnMapper.put("matCode_key", "matCode_key");
 
         this.matDescription = matDescription;
         this.columnMapper.put("matDescription", "matDescription");
@@ -309,6 +322,16 @@ public class TransferDetailReport extends com.ais.damocles.spark.schema.CommonSc
         this.vendorName = vendorName;
         this.columnMapper.put("vendorName", "vendorName");
 
+        this.remark = remark;
+        this.columnMapper.put("remark","remark");
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getReportName() {
@@ -421,30 +444,6 @@ public class TransferDetailReport extends com.ais.damocles.spark.schema.CommonSc
 
     public void setTransferOutStatus(String transferOutStatus) {
         this.transferOutStatus = transferOutStatus;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getMatCode() {
-        return matCode;
-    }
-
-    public void setMatCode(String matCode) {
-        this.matCode = matCode;
     }
 
     public String getMatDescription() {
@@ -685,5 +684,37 @@ public class TransferDetailReport extends com.ais.damocles.spark.schema.CommonSc
 
     public void setForSubStock(String forSubStock) {
         this.forSubStock = forSubStock;
+    }
+
+    public List<Object> getBrand_key() {
+        return brand_key;
+    }
+
+    public void setBrand_key(List<Object> brand_key) {
+        this.brand_key = brand_key;
+    }
+
+    public List<Object> getModel_key() {
+        return model_key;
+    }
+
+    public void setModel_key(List<Object> model_key) {
+        this.model_key = model_key;
+    }
+
+    public List<Object> getMatCode_key() {
+        return matCode_key;
+    }
+
+    public void setMatCode_key(List<Object> matCode_key) {
+        this.matCode_key = matCode_key;
+    }
+
+    public String getCommercialName_key() {
+        return commercialName_key;
+    }
+
+    public void setCommercialName_key(String commercialName_key) {
+        this.commercialName_key = commercialName_key;
     }
 }
