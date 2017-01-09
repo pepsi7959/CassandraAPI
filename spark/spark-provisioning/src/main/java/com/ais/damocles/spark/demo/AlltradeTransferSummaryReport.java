@@ -342,7 +342,6 @@ public class AlltradeTransferSummaryReport {
                             + "transferInNo : " + f.getTransferInNo()+"\n"
                             + "transferInDateTime : " + f.getTransferInDateTime()+"\n"
             ));
-
             javaFunctions(requestGoodsRDD).writerBuilder(
                     "damocles",
                     "transfersummary_report",
