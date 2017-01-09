@@ -2,13 +2,12 @@ package com.ais.damocles.spark.demo;
 
 import static com.datastax.spark.connector.japi.CassandraJavaUtil.javaFunctions;
 
-import java.security.PublicKey;
-import java.security.Timestamp;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 
 import com.datastax.spark.connector.japi.CassandraJavaUtil;
-import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -16,9 +15,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
-import scala.StringContext;
 import scala.Tuple2;
-import scala.Tuple3;
 
 import com.ais.damocles.spark.schema.alltrade.RequestGoods;
 import com.ais.damocles.spark.schema.alltrade.OrderTransfer;
@@ -26,15 +23,13 @@ import com.ais.damocles.spark.schema.alltrade.RequestGoodsDetailReport;
 import com.ais.damocles.spark.util.PropertyFileReader;
 import com.datastax.spark.connector.japi.CassandraRow;
 
-import javax.xml.crypto.Data;
 
+public class AlltradeRequestGoodsDetailReport {
 
-public class AlltradeReportsAggregation {
-    public static JavaSparkContext sc;
     public static final String DAMOCLES_KEYSPACE = "damocles";
     public static final String REQUESTGOODS_TABLE = "requestgoods";
     public static final String ORDERTRANSFER_TABLE = "ordertransfer";
-    //public static final String REQUESTGOODSDETAILREPORT_TABLE = "requestgoodsreport";
+    public static final String REQUESTGOODSDETAIL_TABLE = "requestgoodsdetail_report";
 
     public static void main(String[] args) throws Exception {
 
@@ -79,9 +74,9 @@ public class AlltradeReportsAggregation {
      */
     public static void AggregateTransfer(JavaStreamingContext jssc) {
 
-        sc = jssc.sparkContext();
+        JavaSparkContext sc = jssc.sparkContext();
 
-		/* Load ReqeustGoods from the Cassandra */
+		/* Load RequestGoods from the Cassandra */
         JavaRDD<CassandraRow> cassandraRowRequestGoods = javaFunctions(sc)
                 .cassandraTable(DAMOCLES_KEYSPACE, REQUESTGOODS_TABLE);
 
@@ -149,12 +144,14 @@ public class AlltradeReportsAggregation {
                     orderTransferOut.setDocRef(f.getString(14));
                     orderTransferOut.setTransactionType(f.getString(1));
                     orderTransferOut.setTransferDetail(f.getString(39));
+                    orderTransferOut.setMmDocNo(f.getString(23));
+                    orderTransferOut.setCreateDateTime(f.getString(12));
                     return new Tuple2<>(orderTransferOut.getDocRef(), orderTransferOut);
                 });
 
 		/* show Request Goods */
         System.out.println("===== Request Goods =====");
-        requestGoodsPairRDD.foreach(f -> System.out.println("RequstNo : "
+        requestGoodsPairRDD.foreach(f -> System.out.println("RequestNo : "
                 + f._1()));
 
 		/* show TransferOut */
@@ -181,12 +178,12 @@ public class AlltradeReportsAggregation {
             }
         });
 
-        /* change key of RequestGoodstranferOut */
+        /* change key of RequestGoodsTransferOut */
         JavaPairRDD<String, Tuple2<RequestGoods, com.google.common.base.Optional<OrderTransfer>>> joinTransferOutRequestGoodsByDocRef = joinTransferRequestGoods
-                .mapToPair(f -> new Tuple2<String, Tuple2<RequestGoods, com.google.common.base.Optional<OrderTransfer>>>(
+                .mapToPair(f -> new Tuple2<>(
                         f._2()._2().get().getTransferNo(), f._2()));
 
-        System.out.println("===== Change Key of RequestGoodstranferOut =====");
+        System.out.println("===== Change Key of RequestGoodsTransferOut =====");
         joinTransferOutRequestGoodsByDocRef.foreach(f -> {
             try {
                 System.out.println("Key : " + f._1() + "CreatedBy : "
@@ -196,7 +193,7 @@ public class AlltradeReportsAggregation {
             }
         });
 
-        /* join RequestGoodstranferOut and TransferIn */
+        /* join RequestGoodsTransferOut and TransferIn */
         JavaPairRDD<String, Tuple2<Tuple2<RequestGoods, com.google.common.base.Optional<OrderTransfer>>, com.google.common.base.Optional<OrderTransfer>>>
                 allAggregation = joinTransferOutRequestGoodsByDocRef.leftOuterJoin(transferInPairRDD);
 
@@ -320,8 +317,8 @@ public class AlltradeReportsAggregation {
         ));
 
         javaFunctions(requestGoodsRDD).writerBuilder(
-                "damocles",
-                "requestgoods_report",
+                DAMOCLES_KEYSPACE,
+                REQUESTGOODSDETAIL_TABLE,
                 CassandraJavaUtil.mapToRow(RequestGoodsDetailReport.class,
                         columnNameMappings)).saveToCassandra();
     }

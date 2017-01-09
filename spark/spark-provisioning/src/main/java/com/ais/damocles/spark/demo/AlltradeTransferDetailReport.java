@@ -25,7 +25,7 @@ public class AlltradeTransferDetailReport {
     public static final String DAMOCLES_KEYSPACE = "damocles11";
     public static final String REQUESTGOODS_TABLE = "requestgoods";
     public static final String ORDERTRANSFER_TABLE = "ordertransfer";
-    public static final String TRANSFERDETAIL_TABLE = "transferdetail_report";
+    public static final String TRANSFERDETAILREPORT_TABLE = "transferdetail_report";
 
     public static void main(String[] args) throws Exception {
 
@@ -76,11 +76,12 @@ public class AlltradeTransferDetailReport {
                 .mapToPair(f -> {
                     RequestGoods requestGoods = new RequestGoods();
 
-//                    requestGoods.setRequestDateTime(f.getString("null"));
+                    requestGoods.setCreateDateTime(f.getString(13));
                     requestGoods.setRequestNo(f.getString(1));
                     requestGoods.setForSubStock(f.getString(15));
+                    requestGoods.setMobileNo(f.getString(22));
+                    requestGoods.setReceiveBy(f.getString(26));
 
-//                    requestGoods.setContactNo(f.getString("null"));
 
                     return new Tuple2<>(requestGoods.getRequestNo(), requestGoods);
                 });
@@ -101,8 +102,6 @@ public class AlltradeTransferDetailReport {
                     orderTransferIn.setTransferNo(f.getString(40));
 
 //                    orderTransferIn.setQtyIn(f.getString("null"));
-
-//                    orderTransferIn.setReceiveBy(f.getString("null"));
 
                     orderTransferIn.setDocRef(f.getString(14));
                     orderTransferIn.setTransactionType(f.getString(1));
@@ -139,7 +138,7 @@ public class AlltradeTransferDetailReport {
 //                    orderTransferOut.setMatType(f.getString("null"));
                     orderTransferOut.setFromSubStock(f.getString(22));
                     orderTransferOut.setToSubStock(f.getString(37));
-//                    orderTransferOut.setSerialNo(f.getString("null"));
+//                    orderTransferOut.setSerial(f.getString("null"));
 //                    orderTransferOut.setQtyOut(f.getString("null"));
 
                     orderTransferOut.setCreateBy(f.getString(11));
@@ -339,7 +338,7 @@ public class AlltradeTransferDetailReport {
         ));
 
         javaFunctions(orderTransferRDD).writerBuilder(
-                DAMOCLES_KEYSPACE, TRANSFERDETAIL_TABLE,
+                DAMOCLES_KEYSPACE, TRANSFERDETAILREPORT_TABLE,
                 CassandraJavaUtil.mapToRow(TransferDetailReport.class,
                         columnNameMappings)).saveToCassandra();
     }

@@ -667,4 +667,5 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
         return serialVersionUID;
     }
 
+
 }
