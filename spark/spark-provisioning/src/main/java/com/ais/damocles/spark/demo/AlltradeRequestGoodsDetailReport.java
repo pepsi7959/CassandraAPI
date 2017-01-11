@@ -26,15 +26,15 @@ import com.datastax.spark.connector.japi.CassandraRow;
 
 public class AlltradeRequestGoodsDetailReport {
 
-    public static final String DAMOCLES_KEYSPACE = "damocles";
-    public static final String REQUESTGOODS_TABLE = "requestgoods";
-    public static final String ORDERTRANSFER_TABLE = "ordertransfer";
-    public static final String REQUESTGOODSDETAIL_TABLE = "requestgoodsdetail_report";
+    private static final String DAMOCLES_KEYSPACE = "damocles";
+    private static final String REQUESTGOODS_TABLE = "requestgoods";
+    private static final String ORDERTRANSFER_TABLE = "ordertransfer";
+    private static final String REQUESTGOODSDETAIL_TABLE = "requestgoodsdetail_report";
 
     public static void main(String[] args) throws Exception {
 
 		/* read Spark and Cassandra properties and create SparkConf */
-        Properties prop = null;
+        Properties prop;
         if (args.length == 0) {
             prop = PropertyFileReader.readPropertyFile();
         } else if (args.length == 1) {
@@ -72,7 +72,7 @@ public class AlltradeRequestGoodsDetailReport {
     /*
      * Aggregate Transfer
      */
-    public static void AggregateTransfer(JavaStreamingContext jssc) {
+    private static void AggregateTransfer(JavaStreamingContext jssc) {
 
         JavaSparkContext sc = jssc.sparkContext();
 
@@ -242,7 +242,7 @@ public class AlltradeRequestGoodsDetailReport {
         });
 
         /*MapColumn schema to cassandra*/
-        Map<String, String> columnNameMappings = new HashMap<String, String>();
+        Map<String, String> columnNameMappings = new HashMap<>();
 
         columnNameMappings.put("requestNo", "requestno");
         columnNameMappings.put("company", "company");

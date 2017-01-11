@@ -21,11 +21,10 @@ import static com.datastax.spark.connector.japi.CassandraJavaUtil.javaFunctions;
 
 public class AlltradeTransferDetailReport {
 
-    public static JavaSparkContext sc;
-    public static final String DAMOCLES_KEYSPACE = "damocles11";
-    public static final String REQUESTGOODS_TABLE = "requestgoods";
-    public static final String ORDERTRANSFER_TABLE = "ordertransfer";
-    public static final String TRANSFERDETAILREPORT_TABLE = "transferdetail_report";
+    private static final String DAMOCLES_KEYSPACE = "damocles";
+    private static final String REQUESTGOODS_TABLE = "requestgoods";
+    private static final String ORDERTRANSFER_TABLE = "ordertransfer";
+    private static final String TRANSFERDETAILREPORT_TABLE = "transferdetail_report";
 
     public static void main(String[] args) throws Exception {
 
@@ -66,7 +65,7 @@ public class AlltradeTransferDetailReport {
     /* Aggregate Transfer */
     private static void AggregateTransfer(JavaStreamingContext jssc) {
 
-        sc = jssc.sparkContext();
+        JavaSparkContext sc = jssc.sparkContext();
 
         /* Load RequestGoods from the Cassandra */
         JavaRDD<CassandraRow> cassandraRowRequestGoods = javaFunctions(sc)
@@ -263,7 +262,7 @@ public class AlltradeTransferDetailReport {
         });
 
         /*MapColumn schema to cassandra*/
-        Map<String, String> columnNameMappings = new HashMap<String, String>();
+        Map<String, String> columnNameMappings = new HashMap<>();
         columnNameMappings.put("company", "company");
         columnNameMappings.put("fromLocationCode", "fromlocationcode");
         columnNameMappings.put("fromLocationName", "fromlocationname");
@@ -286,8 +285,6 @@ public class AlltradeTransferDetailReport {
         columnNameMappings.put("remark", "remark");
         columnNameMappings.put("vendorCode", "vendorcode");
         columnNameMappings.put("vendorName", "vendorname");
-
-
 
 
         /*insert data to cassandra*/
