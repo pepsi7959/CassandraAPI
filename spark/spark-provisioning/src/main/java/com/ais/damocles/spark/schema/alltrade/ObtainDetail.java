@@ -8,6 +8,7 @@ public class ObtainDetail extends com.ais.damocles.spark.schema.CommonSchema {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	@Column(name = "transactionId")
 	private String transactionId;
 
@@ -79,6 +80,8 @@ public class ObtainDetail extends com.ais.damocles.spark.schema.CommonSchema {
 			String obtainDateTime, String createBy, String createDateTime,
 			String updateBy, String updateDateTime, String salesCode_key,
 			String matCode_key, String serial_key, String obtainDetail) {
+
+
 		this.transactionId = transactionId;
 		this.columnMapper.put("transactionId", "transactionId");
 

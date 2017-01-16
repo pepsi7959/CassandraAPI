@@ -2,6 +2,8 @@ package com.ais.damocles.spark.schema.alltrade;
 
 import com.datastax.driver.mapping.annotations.Column;
 
+import java.util.List;
+
 public class StockAdjustment extends com.ais.damocles.spark.schema.CommonSchema {
 
 	/**
@@ -75,44 +77,57 @@ public class StockAdjustment extends com.ais.damocles.spark.schema.CommonSchema 
 	private String updateDateTime;
 
 	@Column(name = "matCode_key")
-	private String matCode_key;
+	private List<Object> matCode_key;
 
 	@Column(name = "brand_key")
-	private String brand_key;
+	private List<Object> brand_key;
 
 	@Column(name = "model_key")
-	private String model_key;
+	private List<Object> model_key;
 
 	@Column(name = "commercialName_key")
-	private String commercialName_key;
+	private List<Object> commercialName_key;
 
 	@Column(name = "productType_key")
-	private String productType_key;
+	private List<Object> productType_key;
 
 	@Column(name = "productSubType_key")
-	private String productSubType_key;
+	private List<Object> productSubType_key;
 
 	@Column(name = "serial_key")
-	private String serial_key;
+	private List<Object> serial_key;
 
 	@Column(name = "adjustDetail")
 	private String adjustDetail;
+
+	@Column(name = "adjustQty")
+	private String adjustQty;
+
+	@Column(name = "adjustType")
+	private String adjustType;
 
 	public StockAdjustment() {
 
 	}
 
 	public StockAdjustment(String transactionId, String transactionType,
-			String adjustStockNo, String company, String memoNo, String remark,
-			String adjustDateTime, String mmDocYear, String mmDocNo,
-			String docRef, String moveMentType, String locationCode,
-			String locationName, String locationType, String locationSubType,
-			String locationRegion, String locationProvince,
-			String adjustStatus, String createBy, String createDateTime,
-			String updateBy, String updateDateTime, String matCode_key,
-			String brand_key, String model_key, String commercialName_key,
-			String productType_key, String productSubType_key,
-			String serial_key, String adjustDetail) {
+						   String adjustStockNo, String company, String memoNo, String remark,
+						   String adjustDateTime, String mmDocYear, String mmDocNo,
+						   String docRef, String moveMentType, String locationCode,
+						   String locationName, String locationType, String locationSubType,
+						   String locationRegion, String locationProvince,
+						   String adjustStatus, String createBy, String createDateTime,
+						   String updateBy, String updateDateTime, List<Object> matCode_key,
+						   List<Object> brand_key, List<Object> model_key, List<Object> commercialName_key,
+						   List<Object> productType_key, List<Object> productSubType_key,
+						   List<Object> serial_key, String adjustDetail, String adjustType
+	, String adjustQty) {
+
+		this.adjustType= adjustType;
+		this.columnMapper.put("adjustType","adjustType");
+
+		this.adjustQty = adjustQty;
+		this.columnMapper.put("adjustQty","adjustQty");
 
 		this.transactionId = transactionId;
 		this.columnMapper.put("transactionId", "transactionId");
@@ -204,6 +219,14 @@ public class StockAdjustment extends com.ais.damocles.spark.schema.CommonSchema 
 		this.adjustDetail = adjustDetail;
 		this.columnMapper.put("adjustDetail", "adjustDetail");
 
+	}
+
+	public String getAdjustQty() {
+		return adjustQty;
+	}
+
+	public void setAdjustQty(String adjustQty) {
+		this.adjustQty = adjustQty;
 	}
 
 	public String getTransactionId() {
@@ -382,59 +405,59 @@ public class StockAdjustment extends com.ais.damocles.spark.schema.CommonSchema 
 		this.updateDateTime = updateDateTime;
 	}
 
-	public String getMatCode_key() {
+	public List<Object> getMatCode_key() {
 		return matCode_key;
 	}
 
-	public void setMatCode_key(String matCode_key) {
+	public void setMatCode_key(List<Object> matCode_key) {
 		this.matCode_key = matCode_key;
 	}
 
-	public String getBrand_key() {
+	public List<Object> getBrand_key() {
 		return brand_key;
 	}
 
-	public void setBrand_key(String brand_key) {
+	public void setBrand_key(List<Object> brand_key) {
 		this.brand_key = brand_key;
 	}
 
-	public String getModel_key() {
+	public List<Object> getModel_key() {
 		return model_key;
 	}
 
-	public void setModel_key(String model_key) {
+	public void setModel_key(List<Object> model_key) {
 		this.model_key = model_key;
 	}
 
-	public String getCommercialName_key() {
+	public List<Object> getCommercialName_key() {
 		return commercialName_key;
 	}
 
-	public void setCommercialName_key(String commercialName_key) {
+	public void setCommercialName_key(List<Object> commercialName_key) {
 		this.commercialName_key = commercialName_key;
 	}
 
-	public String getProductType_key() {
+	public List<Object> getProductType_key() {
 		return productType_key;
 	}
 
-	public void setProductType_key(String productType_key) {
+	public void setProductType_key(List<Object> productType_key) {
 		this.productType_key = productType_key;
 	}
 
-	public String getProductSubType_key() {
+	public List<Object> getProductSubType_key() {
 		return productSubType_key;
 	}
 
-	public void setProductSubType_key(String productSubType_key) {
+	public void setProductSubType_key(List<Object> productSubType_key) {
 		this.productSubType_key = productSubType_key;
 	}
 
-	public String getSerial_key() {
+	public List<Object> getSerial_key() {
 		return serial_key;
 	}
 
-	public void setSerial_key(String serial_key) {
+	public void setSerial_key(List<Object> serial_key) {
 		this.serial_key = serial_key;
 	}
 
@@ -450,4 +473,11 @@ public class StockAdjustment extends com.ais.damocles.spark.schema.CommonSchema 
 		return serialVersionUID;
 	}
 
+	public void setAdjustType(String adjustType) {
+		this.adjustType = adjustType;
+	}
+
+	public String getAdjustType() {
+		return adjustType;
+	}
 }

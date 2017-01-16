@@ -1,7 +1,6 @@
 package com.ais.damocles.spark.demo;
 
 import com.ais.damocles.spark.schema.alltrade.*;
-import com.ais.damocles.spark.schema.alltrade.TransferDetailReport;
 import com.ais.damocles.spark.util.PropertyFileReader;
 import com.datastax.spark.connector.japi.CassandraJavaUtil;
 import com.datastax.spark.connector.japi.CassandraRow;
@@ -23,7 +22,7 @@ public class AlltradeAdjustStockReport {
 
     private static final String DAMOCLES_KEYSPACE = "damocles";
     private static final String STOCKADJUSTMENT_TABLE = "stockadjustment";
-    private static final String ADJUSTSTOCKREPORT_TABLE = "adjustStock_report";
+    private static final String ADJUSTSTOCKREPORT_TABLE = "adjuststock_report";
 
     public static void main(String[] args) throws Exception {
 
@@ -80,16 +79,16 @@ public class AlltradeAdjustStockReport {
                     stockAdjustment.setAdjustDateTime(f.getString(3));
                     stockAdjustment.setAdjustStockNo(f.getString(1));
                     //stockAdjustment.setItemNo(f.getString(null));
-                    stockAdjustment.setCommercialName_key(f.getString(7));
-                    stockAdjustment.setMatCode_key(f.getString(4));
+                    stockAdjustment.setCommercialName_key(f.getList(7));
+                    stockAdjustment.setMatCode_key(f.getList(4));
                     //stockAdjustment.setMatDescription(f.getString(null));
-                    stockAdjustment.setProductType_key(f.getString(8));
-                    stockAdjustment.setProductSubType_key(f.getString(9));
-                    stockAdjustment.setBrand_key(f.getString(5));
-                    stockAdjustment.setModel_key(f.getString(6));
+                    stockAdjustment.setProductType_key(f.getList(8));
+                    stockAdjustment.setProductSubType_key(f.getList(9));
+                    stockAdjustment.setBrand_key(f.getList(5));
+                    stockAdjustment.setModel_key(f.getList(6));
                     //stockAdjustment.setSubStock(f.getString(null));
                     //stockAdjustment.setAdjustType(f.getString(null));
-                    stockAdjustment.setSerial_key(f.getString(10));
+                    stockAdjustment.setSerial_key(f.getList(10));
                     //stockAdjustment.setAdjustQty(f.getString(null));
                     //stockAdjustment.setReason(f.getString(null));
                     stockAdjustment.setRemark(f.getString(26));
@@ -104,75 +103,96 @@ public class AlltradeAdjustStockReport {
         /* show Request Goods */
         System.out.println("===== Stock Adjustment =====");
         stockAdjustmentPairRDD.foreach(f ->
-                System.out.println("RequestNo : " + f._1() + "\n"));
+                System.out.println("Adjust Stock No : " + f._1() + "\n"));
 
 
         JavaPairRDD<String, StockAdjustment>
                 Aggregation = stockAdjustmentPairRDD;
 
         System.out.println("======== Adjust Stock Report ========");
-        Aggregation.foreach(f -> {
+        Aggregation.foreach(f -> System.out.println("key : " + f._1()
+                        + "Company : " + f._2().getCompany() + "\n"
+                        + "Location Code : " + f._2().getLocationCode() + "\n"
+                        + "Location Name : " + f._2().getLocationName() + "\n"
+                        + "Adjust Date Time : " + f._2().getAdjustDateTime() + "\n"
+                        + "Adjust Stock No : " + f._2().getAdjustStockNo() + "\n"
+                        //+ "Item No : " + f._2().getItemNo() + "\n"
+                        + "Commercial Name : " + f._2().getCommercialName_key() + "\n"
+                        + "Mat Code : " + f._2().getMatCode_key() + "\n"
+                        //+ "Mat Description : " + f._2().getMatDescription() + "\n"
+                        + "Product Type : " + f._2().getProductType_key() + "\n"
+                        + "Product Sub Type : " + f._2().getProductSubType_key() + "\n"
+                        + "Brand : " + f._2().getBrand_key() + "\n"
+                        + "Model : " + f._2().getModel_key() + "\n"
+                        //+ "Sub Stock : " + f._2().getSubStock() + "\n"
+                        + "Adjust Type : " + f._2().getAdjustType() + "\n"
+                        + "Serial : " + f._2().getSerial_key() + "\n"
+                        //+ "Adjust Qty : " + f._2().getAdjustQty() + "\n"
+                        //+ "Reason : " + f._2().getReason() + "\n"
+                        + "Remark : " + f._2().getRemark() + "\n"
 
+        ));
 
-            System.out.println("key : " + f._1()
-                            + "Company : " + f._2().getCompany() + "\n"
-                            + "Location Code : " + f._2().getLocationCode() + "\n"
-                            + "Location Name : " + f._2().getLocationName() + "\n"
-                            + "Adjust Date Time : " + f._2().getAdjustDateTime() + "\n"
-                            + "Adjust Stock No : " + f._2().getAdjustStockNo() + "\n"
-                            //+ "Item No : " + f._2().getItemNo() + "\n"
-                            + "Commercial Name : " + f._2().getCommercialName_key() + "\n"
-                            + "Mat Code : " + f._2().getMatCode_key() + "\n"
-                            //+ "Mat Description : " + f._2().getMatDescription() + "\n"
-                            + "Product Type : " + f._2().getProductType_key() + "\n"
-                            + "Product Sub Type : " + f._2().getProductSubType_key() + "\n"
-                            + "Brand : " + f._2().getBrand_key() + "\n"
-                            + "Model : " + f._2().getModel_key() + "\n"
-                            //+ "Sub Stock : " + f._2().getSubStock() + "\n"
-                            //+ "Adjust Type : " + f._2().getAdjustType() + "\n"
-                            + "Serial : " + f._2().getSerial_key() + "\n"
-                            //+ "Adjust Qty : " + f._2().getAdjustQty() + "\n"
-                            //+ "Reason : " + f._2().getReason() + "\n"
-                            + "Remark : " + f._2().getRemark() + "\n"
-
-            );
-        });
-
-//        /*MapColumn schema to cassandra*/
-//        Map<String, String> columnNameMappings = new HashMap<>();
-//        columnNameMappings.put("company", "company");
-//        columnNameMappings.put("locationCode", "locationcode");
-//        columnNameMappings.put("locationName", "locationname");
-//        columnNameMappings.put("adjustDateTime", "adjustdatetime");
-//        columnNameMappings.put("adjustStockNo", "adjuststockno");
-//        columnNameMappings.put("commercialName_key", "commercialname_key");
-//        columnNameMappings.put("matCode_key", "matCode_key");
-
+        /*MapColumn schema to cassandra*/
+        Map<String, String> columnNameMappings = new HashMap<>();
+        columnNameMappings.put("company", "company");
+        columnNameMappings.put("locationCode", "locationcode");
+        columnNameMappings.put("locationName", "locationname");
+        columnNameMappings.put("adjustDateTime", "adjustdatetime");
+        columnNameMappings.put("adjustStockNo", "adjuststockno");
+        columnNameMappings.put("commercialName_key", "commercialname_key");
+        columnNameMappings.put("matCode_key", "matcode_key");
+        //columnNameMappings.put("productType_key", "producttype");
+        //columnNameMappings.put("productSubType_key", "productsubtype");
+        columnNameMappings.put("brand_key", "brand_key");
+        columnNameMappings.put("model_key", "model_key");
+        //columnNameMappings.put("subStock", "substock");
+        //columnNameMappings.put("adjustType", "adjusttype");
+        columnNameMappings.put("serial", "serial");
+        //columnNameMappings.put("adjustQty", "adjustqty");
+        columnNameMappings.put("reason", "reason");
+        columnNameMappings.put("remark", "remark");
+//
 //        /*insert data to cassandra*/
-//        JavaRDD<TransferDetailReport> orderTransferRDD = allAggregation
-//                .map(f -> {
+//        JavaRDD<AdjustStockReport> adjustStockRDD = Aggregation
+//                .map((Tuple2<String, StockAdjustment> f) -> {
 //
+//                    AdjustStockReport adjustStock = new AdjustStockReport();
 //
-//                    TransferDetailReport orderTransfer = new TransferDetailReport();
+//                    adjustStock.setCompany(f._2().getCompany());
+//                    adjustStock.setLocationCode(f._2().getLocationCode());
+//                    adjustStock.setLocationName(f._2().getLocationName());
+//                    adjustStock.setAdjustDateTime(f._2().getAdjustDateTime());
+//                    adjustStock.setAdjustStockNo(f._2().getAdjustStockNo());
+//                    //adjustStock.setItemNo(f._2().getString(null));
+//                    adjustStock.setCommercialName_key(f._2().getCommercialName_key());
+//                    adjustStock.setMatCode_key(f._2().getMatCode_key());
+//                    //adjustStock.setMatDescription(f._2().getString(null));
+//                    //adjustStock.setProductType(f._2().getProductType_key());
+//                    //adjustStock.setProductSubType(f._2().getProductSubType_key());
+//                    adjustStock.setBrand_key(f._2().getBrand_key());
+//                    adjustStock.setModel_key(f._2().getModel_key());
+//                    //adjustStock.setSubStock(f._2().getString(null));
+//                    //adjustStock.setAdjustType(f._2().getString(null));
+//                    adjustStock.setSerial(f._2().getSerial_key());
+//                    //adjustStock.setAdjustQty(f._2().getAdjustQty("null"));
+//                    //adjustStock.setReason(f._2().getString(null));
+//                    adjustStock.setRemark(f._2().getRemark());
 //
-//                    orderTransfer.setCompany(f._2()._1()._2().get().getCompany());
-//
-//                    return orderTransfer;
+//                    return adjustStock;
 //                });
 //
 //        /* show insert data to cassandra */
 //        System.out.println("===== insert data to cassandra =====");
-//        orderTransferRDD.foreach(f -> System.out.println(
-//                "RequestNo: " + f.getRequestNo() + "\n"
-//                        + "TransferOutNo : " + f.getTransferOutNo() + "\n"
-//                        + "TransferInNo : " + f.getTransferInNo() + "\n"
-//                        + "createBy : " + f.getCreateBy() + "\n"
-//                        + "matCode_key : " + f.getMatCode_key()
+//        adjustStockRDD.foreach(f -> System.out.println(
+//                "Adjust Stock No: " + f.getAdjustStockNo() + "\n"
+//                        + "Adjust Date Time : " + f.getAdjustDateTime() + "\n"
+//                        + "Mat Code key : " + f.getMatCode_key()
 //        ));
 //
-//        javaFunctions(orderTransferRDD).writerBuilder(
+//        javaFunctions(adjustStockRDD).writerBuilder(
 //                DAMOCLES_KEYSPACE, ADJUSTSTOCKREPORT_TABLE,
-//                CassandraJavaUtil.mapToRow(TransferDetailReport.class,
+//                CassandraJavaUtil.mapToRow(AdjustStockReport.class,
 //                        columnNameMappings)).saveToCassandra();
     }
 }
