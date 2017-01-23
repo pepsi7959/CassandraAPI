@@ -83,25 +83,25 @@ public class AlltradeTransferSummaryReport {
                     RequestGoods requestGoods = new RequestGoods();
 
                     requestGoods.setRequestNo(f.getString(1));
-                    requestGoods.setForSubStock(f.getString(15));
-                    requestGoods.setShipToCode(f.getString(32));
-                    requestGoods.setShipToName(f.getString(34));
-                    requestGoods.setDoNo(f.getString(14));
-                    requestGoods.setPickingDateTime(f.getString(24));
+                    requestGoods.setForSubStock(f.getString(17));
+                    requestGoods.setShipToCode(f.getString(36));
+                    requestGoods.setShipToName(f.getString(38));
+                    requestGoods.setDoNo(f.getString(16));
+                    requestGoods.setPickingDateTime(f.getString(27));
 
                     requestGoods.setCompany(f.getString(11));
-                    requestGoods.setToLocationCode(f.getString(37));
-                    requestGoods.setToLocationName(f.getString(38));
+                    requestGoods.setToLocationCode(f.getString(43));
+                    requestGoods.setToLocationName(f.getString(44));
                     requestGoods.setCreateDateTime(f.getString(13));
                     requestGoods.setRequestStatus(f.getString(2));
-                    requestGoods.setReservedNo(f.getString(28));
+                    requestGoods.setReservedNo(f.getString(32));
                     requestGoods.setBrand_key(f.getList(4));
                     requestGoods.setModel_key(f.getList(5));
                     requestGoods.setMatCode_key(f.getList(3)); /*3*/
                     /*requestGoods.setMatDescription_key(f.getString());*/
                     requestGoods.setCommercialName_key(f.getList(8));
-                    requestGoods.setRemark(f.getString(27));
-                    requestGoods.setShipToProvince(f.getString(35));
+                    requestGoods.setRemark(f.getString(31));
+                    requestGoods.setShipToProvince(f.getString(39));
                     requestGoods.setCreateBy(f.getString(12));
 
                     return new Tuple2<>(requestGoods.getRequestNo(),

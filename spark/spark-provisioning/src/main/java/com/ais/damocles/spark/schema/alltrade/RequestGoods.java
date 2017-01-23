@@ -111,6 +111,26 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
     @Column(name = "matDescription_key")
     private List<Object> matDescription_key;
 
+    @Column(name = "deviceHandsetQty")
+    private String deviceHandsetQty;
+
+    @Column(name = "deviceHandsetBundleQty")
+    private String deviceHandsetBundleQty;
+
+    @Column(name = "simPrepaidQty")
+    private String simPrepaidQty;
+
+    @Column(name = "simPostpaidQty")
+    private String simPostpaidQty;
+
+    @Column(name = "premiumQty")
+    private String premiumQty;
+
+    @Column(name = "otherQty")
+    private String otherQty;
+
+    @Column(name = "contactNo")
+    private String contactNo;
 
     public RequestGoods() {
 
@@ -135,7 +155,30 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
                         List<Object> matCode_key, List<Object> brand_key, List<Object> model_key,
                         List<Object> productType_key, List<Object> productSubType_key,
                         List<Object> commercialName_key, String requestDetail,
-                        String quotaFlag, String itemNo,List<Object> matDescription_key) {
+                        String quotaFlag, String itemNo,List<Object> matDescription_key,
+                        String deviceHandsetQty, String deviceHandsetBundleQty, String simPrepaidQty,
+                        String simPostpaidQty, String premiumQty, String otherQty, String contactNo) {
+
+        this.deviceHandsetQty = deviceHandsetQty;
+        this.columnMapper.put("deviceHandsetQty","deviceHandsetQty");
+
+        this.deviceHandsetBundleQty = deviceHandsetBundleQty;
+        this.columnMapper.put("deviceHandsetBundleQty","deviceHandsetBundleQty");
+
+        this.simPrepaidQty = simPrepaidQty;
+        this.columnMapper.put("simPrepaidQty","simPrepaidQty");
+
+        this.simPostpaidQty = simPostpaidQty;
+        this.columnMapper.put("simPostpaidQty","simPostpaidQty");
+
+        this.premiumQty = premiumQty;
+        this.columnMapper.put("premiumQty","premiumQty");
+
+        this.otherQty = otherQty;
+        this.columnMapper.put("otherQty","otherQty");
+
+        this.contactNo = contactNo;
+        this.columnMapper.put("contactNo","contactNo");
 
         this.transactionId = transactionId;
         this.columnMapper.put("transactionId", "transactionId");
@@ -667,5 +710,59 @@ public class RequestGoods extends com.ais.damocles.spark.schema.CommonSchema {
         return serialVersionUID;
     }
 
+    public String getDeviceHandsetQty() {
+        return deviceHandsetQty;
+    }
 
+    public void setDeviceHandsetQty(String deviceHandsetQty) {
+        this.deviceHandsetQty = deviceHandsetQty;
+    }
+
+    public String getDeviceHandsetBundleQty() {
+        return deviceHandsetBundleQty;
+    }
+
+    public void setDeviceHandsetBundleQty(String deviceHandsetBundleQty) {
+        this.deviceHandsetBundleQty = deviceHandsetBundleQty;
+    }
+
+    public String getSimPrepaidQty() {
+        return simPrepaidQty;
+    }
+
+    public void setSimPrepaidQty(String simPrepaidQty) {
+        this.simPrepaidQty = simPrepaidQty;
+    }
+
+    public String getSimPostpaidQty() {
+        return simPostpaidQty;
+    }
+
+    public void setSimPostpaidQty(String simPostpaidQty) {
+        this.simPostpaidQty = simPostpaidQty;
+    }
+
+    public String getPremiumQty() {
+        return premiumQty;
+    }
+
+    public void setPremiumQty(String premiumQty) {
+        this.premiumQty = premiumQty;
+    }
+
+    public String getOtherQty() {
+        return otherQty;
+    }
+
+    public void setOtherQty(String otherQty) {
+        this.otherQty = otherQty;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
+    }
 }

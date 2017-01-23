@@ -29,7 +29,7 @@ public class AlltradeRequestGoodsDetailReport {
     private static final String DAMOCLES_KEYSPACE = "damocles";
     private static final String REQUESTGOODS_TABLE = "requestgoods";
     private static final String ORDERTRANSFER_TABLE = "ordertransfer";
-    private static final String REQUESTGOODSDETAIL_TABLE = "requestgoodsdetail_report";
+    private static final String REQUESTGOODSDETAIL_TABLE = "requestgoods_report";
 
     public static void main(String[] args) throws Exception {
 
@@ -61,7 +61,7 @@ public class AlltradeRequestGoodsDetailReport {
         jssc.checkpoint(prop
                 .getProperty("com.ais.damocles.spark.checkpoint.dir"));
 
-        AggregateTransfer(jssc);
+        AggregateRequestGoodsDetail(jssc);
 
         jssc.start();
         System.out.println("start jssc");
@@ -72,7 +72,7 @@ public class AlltradeRequestGoodsDetailReport {
     /*
      * Aggregate Transfer
      */
-    private static void AggregateTransfer(JavaStreamingContext jssc) {
+    private static void AggregateRequestGoodsDetail(JavaStreamingContext jssc) {
 
         JavaSparkContext sc = jssc.sparkContext();
 
@@ -85,15 +85,15 @@ public class AlltradeRequestGoodsDetailReport {
 
                     RequestGoods requestGoods = new RequestGoods();
                     requestGoods.setCompany(f.getString(11));
-                    requestGoods.setToLocationCode(f.getString(37));
-                    requestGoods.setToLocationName(f.getString(38));
-                    requestGoods.setForSubStock(f.getString(15));
-                    requestGoods.setCreateDateTime(f.getString(13));
+                    requestGoods.setToLocationCode(f.getString(44));
+                    requestGoods.setToLocationName(f.getString(45));
+                    requestGoods.setForSubStock(f.getString(18));
+                    requestGoods.setCreateDateTime(f.getString(14));
                     requestGoods.setRequestNo(f.getString(1));
                     requestGoods.setRequestStatus(f.getString(2));
-                    requestGoods.setReservedNo(f.getString(28));
-                    requestGoods.setDoNo(f.getString(14));
-                    requestGoods.setPickingDateTime(f.getString(24));
+                    requestGoods.setReservedNo(f.getString(33));
+                    requestGoods.setDoNo(f.getString(17));
+                    requestGoods.setPickingDateTime(f.getString(28));
                     /*requestGoods.setQuotaFlag(f.getString());*/
                     /*requestGoods.setItemNo(f.getString());*/
                     requestGoods.setBrand_key(f.getList(4));
@@ -101,9 +101,9 @@ public class AlltradeRequestGoodsDetailReport {
                     requestGoods.setMatCode_key(f.getList(3)); /*3*/
                     /*requestGoods.setMatDescription_key(f.getString());*/
                     requestGoods.setCommercialName_key(f.getList(8));
-                    requestGoods.setRemark(f.getString(27));
-                    requestGoods.setShipToCode(f.getString(32));
-                    requestGoods.setShipToProvince(f.getString(35));
+                    requestGoods.setRemark(f.getString(32));
+                    requestGoods.setShipToCode(f.getString(37));
+                    requestGoods.setShipToProvince(f.getString(40));
                     return new Tuple2<>(requestGoods.getRequestNo(), requestGoods);
                 });
 

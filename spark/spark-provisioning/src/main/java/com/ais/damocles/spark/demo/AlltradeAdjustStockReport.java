@@ -74,24 +74,24 @@ public class AlltradeAdjustStockReport {
                     StockAdjustment stockAdjustment = new StockAdjustment();
 
                     stockAdjustment.setCompany(f.getString(2));
-                    stockAdjustment.setLocationCode(f.getString(16));
-                    stockAdjustment.setLocationName(f.getString(17));
+                    stockAdjustment.setLocationCode(f.getString(17));
+                    stockAdjustment.setLocationName(f.getString(18));
                     stockAdjustment.setAdjustDateTime(f.getString(3));
                     stockAdjustment.setAdjustStockNo(f.getString(1));
                     //stockAdjustment.setItemNo(f.getString(null));
                     stockAdjustment.setCommercialName_key(f.getList(7));
                     stockAdjustment.setMatCode_key(f.getList(4));
                     //stockAdjustment.setMatDescription(f.getString(null));
-                    stockAdjustment.setProductType_key(f.getList(8));
-                    stockAdjustment.setProductSubType_key(f.getList(9));
+                    //stockAdjustment.setProductType_key(f.getList(8));
+                    //stockAdjustment.setProductSubType_key(f.getList(9));
                     stockAdjustment.setBrand_key(f.getList(5));
                     stockAdjustment.setModel_key(f.getList(6));
                     //stockAdjustment.setSubStock(f.getString(null));
-                    //stockAdjustment.setAdjustType(f.getString(null));
+                    stockAdjustment.setAdjustType(f.getString(13));
                     stockAdjustment.setSerial_key(f.getList(10));
                     //stockAdjustment.setAdjustQty(f.getString(null));
                     //stockAdjustment.setReason(f.getString(null));
-                    stockAdjustment.setRemark(f.getString(26));
+                    stockAdjustment.setRemark(f.getString(27));
 
                     return new Tuple2<>(stockAdjustment.getAdjustStockNo(), stockAdjustment);
                 });
@@ -120,8 +120,8 @@ public class AlltradeAdjustStockReport {
                         + "Commercial Name : " + f._2().getCommercialName_key() + "\n"
                         + "Mat Code : " + f._2().getMatCode_key() + "\n"
                         //+ "Mat Description : " + f._2().getMatDescription() + "\n"
-                        + "Product Type : " + f._2().getProductType_key() + "\n"
-                        + "Product Sub Type : " + f._2().getProductSubType_key() + "\n"
+                        //+ "Product Type : " + f._2().getProductType_key() + "\n"
+                        //+ "Product Sub Type : " + f._2().getProductSubType_key() + "\n"
                         + "Brand : " + f._2().getBrand_key() + "\n"
                         + "Model : " + f._2().getModel_key() + "\n"
                         //+ "Sub Stock : " + f._2().getSubStock() + "\n"
@@ -147,53 +147,53 @@ public class AlltradeAdjustStockReport {
         columnNameMappings.put("brand_key", "brand_key");
         columnNameMappings.put("model_key", "model_key");
         //columnNameMappings.put("subStock", "substock");
-        //columnNameMappings.put("adjustType", "adjusttype");
+        columnNameMappings.put("adjustType", "adjusttype");
         columnNameMappings.put("serial", "serial");
         //columnNameMappings.put("adjustQty", "adjustqty");
-        columnNameMappings.put("reason", "reason");
+        //columnNameMappings.put("reason", "reason");
         columnNameMappings.put("remark", "remark");
-//
-//        /*insert data to cassandra*/
-//        JavaRDD<AdjustStockReport> adjustStockRDD = Aggregation
-//                .map((Tuple2<String, StockAdjustment> f) -> {
-//
-//                    AdjustStockReport adjustStock = new AdjustStockReport();
-//
-//                    adjustStock.setCompany(f._2().getCompany());
-//                    adjustStock.setLocationCode(f._2().getLocationCode());
-//                    adjustStock.setLocationName(f._2().getLocationName());
-//                    adjustStock.setAdjustDateTime(f._2().getAdjustDateTime());
-//                    adjustStock.setAdjustStockNo(f._2().getAdjustStockNo());
-//                    //adjustStock.setItemNo(f._2().getString(null));
-//                    adjustStock.setCommercialName_key(f._2().getCommercialName_key());
-//                    adjustStock.setMatCode_key(f._2().getMatCode_key());
-//                    //adjustStock.setMatDescription(f._2().getString(null));
-//                    //adjustStock.setProductType(f._2().getProductType_key());
-//                    //adjustStock.setProductSubType(f._2().getProductSubType_key());
-//                    adjustStock.setBrand_key(f._2().getBrand_key());
-//                    adjustStock.setModel_key(f._2().getModel_key());
-//                    //adjustStock.setSubStock(f._2().getString(null));
-//                    //adjustStock.setAdjustType(f._2().getString(null));
-//                    adjustStock.setSerial(f._2().getSerial_key());
-//                    //adjustStock.setAdjustQty(f._2().getAdjustQty("null"));
-//                    //adjustStock.setReason(f._2().getString(null));
-//                    adjustStock.setRemark(f._2().getRemark());
-//
-//                    return adjustStock;
-//                });
-//
-//        /* show insert data to cassandra */
-//        System.out.println("===== insert data to cassandra =====");
-//        adjustStockRDD.foreach(f -> System.out.println(
-//                "Adjust Stock No: " + f.getAdjustStockNo() + "\n"
-//                        + "Adjust Date Time : " + f.getAdjustDateTime() + "\n"
-//                        + "Mat Code key : " + f.getMatCode_key()
-//        ));
-//
-//        javaFunctions(adjustStockRDD).writerBuilder(
-//                DAMOCLES_KEYSPACE, ADJUSTSTOCKREPORT_TABLE,
-//                CassandraJavaUtil.mapToRow(AdjustStockReport.class,
-//                        columnNameMappings)).saveToCassandra();
+
+        /*insert data to cassandra*/
+        JavaRDD<AdjustStockReport> adjustStockRDD = Aggregation
+                .map((Tuple2<String, StockAdjustment> f) -> {
+
+                    AdjustStockReport adjustStock = new AdjustStockReport();
+
+                    adjustStock.setCompany(f._2().getCompany());
+                    adjustStock.setLocationCode(f._2().getLocationCode());
+                    adjustStock.setLocationName(f._2().getLocationName());
+                    adjustStock.setAdjustDateTime(f._2().getAdjustDateTime());
+                    adjustStock.setAdjustStockNo(f._2().getAdjustStockNo());
+                    //adjustStock.setItemNo(f._2().getString(null));
+                    adjustStock.setCommercialName_key(f._2().getCommercialName_key());
+                    adjustStock.setMatCode_key(f._2().getMatCode_key());
+                    //adjustStock.setMatDescription(f._2().getString(null));
+                    //adjustStock.setProductType(f._2().getProductType_key());
+                    //adjustStock.setProductSubType(f._2().getProductSubType_key());
+                    adjustStock.setBrand_key(f._2().getBrand_key());
+                    adjustStock.setModel_key(f._2().getModel_key());
+                    //adjustStock.setSubStock(f._2().getString(null));
+                    adjustStock.setAdjustType(f._2().getAdjustType());
+                    adjustStock.setSerial(f._2().getSerial_key());
+                    //adjustStock.setAdjustQty(f._2().getAdjustQty("null"));
+                    //adjustStock.setReason(f._2().getString(null));
+                    adjustStock.setRemark(f._2().getRemark());
+
+                    return adjustStock;
+                });
+
+        /* show insert data to cassandra */
+        System.out.println("===== insert data to cassandra =====");
+        adjustStockRDD.foreach(f -> System.out.println(
+                "Adjust Stock No: " + f.getAdjustStockNo() + "\n"
+                        + "Adjust Date Time : " + f.getAdjustDateTime() + "\n"
+                        + "Mat Code key : " + f.getMatCode_key()
+        ));
+
+        javaFunctions(adjustStockRDD).writerBuilder(
+                DAMOCLES_KEYSPACE, ADJUSTSTOCKREPORT_TABLE,
+                CassandraJavaUtil.mapToRow(AdjustStockReport.class,
+                        columnNameMappings)).saveToCassandra();
     }
 }
 

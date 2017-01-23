@@ -84,38 +84,38 @@ public class RequestGoodsSummaryReport extends com.ais.damocles.spark.schema.Com
     @Column(name = "pickingTime")
     private String pickingTime;
 
-    @Column(name = "TransferOutDate")
-    private String TransferOutDate;
+    @Column(name = "transferOutDate")
+    private String transferOutDate;
 
-    @Column(name = "TransferOutTime")
-    private String TransferOutTime;
+    @Column(name = "transferOutTime")
+    private String transferOutTime;
 
-    @Column(name = "TransferInBy")
-    private String TransferInBy;
+    @Column(name = "transferInBy")
+    private String transferInBy;
 
-    @Column(name = "TransferInDate")
-    private String TransferInDate;
+    @Column(name = "transferInDate")
+    private String transferInDate;
 
-    @Column(name = "TransferInTime")
-    private String TransferInTime;
+    @Column(name = "transferInTime")
+    private String transferInTime;
 
-    @Column(name = "DeviceHandsetQty")
-    private String DeviceHandsetQty;
+    @Column(name = "deviceHandsetQty")
+    private String deviceHandsetQty;
 
-    @Column(name = "DeviceHandsetBundleQty")
-    private String DeviceHandsetBundleQty;
+    @Column(name = "deviceHandsetBundleQty")
+    private String deviceHandsetBundleQty;
 
-    @Column(name = "SIMPrepaidQty")
-    private String SIMPrepaidQty;
+    @Column(name = "simPrepaidQty")
+    private String simPrepaidQty;
 
-    @Column(name = "SIMPostpaidQty")
-    private String SIMPostpaidQty;
+    @Column(name = "simPostpaidQty")
+    private String simPostpaidQty;
 
-    @Column(name = "PremiumQty")
-    private String PremiumQty;
+    @Column(name = "premiumQty")
+    private String premiumQty;
 
-    @Column(name = "OtherQty")
-    private String OtherQty;
+    @Column(name = "otherQty")
+    private String otherQty;
 
     @Column(name = "receiveBy")
     private String receiveBy;
@@ -125,6 +125,9 @@ public class RequestGoodsSummaryReport extends com.ais.damocles.spark.schema.Com
 
     @Column(name = "remark")
     private String remark;
+
+    @Column(name = "contactNo")
+    private String contactNo;
 
     public RequestGoodsSummaryReport(){
 
@@ -142,7 +145,11 @@ public class RequestGoodsSummaryReport extends com.ais.damocles.spark.schema.Com
                                      String TransferOutTime, String TransferInBy, String TransferInDate,
                                      String TransferInTime, String DeviceHandsetQty,String DeviceHandsetBundleQty,
                                      String SIMPrepaidQty,String SIMPostpaidQty,String PremiumQty,
-                                     String OtherQty, String receiveBy, String mobileNo, String remark){
+                                     String OtherQty, String receiveBy, String mobileNo, String remark,
+                                     String contactNo){
+
+        this.contactNo =contactNo;
+        this.columnMapper.put("contactNo", "contactNo");
 
         this.reportName =reportName;
         this.columnMapper.put("reportName", "reportName");
@@ -222,35 +229,35 @@ public class RequestGoodsSummaryReport extends com.ais.damocles.spark.schema.Com
         this.pickingTime =pickingTime;
         this.columnMapper.put("pickingTime", "pickingTime");
 
-        this.TransferOutDate =TransferOutDate;
-        this.columnMapper.put("TransferOutDate", "TransferOutDate");
+        this.transferOutDate = transferOutDate;
+        this.columnMapper.put("transferOutDate", "transferOutDate");
 
-        this.TransferInBy =TransferInBy;
-        this.columnMapper.put("TransferInBy", "TransferInBy");
+        this.transferInBy = transferInBy;
+        this.columnMapper.put("transferInBy", "transferInBy");
 
-        this.TransferInDate =TransferInDate;
-        this.columnMapper.put("TransferInDate", "TransferInDate");
+        this.transferInDate = transferInDate;
+        this.columnMapper.put("transferInDate", "transferInDate");
 
-        this.TransferInTime =TransferInTime;
-        this.columnMapper.put("TransferInTime", "TransferInTime");
+        this.transferInTime = TransferInTime;
+        this.columnMapper.put("transferInTime", "transferInTime");
 
-        this.DeviceHandsetQty =DeviceHandsetQty;
-        this.columnMapper.put("DeviceHandsetQty", "DeviceHandsetQty");
+        this.deviceHandsetQty = deviceHandsetQty;
+        this.columnMapper.put("deviceHandsetQty", "deviceHandsetQty");
 
-        this.DeviceHandsetBundleQty =DeviceHandsetBundleQty;
-        this.columnMapper.put("DeviceHandsetBundleQty", "DeviceHandsetBundleQty");
+        this.deviceHandsetBundleQty = deviceHandsetBundleQty;
+        this.columnMapper.put("deviceHandsetBundleQty", "deviceHandsetBundleQty");
 
-        this.SIMPrepaidQty =SIMPrepaidQty;
-        this.columnMapper.put("SIMPrepaidQty", "SIMPrepaidQty");
+        this.simPrepaidQty = simPrepaidQty;
+        this.columnMapper.put("simPrepaidQty", "simPrepaidQty");
 
-        this.SIMPostpaidQty =SIMPostpaidQty;
-        this.columnMapper.put("SIMPostpaidQty", "SIMPostpaidQty");
+        this.simPostpaidQty = simPostpaidQty;
+        this.columnMapper.put("simPostpaidQty", "simPostpaidQty");
 
-        this.PremiumQty =PremiumQty;
-        this.columnMapper.put("PremiumQty", "PremiumQty");
+        this.premiumQty = premiumQty;
+        this.columnMapper.put("premiumQty", "premiumQty");
 
-        this.OtherQty =OtherQty;
-        this.columnMapper.put("OtherQty", "OtherQty");
+        this.otherQty = otherQty;
+        this.columnMapper.put("otherQty", "otherQty");
 
         this.receiveBy =receiveBy;
         this.columnMapper.put("receiveBy", "receiveBy");
@@ -415,94 +422,6 @@ public class RequestGoodsSummaryReport extends com.ais.damocles.spark.schema.Com
         this.pickingTime = pickingTime;
     }
 
-    public String getTransferOutDate() {
-        return TransferOutDate;
-    }
-
-    public void setTransferOutDate(String transferOutDate) {
-        TransferOutDate = transferOutDate;
-    }
-
-    public String getTransferOutTime() {
-        return TransferOutTime;
-    }
-
-    public void setTransferOutTime(String transferOutTime) {
-        TransferOutTime = transferOutTime;
-    }
-
-    public String getTransferInBy() {
-        return TransferInBy;
-    }
-
-    public void setTransferInBy(String transferInBy) {
-        TransferInBy = transferInBy;
-    }
-
-    public String getTransferInDate() {
-        return TransferInDate;
-    }
-
-    public void setTransferInDate(String transferInDate) {
-        TransferInDate = transferInDate;
-    }
-
-    public String getTransferInTime() {
-        return TransferInTime;
-    }
-
-    public void setTransferInTime(String transferInTime) {
-        TransferInTime = transferInTime;
-    }
-
-    public String getDeviceHandsetQty() {
-        return DeviceHandsetQty;
-    }
-
-    public void setDeviceHandsetQty(String deviceHandsetQty) {
-        DeviceHandsetQty = deviceHandsetQty;
-    }
-
-    public String getDeviceHandsetBundleQty() {
-        return DeviceHandsetBundleQty;
-    }
-
-    public void setDeviceHandsetBundleQty(String deviceHandsetBundleQty) {
-        DeviceHandsetBundleQty = deviceHandsetBundleQty;
-    }
-
-    public String getSIMPrepaidQty() {
-        return SIMPrepaidQty;
-    }
-
-    public void setSIMPrepaidQty(String SIMPrepaidQty) {
-        this.SIMPrepaidQty = SIMPrepaidQty;
-    }
-
-    public String getSIMPostpaidQty() {
-        return SIMPostpaidQty;
-    }
-
-    public void setSIMPostpaidQty(String SIMPostpaidQty) {
-        this.SIMPostpaidQty = SIMPostpaidQty;
-    }
-
-    public String getPremiumQty() {
-        return PremiumQty;
-    }
-
-    public void setPremiumQty(String premiumQty) {
-        PremiumQty = premiumQty;
-    }
-
-    public String getOtherQty() {
-        return OtherQty;
-    }
-
-    public void setOtherQty(String otherQty) {
-        OtherQty = otherQty;
-    }
-
     public String getReceiveBy() {
         return receiveBy;
     }
@@ -575,4 +494,107 @@ public class RequestGoodsSummaryReport extends com.ais.damocles.spark.schema.Com
         this.company = company;
     }
 
+    public String getLocationCodeList() {
+        return locationCodeList;
+    }
+
+    public void setLocationCodeList(String locationCodeList) {
+        this.locationCodeList = locationCodeList;
+    }
+
+    public String getTransferOutDate() {
+        return transferOutDate;
+    }
+
+    public void setTransferOutDate(String transferOutDate) {
+        this.transferOutDate = transferOutDate;
+    }
+
+    public String getTransferOutTime() {
+        return transferOutTime;
+    }
+
+    public void setTransferOutTime(String transferOutTime) {
+        this.transferOutTime = transferOutTime;
+    }
+
+    public String getTransferInBy() {
+        return transferInBy;
+    }
+
+    public void setTransferInBy(String transferInBy) {
+        this.transferInBy = transferInBy;
+    }
+
+    public String getTransferInDate() {
+        return transferInDate;
+    }
+
+    public void setTransferInDate(String transferInDate) {
+        this.transferInDate = transferInDate;
+    }
+
+    public String getTransferInTime() {
+        return transferInTime;
+    }
+
+    public void setTransferInTime(String transferInTime) {
+        this.transferInTime = transferInTime;
+    }
+
+    public String getDeviceHandsetQty() {
+        return deviceHandsetQty;
+    }
+
+    public void setDeviceHandsetQty(String deviceHandsetQty) {
+        this.deviceHandsetQty = deviceHandsetQty;
+    }
+
+    public String getDeviceHandsetBundleQty() {
+        return deviceHandsetBundleQty;
+    }
+
+    public void setDeviceHandsetBundleQty(String deviceHandsetBundleQty) {
+        this.deviceHandsetBundleQty = deviceHandsetBundleQty;
+    }
+
+    public String getSimPrepaidQty() {
+        return simPrepaidQty;
+    }
+
+    public void setSimPrepaidQty(String simPrepaidQty) {
+        this.simPrepaidQty = simPrepaidQty;
+    }
+
+    public String getSimPostpaidQty() {
+        return simPostpaidQty;
+    }
+
+    public void setSimPostpaidQty(String simPostpaidQty) {
+        this.simPostpaidQty = simPostpaidQty;
+    }
+
+    public String getPremiumQty() {
+        return premiumQty;
+    }
+
+    public void setPremiumQty(String premiumQty) {
+        this.premiumQty = premiumQty;
+    }
+
+    public String getOtherQty() {
+        return otherQty;
+    }
+
+    public void setOtherQty(String otherQty) {
+        this.otherQty = otherQty;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
+    }
 }

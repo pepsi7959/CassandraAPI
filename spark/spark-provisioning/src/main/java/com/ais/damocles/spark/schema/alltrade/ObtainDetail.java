@@ -5,7 +5,7 @@ import com.datastax.driver.mapping.annotations.Column;
 public class ObtainDetail extends com.ais.damocles.spark.schema.CommonSchema {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -74,12 +74,12 @@ public class ObtainDetail extends com.ais.damocles.spark.schema.CommonSchema {
 	}
 
 	public ObtainDetail(String transactionId, String transactionType,
-			String obtainNo, String obtainStatus, String locationCode,
-			String locationName, String locationType, String locationSubType,
-			String locationRegion, String locationProvince, String docRef,
-			String obtainDateTime, String createBy, String createDateTime,
-			String updateBy, String updateDateTime, String salesCode_key,
-			String matCode_key, String serial_key, String obtainDetail) {
+						String obtainNo, String obtainStatus, String locationCode,
+						String locationName, String locationType, String locationSubType,
+						String locationRegion, String locationProvince, String docRef,
+						String obtainDateTime, String createBy, String createDateTime,
+						String updateBy, String updateDateTime, String salesCode_key,
+						String matCode_key, String serial_key, String obtainDetail) {
 
 
 		this.transactionId = transactionId;

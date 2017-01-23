@@ -51,11 +51,11 @@ public class DirectsaleDetailReport extends com.ais.damocles.spark.schema.Common
     @Column(name = "locationName")
     private String locationName;
 
-    @Column(name = "pickupNo")
-    private String pickupNo;
+    @Column(name = "obtainNo")
+    private String obtainNo;
 
-    @Column(name = "pickupDate")
-    private String pickupDate;
+    @Column(name = "obtainDateTime")
+    private String obtainDateTime;
 
     @Column(name = "salesName")
     private String salesName;
@@ -118,7 +118,7 @@ public class DirectsaleDetailReport extends com.ais.damocles.spark.schema.Common
                                    String fromLocationCodeTo ,  String salesCode ,  String status ,
                                    String locationType ,  String locationSubType ,  String region,
                                    String company ,  String locationCode ,  String locationName ,
-                                   String pickupNo ,  String pickupDate ,
+                                   String obtainNo ,  String obtainDateTime ,
                                    String salesName ,  String returnNo ,  String returnDate ,
                                    String fromSubStock ,  String brand ,
                                    String model ,  String color ,  String commercialName ,
@@ -169,11 +169,11 @@ public class DirectsaleDetailReport extends com.ais.damocles.spark.schema.Common
         this.locationName =locationName;
         this.columnMapper.put("locationName", "locationName");
 
-        this.pickupNo =pickupNo;
-        this.columnMapper.put("pickupNo", "pickupNo");
+        this.obtainNo = obtainNo;
+        this.columnMapper.put("obtainNo", "obtainNo");
 
-        this.pickupDate =pickupDate;
-        this.columnMapper.put("pickupDate", "pickupDate");
+        this.obtainDateTime =obtainDateTime;
+        this.columnMapper.put("obtainDateTime", "obtainDateTime");
 
         this.salesName =salesName;
         this.columnMapper.put("salesName", "salesName");
@@ -484,19 +484,20 @@ public class DirectsaleDetailReport extends com.ais.damocles.spark.schema.Common
         this.locationName = locationName;
     }
 
-    public String getPickupNo() {
-        return pickupNo;
+    public String getObtainNo() {
+        return obtainNo;
     }
 
-    public void setPickupNo(String pickupNo) {
-        this.pickupNo = pickupNo;
+    public void setObtainNo(String obtainNo) {
+        this.obtainNo = obtainNo;
     }
 
-    public String getPickupDate() {
-        return pickupDate;
+    public String getObtainDateTime() {
+        return obtainDateTime;
     }
 
-    public void setPickupDate(String pickupDate) {
-        this.pickupDate = pickupDate;
+    public void setObtainDateTime(String obtainDateTime) {
+        this.obtainDateTime = obtainDateTime;
     }
+
 }
